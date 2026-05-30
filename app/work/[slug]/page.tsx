@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -37,13 +38,24 @@ export default async function CaseStudyPage(
   return (
     <article>
       {/* Hero */}
-      <section className="relative">
-        <div
-          aria-hidden
-          className="h-[60vh] min-h-[420px] w-full"
-          style={{ background: project.gradient }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent" />
+      <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
+        {project.heroImage ? (
+          <Image
+            src={project.heroImage}
+            alt={project.title}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div
+            aria-hidden
+            className="h-full w-full"
+            style={{ background: project.gradient }}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 mx-auto flex max-w-7xl flex-col gap-6 px-6 pb-16 sm:px-10">
           <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
             {getDisciplineLabel(project.discipline)}
@@ -115,22 +127,43 @@ export default async function CaseStudyPage(
         </div>
       </section>
 
-      {/* Placeholder gallery */}
-      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-6 pb-24 sm:grid-cols-2 sm:px-10">
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            aria-hidden
-            className={`aspect-[4/3] rounded-md border border-border ${
-              i === 0 ? "sm:col-span-2 sm:aspect-[16/7]" : ""
-            }`}
-            style={{
-              background: project.gradient,
-              opacity: 0.85 - i * 0.15,
-            }}
-          />
-        ))}
-      </section>
+      {/* Gallery */}
+      {project.gallery ? (
+        <section className="mx-auto grid max-w-7xl grid-cols-1 gap-x-6 gap-y-12 px-6 pb-24 sm:grid-cols-2 sm:px-10">
+          {project.gallery.map((item) => (
+            <figure key={item.src} className="flex flex-col gap-4">
+              <div className="relative aspect-[3/2] overflow-hidden rounded-md border border-border bg-basalt">
+                <Image
+                  src={item.src}
+                  alt={item.caption}
+                  fill
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="font-serif text-base italic text-smoke">
+                {item.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </section>
+      ) : (
+        <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-6 pb-24 sm:grid-cols-2 sm:px-10">
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              aria-hidden
+              className={`aspect-[4/3] rounded-md border border-border ${
+                i === 0 ? "sm:col-span-2 sm:aspect-[16/7]" : ""
+              }`}
+              style={{
+                background: project.gradient,
+                opacity: 0.85 - i * 0.15,
+              }}
+            />
+          ))}
+        </section>
+      )}
 
       {/* Prev / Next */}
       <nav

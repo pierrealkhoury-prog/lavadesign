@@ -11,6 +11,8 @@ export const DISCIPLINES = [
 
 export type DisciplineSlug = (typeof DISCIPLINES)[number]["slug"];
 
+export type GalleryItem = { src: string; caption: string };
+
 export type Project = {
   slug: string;
   title: string;
@@ -23,6 +25,10 @@ export type Project = {
   role?: string;
   /** Scope chip strip on the case study. Hidden when unset. */
   scopeTags?: string[];
+  /** Public-folder path to the hero image. Falls back to gradient when unset. */
+  heroImage?: string;
+  /** Public-folder paths + atmospheric captions. Falls back to gradient blocks when unset. */
+  gallery?: GalleryItem[];
   /** Tailwind gradient used as a hero/card placeholder until real imagery lands. */
   gradient: string;
   featured?: boolean;
@@ -156,6 +162,25 @@ export const PROJECTS: Project[] = [
       "Plumbing & Drainage",
       "Gas Distribution",
       "Construction Documents",
+    ],
+    heroImage: "/work/private-residence-tx-2023/hero.png",
+    gallery: [
+      {
+        src: "/work/private-residence-tx-2023/plan-01.png",
+        caption: "Where the air begins.",
+      },
+      {
+        src: "/work/private-residence-tx-2023/plan-02.png",
+        caption: "Lines beneath the floor.",
+      },
+      {
+        src: "/work/private-residence-tx-2023/plan-03.png",
+        caption: "Heat, light, water — choreographed.",
+      },
+      {
+        src: "/work/private-residence-tx-2023/plan-04.png",
+        caption: "Every room, served in silence.",
+      },
     ],
     gradient:
       "linear-gradient(135deg, #f5b04b 0%, #8c7f78 50%, #1c1715 100%)",
