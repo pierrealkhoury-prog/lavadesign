@@ -25,8 +25,17 @@ export type Project = {
   role?: string;
   /** Scope chip strip on the case study. Hidden when unset. */
   scopeTags?: string[];
-  /** Public-folder path to the hero image. Falls back to gradient when unset. */
-  heroImage?: string;
+  /**
+   * Hero banner variants for the case study <picture> element.
+   * Desktop is 16:9, mobile is 4:5 — supplied as separate assets so
+   * each viewport gets art-directed crop rather than a single image
+   * forced into both aspect ratios.
+   * Falls back to the gradient block when both are unset.
+   */
+  heroDesktop?: string;
+  heroMobile?: string;
+  /** Square (1:1) thumbnail used on WorkCard grids. Falls back to gradient. */
+  thumb?: string;
   /** Public-folder paths + atmospheric captions. Falls back to gradient blocks when unset. */
   gallery?: GalleryItem[];
   /** Tailwind gradient used as a hero/card placeholder until real imagery lands. */
@@ -163,7 +172,9 @@ export const PROJECTS: Project[] = [
       "Gas Distribution",
       "Construction Documents",
     ],
-    heroImage: "/work/private-residence-tx-2023/hero.png",
+    heroDesktop: "/work/private-residence-tx-2023/hero-desktop.png",
+    heroMobile: "/work/private-residence-tx-2023/hero-mobile.png",
+    thumb: "/work/private-residence-tx-2023/thumb.png",
     gallery: [
       {
         src: "/work/private-residence-tx-2023/plan-01.png",

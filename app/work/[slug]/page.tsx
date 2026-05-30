@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   PROJECTS,
@@ -37,17 +37,25 @@ export default async function CaseStudyPage(
 
   return (
     <article>
-      {/* Hero */}
-      <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
-        {project.heroImage ? (
-          <Image
-            src={project.heroImage}
-            alt={project.title}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
+      {/* Hero — art-directed <picture>: 4:5 portrait on mobile, true 16:9 on desktop.
+          max-h-[85vh] keeps the hero from dominating widescreens; combined with
+          md:object-contain that means on wide viewports the image letterboxes
+          (against basalt) rather than crops, so the full plan stays visible. */}
+      <section className="relative aspect-[4/5] max-h-[85vh] w-full overflow-hidden md:aspect-video">
+        {project.heroDesktop && project.heroMobile ? (
+          <picture>
+            <source
+              media="(min-width: 768px)"
+              srcSet={project.heroDesktop}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={project.heroMobile}
+              alt={project.title}
+              className="absolute inset-0 h-full w-full object-cover md:object-contain"
+              fetchPriority="high"
+            />
+          </picture>
         ) : (
           <div
             aria-hidden
