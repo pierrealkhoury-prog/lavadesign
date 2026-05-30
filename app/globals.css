@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Lava Design — molten design tokens.
+ * Palette and type scale are exposed to Tailwind via @theme so
+ * utilities like bg-obsidian / text-lava / font-display work everywhere.
+ */
+@theme {
+  /* Molten palette */
+  --color-obsidian: #0a0706;
+  --color-basalt: #14100e;
+  --color-charcoal: #1c1715;
+  --color-ash: #f4ede5;
+  --color-smoke: #8c7f78;
+  --color-ember: #f5b04b;
+  --color-lava: #ff4d1c;
+  --color-magma: #7a1a0a;
+  --color-crust: #2a221f;
+
+  /* Semantic aliases */
+  --color-background: var(--color-obsidian);
+  --color-foreground: var(--color-ash);
+  --color-muted: var(--color-smoke);
+  --color-border: var(--color-crust);
+  --color-accent: var(--color-lava);
+
+  /* Brand typography (variables come from next/font in app/layout.tsx) */
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: var(--font-space-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background-color: var(--color-obsidian);
+  color: var(--color-ash);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Selection picks up brand accent */
+::selection {
+  background-color: var(--color-lava);
+  color: var(--color-obsidian);
 }
