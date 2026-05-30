@@ -58,12 +58,16 @@ const DESIGN_SERVICES = [
     body: "Distinct, high-performing digital identities that attract customers, provoke engagement, and inspire growth.",
   },
   {
-    title: "Branding & Identity",
-    body: "Work with our brand consultants and designers to custom-design a new identity or refresh an existing one.",
+    title: "Logos & Branding",
+    body: "Custom-design a new identity, or refresh an existing one — into a consistent system that carries across every touchpoint.",
   },
   {
-    title: "Artwork & Packaging",
-    body: "Production-ready artwork and packaging design that makes products shelf-ready and on-brand.",
+    title: "Artworking",
+    body: "Specialized art-production support that extends the capacity of creative teams and agencies — hourly or on retainer.",
+  },
+  {
+    title: "Marketing Materials",
+    body: "Flyers, brochures, menus, and collateral that build recognition — designed and produced for print.",
   },
 ];
 
@@ -153,7 +157,7 @@ function HeroSection() {
               See the work
             </Link>
             <Link
-              href="#services"
+              href="/services"
               className="rounded-full border border-border px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-ash transition-colors hover:border-ash"
             >
               Our services
@@ -335,7 +339,7 @@ function DesignServicesSection() {
           </div>
         </Reveal>
 
-        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {DESIGN_SERVICES.map((svc, i) => (
             <Reveal
               key={svc.title}
