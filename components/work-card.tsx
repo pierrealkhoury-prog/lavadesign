@@ -5,7 +5,14 @@ import {
   getDisciplineLabel,
 } from "@/lib/projects";
 
-export function WorkCard({ project }: { project: Project }) {
+export function WorkCard({
+  project,
+  priority = false,
+}: {
+  project: Project;
+  /** Forward to next/image for LCP-candidate cards (e.g. featured grid above the fold). */
+  priority?: boolean;
+}) {
   return (
     <Link
       href={`/work/${project.slug}`}
@@ -22,6 +29,7 @@ export function WorkCard({ project }: { project: Project }) {
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
             className="object-contain"
+            priority={priority}
           />
         ) : null}
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-transparent to-transparent" />

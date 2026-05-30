@@ -48,3 +48,11 @@ body {
   background-color: var(--color-lava);
   color: var(--color-obsidian);
 }
+
+/* Scroll-reveal fallback for users without JavaScript — keep content visible. */
+@media (scripting: none) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
