@@ -1,6 +1,10 @@
-// Phase 1 — placeholder portfolio data.
+// Phase 1 — portfolio data.
 // Promoted to the Prisma `Project` model in a later phase (admin CRUD).
 // Keep entries deterministic so prerendering stays stable.
+//
+// Privacy: NO client names, NO street addresses, NO firm license numbers.
+// Identify projects by sector + discipline + state + year (and city where
+// useful at the city level — never a street address).
 
 export const DISCIPLINES = [
   { slug: "2d-3d", label: "2D & 3D" },
@@ -21,6 +25,8 @@ export type Project = {
   year: number;
   summary: string;
   body: string[];
+  /** Sector label (Education, Healthcare, etc.) — shown in case-study meta. */
+  sector?: string;
   /** Per-project role line for the case-study meta strip. Hidden when unset. */
   role?: string;
   /** Scope chip strip on the case study. Hidden when unset. */
@@ -41,123 +47,177 @@ export type Project = {
   /** Tailwind gradient used as a hero/card placeholder until real imagery lands. */
   gradient: string;
   featured?: boolean;
+  /**
+   * Light entry — renders a card on the /work grid but does NOT generate a
+   * /work/[slug] detail page. Use for portfolio breadth without writing a
+   * full case study. Light entries should set `caption` for the one-line
+   * description rendered under the card meta.
+   */
+  noDetail?: boolean;
+  /** One-line caption for light entries (rendered under the card meta). */
+  caption?: string;
 };
 
 export const PROJECTS: Project[] = [
+  // ─── Full case studies ─────────────────────────────────────────────────
   {
-    slug: "lumen-pavilion",
-    title: "Lumen Pavilion",
-    discipline: "events-activations",
-    location: "Dubai",
-    year: 2025,
-    summary:
-      "A temporary cor-ten and translucent-PETG pavilion for the Dubai Design District opening week.",
-    body: [
-      "Lumen was a three-week temporary structure threading three exhibitor zones with a single continuous bench. We worked from concept through fabrication, partnering with a local steel shop and a translucent-panel supplier in Sharjah.",
-      "The pavilion drew 12,000 visitors across nine evenings and became the signature image of the d3 opening week press kit.",
-    ],
-    gradient:
-      "linear-gradient(135deg, #ff4d1c 0%, #7a1a0a 55%, #1c1715 100%)",
-    featured: true,
-  },
-  {
-    slug: "stratum-house",
-    title: "Stratum House",
-    discipline: "interiors-architecture",
-    location: "Abu Dhabi",
-    year: 2024,
-    summary:
-      "A 540 m² private residence organised around a vertical lava-rock spine and shaded courtyards.",
-    body: [
-      "Stratum House layers a heavy lava-stone core against light, lifted living volumes. The plan reads as four stacked horizons; the materials read as compressed time.",
-      "We led architecture, interior design and FF&E selection, working with a structural engineer in Abu Dhabi and a stone supplier in Oman.",
-    ],
-    gradient:
-      "linear-gradient(135deg, #f5b04b 0%, #7a1a0a 60%, #14100e 100%)",
-    featured: true,
-  },
-  {
-    slug: "magma-type-system",
-    title: "Magma Type System",
-    discipline: "2d-3d",
-    location: "Dubai",
-    year: 2025,
-    summary:
-      "A variable display typeface and identity system developed for a UAE-based mineral water brand.",
-    body: [
-      "Magma is a single-axis variable font that compresses from a humanist sans into a dense industrial display. We designed the typeface, the wordmark, the bottle label system and the launch campaign.",
-      "It ships across 11 SKUs and an eight-language packaging matrix.",
-    ],
-    gradient:
-      "linear-gradient(135deg, #ff4d1c 0%, #f5b04b 60%, #14100e 100%)",
-    featured: true,
-  },
-  {
-    slug: "forge-engine-mount",
-    title: "Forge Engine Mount",
+    slug: "charter-school-tx-2025",
+    title: "Charter School — Full MEP & Site Electrical",
     discipline: "engineering",
-    location: "Sharjah",
-    year: 2024,
-    summary:
-      "A vibration-damping engine mount cast in two alloys, designed for a regional electric mobility startup.",
-    body: [
-      "Forge replaced a four-part welded assembly with a single bi-metal casting that absorbs 38% more high-frequency vibration. We owned the mechanical design, FEA simulation and supplier qualification across two casting houses.",
-      "Now shipping on the startup's first 600 production units.",
-    ],
-    gradient:
-      "linear-gradient(135deg, #8c7f78 0%, #2a221f 50%, #14100e 100%)",
-  },
-  {
-    slug: "veil-identity",
-    title: "Veil Identity",
-    discipline: "2d-3d",
-    location: "Dubai",
-    year: 2024,
-    summary:
-      "Brand identity, packaging and direct-mail program for an Emirati skincare house.",
-    body: [
-      "Veil reframes a 20-year-old apothecary brand for a new generation of customers. We rebuilt the logotype, the entire SKU system and the unboxing experience around a single recurring veiling gesture.",
-      "Press kit, in-store signage and seasonal capsules all run on the same modular system.",
-    ],
-    gradient:
-      "linear-gradient(135deg, #f5b04b 0%, #ff4d1c 50%, #7a1a0a 100%)",
-  },
-  {
-    slug: "embers-restaurant",
-    title: "Embers Restaurant",
-    discipline: "interiors-architecture",
-    location: "Dubai",
+    location: "Magnolia, Texas",
     year: 2025,
+    sector: "Education / Institutional",
+    role: "MEP & site electrical engineering of record",
     summary:
-      "A 1,200 m² flame-fired dining concept anchored by an open kitchen and a 14 m basalt counter.",
+      "A ground-up charter school campus — full building MEP plus the site-wide electrical infrastructure that powers everything beyond the walls.",
     body: [
-      "Embers is built around the heat of the kitchen. We led interiors, lighting, custom millwork and the open-kitchen choreography with the executive chef.",
-      "The dining room and the bar share a single material palette: blackened steel, lava stone and tumbled brass.",
+      "A complete educational campus engineered from the ground up: classrooms, flex-classrooms, leasing suites, lobby, and support spaces, each served by its own heat-pump and air-handling zone for room-by-room control and quiet, efficient operation. We designed the full mechanical, electrical, and plumbing systems alongside fire-rated penetrations and code-driven smoke and safety controls throughout.",
+      "Beyond the building, the project's reach is what makes it a campus. We engineered the site electrical distribution — a multi-meter service arrangement for the school, leasing, and house loads off a single secondary tap — together with provisions for an electric gate, a lift station, dual EV charging stations, and underground feeds staged for a diesel fire-pump and for football-field lighting. Outdoor pole lighting on photocells completes a site built to grow.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Site Electrical",
+      "Solar-Ready",
+      "EV Charging",
     ],
     gradient:
-      "linear-gradient(135deg, #ff4d1c 0%, #1c1715 100%)",
+      "linear-gradient(135deg, #ff4d1c 0%, #f5b04b 55%, #14100e 100%)",
+    featured: true,
   },
   {
-    slug: "solstice-activation",
-    title: "Solstice Activation",
-    discipline: "events-activations",
-    location: "Riyadh",
-    year: 2025,
+    slug: "recycling-facility-ny-2024",
+    title: "Recycling Facility — MEP & Solar PV",
+    discipline: "engineering",
+    location: "New York",
+    year: 2024,
+    sector: "Industrial",
+    role: "MEP & solar PV engineering",
     summary:
-      "A three-night brand activation for a global luxury maison during the Riyadh winter season.",
+      "A working recycling facility ventilated for heavy industrial air change — and topped with a grid-tied solar array that feeds power back through a supply-side connection.",
     body: [
-      "Solstice ran across three nights with a programme of live performance, ticketed dinner and a private gallery moment. We led creative direction, set design and on-site production.",
-      "Total audience: 4,200 across the three nights.",
+      "Industrial process spaces breathe differently. This recycling facility required high-volume mechanical ventilation — wall-mounted cabinet exhaust fans moving thirteen thousand CFM against large intake louvers — to keep air turning over at the rate a working recycle building demands.",
+      "The electrical scope paired a conventional panel with a 15 kW rooftop solar array: twenty-seven modules on power optimizers feeding a string inverter, connected to the grid via a supply-side tap with its own lockable AC disconnect and PV load center. The result is a facility that handles its industrial workload while offsetting its own demand with on-site renewable generation.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Solar PV",
+      "Renewable Energy",
     ],
     gradient:
-      "linear-gradient(135deg, #f5b04b 0%, #ff4d1c 40%, #14100e 100%)",
+      "linear-gradient(135deg, #8c7f78 0%, #7a1a0a 55%, #14100e 100%)",
+    featured: true,
   },
+  {
+    slug: "dental-clinic-tx-2024",
+    title: "Dental Clinic — Full MEP",
+    discipline: "engineering",
+    location: "Texas",
+    year: 2024,
+    sector: "Healthcare",
+    role: "Full MEP engineering",
+    summary:
+      "A multi-operatory dental clinic where every treatment room, sterilization suite, and medical-gas line had to be engineered to healthcare standards.",
+    body: [
+      "Healthcare interiors carry requirements an ordinary office never sees. This dental clinic was designed around a long row of treatment and hygiene rooms, each with its own conditioned supply and carefully placed exhaust, plus a sterilization suite, lab, and surgery — all balanced for clean, controlled airflow and tankless gas water heating sized for continuous demand.",
+      "The plumbing scope handled twelve dental lavatories with their dedicated fixtures alongside standard sanitary loads, vacuum and compressor connections, and provisional stub-outs for future tenant build-out. Specialized exhaust, medical-gas storage, and door-transfer grilles were coordinated tightly with the dental-equipment supplier so the engineering and the operatory fit-out moved as one.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Medical Gas",
+      "Specialized Exhaust",
+    ],
+    gradient:
+      "linear-gradient(135deg, #f4ede5 0%, #8c7f78 50%, #14100e 100%)",
+  },
+  {
+    slug: "retail-buildout-tx-2024",
+    title: "Retail Build-Out — MEP",
+    discipline: "engineering",
+    location: "Houston, Texas",
+    year: 2024,
+    sector: "Retail",
+    role: "MEP engineering for interior build-out",
+    summary:
+      "A retail interior build-out spanning a customer shopping floor and a back-of-house warehouse — two very different environments under one roof.",
+    body: [
+      "A retail tenant build-out has to serve the showroom and the stockroom at once. We engineered rooftop packaged units distributing conditioned air across an open shopping floor through a balanced network of ceiling diffusers, with a separate treatment for the warehouse zone behind it — each space sized to its own occupancy and use.",
+      "The electrical and plumbing scope tied the new fit-out back to the building's existing service: a pad-mounted transformer and panel arrangement for lighting and receptacles, restroom and break-room plumbing, and rooftop-unit condensate handling, all coordinated to a clean, contractor-biddable set.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Rooftop HVAC",
+      "Tenant Build-Out",
+    ],
+    gradient:
+      "linear-gradient(135deg, #f5b04b 0%, #ff4d1c 60%, #2a221f 100%)",
+  },
+  {
+    slug: "office-fitout-fl-2025",
+    title: "Office Fit-Out — MEP",
+    discipline: "engineering",
+    location: "Florida",
+    year: 2025,
+    sector: "Commercial Office",
+    role: "Full MEP engineering for office fit-out",
+    summary:
+      "A full commercial office fit-out — open work areas, private offices, conference and break rooms — engineered around quiet split-system comfort and a clean power-and-data layout.",
+    body: [
+      "An office lives or dies on comfort and flexibility. This fit-out paired multiple condensing units with matched air handlers, each serving its own zone — lobby, conference, private offices, locker and break rooms — with thermostats set up for setback scheduling and occupant override so the building only conditions what's in use.",
+      "The power plan laid out distributed receptacles, ceiling and floor data outlets, and dedicated circuits for the IT room and equipment, while the plumbing scope covered restrooms, break-room fixtures, water heating, and condensate handling for every air handler. The whole package was built around a new 208/120V three-phase service feeding a cleanly scheduled panel.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Split-System HVAC",
+      "Data/Low-Voltage",
+    ],
+    gradient:
+      "linear-gradient(135deg, #f4ede5 0%, #f5b04b 40%, #2a221f 100%)",
+  },
+  {
+    slug: "restaurant-tx-2025",
+    title: "Restaurant — MEP & Kitchen Ventilation",
+    discipline: "engineering",
+    location: "Texas",
+    year: 2025,
+    sector: "Hospitality / Food Service",
+    role: "Full MEP engineering",
+    summary:
+      "A full-service restaurant where the commercial kitchen drove everything — hood exhaust, make-up air, gas, grease waste, and the dining-room comfort wrapped around it.",
+    body: [
+      "A restaurant is really a commercial kitchen with a dining room attached, and the engineering follows the kitchen. We designed the kitchen exhaust hood and its make-up air to balance thousands of CFM of cooking exhaust against tempered replacement air, kept the building under correct net pressure, and routed the gas service to ranges, fryers, and water heaters with the shut-offs and sediment traps each appliance demands.",
+      "On the dining side, packaged rooftop and make-up-air units carry comfort across the seating and bar, while the plumbing scope handles a grease interceptor, floor sinks with proper air gaps for every appliance, three-compartment and prep sinks, and the full sanitary and grease-waste networks. The electrical package ties the kitchen equipment schedule — ovens, coolers, ice machines, espresso — into a coordinated power layout with emergency shut-off.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Kitchen Hood",
+      "Make-Up Air",
+      "Grease Waste",
+    ],
+    gradient:
+      "linear-gradient(135deg, #ff4d1c 0%, #7a1a0a 60%, #14100e 100%)",
+    featured: true,
+  },
+
+  // ─── Existing full case study (Phase 1) ────────────────────────────────
   {
     slug: "private-residence-tx-2023",
     title: "Private Residence — Full MEP Design",
     discipline: "engineering",
     location: "Texas, USA",
     year: 2023,
+    sector: "Residential",
     summary:
       "Complete mechanical, electrical, and plumbing engineering for a luxury single-family estate — a 30+ room residence with golf simulator, wine room, dual master suites, pool, spa, and outdoor living.",
     body: [
@@ -197,35 +257,88 @@ export const PROJECTS: Project[] = [
       "linear-gradient(135deg, #f5b04b 0%, #8c7f78 50%, #1c1715 100%)",
     featured: true,
   },
+
+  // ─── Light entries (card + thumb + caption, no detail page) ────────────
   {
-    slug: "glass-and-ash",
-    title: "Glass & Ash Storefront",
-    discipline: "interiors-architecture",
-    location: "Dubai",
+    slug: "restaurant-remodel-fl-2024",
+    title: "Restaurant Remodel — MEP",
+    discipline: "engineering",
+    location: "Florida",
     year: 2024,
+    sector: "Hospitality / Food Service",
+    // Light entries: summary + body unused but kept short for type safety.
     summary:
-      "A 90 m² flagship retail interior for a contemporary ceramics studio.",
-    body: [
-      "Glass & Ash uses a single material gesture — sand-cast glass shelving — to display 80+ pieces of small-batch ceramics. The rest of the room recedes.",
-      "We led interiors, custom shelving fabrication and the in-store lighting design.",
-    ],
+      "Kitchen exhaust, make-up air, and dining comfort reworked for a restaurant remodel.",
+    body: [],
+    caption:
+      "Kitchen exhaust, make-up air, and dining comfort reworked for a restaurant remodel.",
+    noDetail: true,
     gradient:
-      "linear-gradient(135deg, #f4ede5 0%, #8c7f78 40%, #14100e 100%)",
+      "linear-gradient(135deg, #ff4d1c 0%, #7a1a0a 60%, #14100e 100%)",
   },
   {
-    slug: "halo-packaging",
-    title: "Halo Packaging Series",
-    discipline: "2d-3d",
-    location: "Dubai",
-    year: 2025,
+    slug: "restaurant-tx-2024",
+    title: "Restaurant — MEP",
+    discipline: "engineering",
+    location: "Texas",
+    year: 2024,
+    sector: "Hospitality / Food Service",
     summary:
-      "Limited-edition packaging for a four-piece collaboration between a coffee brand and a perfumer.",
-    body: [
-      "Halo is a four-piece capsule with a single recurring optical motif: a ring of negative space that reads as both halo and aperture. We designed the structural packaging, the surface graphics and the launch shorts.",
-      "Sold out in 11 days across the GCC.",
-    ],
+      "Full mechanical, electrical, and plumbing for a ground-up restaurant and kitchen.",
+    body: [],
+    caption:
+      "Full mechanical, electrical, and plumbing for a ground-up restaurant and kitchen.",
+    noDetail: true,
     gradient:
-      "linear-gradient(135deg, #f5b04b 0%, #ff4d1c 60%, #2a221f 100%)",
+      "linear-gradient(135deg, #f5b04b 0%, #ff4d1c 50%, #2a221f 100%)",
+  },
+  {
+    slug: "bakery-tx-2025",
+    title: "Bakery — MEP",
+    discipline: "engineering",
+    location: "Texas",
+    year: 2025,
+    sector: "Food Service",
+    summary:
+      "Oven exhaust, refrigeration, and food-service plumbing for a working bakery.",
+    body: [],
+    caption:
+      "Oven exhaust, refrigeration, and food-service plumbing for a working bakery.",
+    noDetail: true,
+    gradient:
+      "linear-gradient(135deg, #f5b04b 0%, #f4ede5 40%, #8c7f78 100%)",
+  },
+  {
+    slug: "barber-shop-tx-2025",
+    title: "Barber Shop — MEP Renovation",
+    discipline: "engineering",
+    location: "Texas",
+    year: 2025,
+    sector: "Retail / Personal Service",
+    summary:
+      "A compact interior renovation — HVAC, power, and plumbing for a barber shop fit-out.",
+    body: [],
+    caption:
+      "A compact interior renovation — HVAC, power, and plumbing for a barber shop fit-out.",
+    noDetail: true,
+    gradient:
+      "linear-gradient(135deg, #f4ede5 0%, #8c7f78 50%, #2a221f 100%)",
+  },
+  {
+    slug: "fire-sprinklers-ny-2024",
+    title: "Residential Fire Sprinklers",
+    discipline: "engineering",
+    location: "New York",
+    year: 2024,
+    sector: "Residential / Life Safety",
+    summary:
+      "A three-level residential fire-sprinkler system, designed zone by zone for life safety.",
+    body: [],
+    caption:
+      "A three-level residential fire-sprinkler system, designed zone by zone for life safety.",
+    noDetail: true,
+    gradient:
+      "linear-gradient(135deg, #8c7f78 0%, #2a221f 50%, #7a1a0a 100%)",
   },
 ];
 
@@ -242,6 +355,11 @@ export function getProjectsByDiscipline(
 ): Project[] {
   if (!discipline) return PROJECTS;
   return PROJECTS.filter((p) => p.discipline === discipline);
+}
+
+/** Only projects that render a /work/[slug] detail page (excludes light entries). */
+export function getProjectsWithDetail(): Project[] {
+  return PROJECTS.filter((p) => !p.noDetail);
 }
 
 export function getDisciplineLabel(slug: DisciplineSlug): string {

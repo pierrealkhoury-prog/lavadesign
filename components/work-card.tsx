@@ -13,13 +13,17 @@ export function WorkCard({
   /** Forward to next/image for LCP-candidate cards (e.g. featured grid above the fold). */
   priority?: boolean;
 }) {
-  return (
-    <Link
-      href={`/work/${project.slug}`}
-      className="group block focus:outline-none"
-    >
+  const isInteractive = !project.noDetail;
+
+  const card = (
+    <>
       <div
-        className="relative aspect-[4/5] overflow-hidden rounded-md border border-border bg-basalt transition-transform duration-300 group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-lava"
+        className={[
+          "relative aspect-[4/5] overflow-hidden rounded-md border border-border bg-basalt",
+          isInteractive
+            ? "transition-transform duration-300 group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-lava"
+            : "",
+        ].join(" ")}
         style={project.thumb ? undefined : { background: project.gradient }}
       >
         {project.thumb ? (
@@ -46,6 +50,24 @@ export function WorkCard({
         <span>{project.location}</span>
         <span>{project.year}</span>
       </div>
+      {project.caption ? (
+        <p className="mt-3 font-serif text-sm italic leading-relaxed text-smoke">
+          {project.caption}
+        </p>
+      ) : null}
+    </>
+  );
+
+  if (!isInteractive) {
+    return <div className="block">{card}</div>;
+  }
+
+  return (
+    <Link
+      href={`/work/${project.slug}`}
+      className="group block focus:outline-none"
+    >
+      {card}
     </Link>
   );
 }

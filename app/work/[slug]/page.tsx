@@ -3,13 +3,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
-  PROJECTS,
   getDisciplineLabel,
   getProject,
+  getProjectsWithDetail,
 } from "@/lib/projects";
 
 export function generateStaticParams() {
-  return PROJECTS.map((p) => ({ slug: p.slug }));
+  // Light entries don't get a detail route — skip them.
+  return getProjectsWithDetail().map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata(
@@ -29,11 +30,14 @@ export default async function CaseStudyPage(
 ) {
   const { slug } = await props.params;
   const project = getProject(slug);
-  if (!project) notFound();
+  if (!project || project.noDetail) notFound();
 
-  const index = PROJECTS.findIndex((p) => p.slug === project.slug);
-  const prev = index > 0 ? PROJECTS[index - 1] : null;
-  const next = index < PROJECTS.length - 1 ? PROJECTS[index + 1] : null;
+  // Prev/next walks only projects that actually have a detail page.
+  const detailProjects = getProjectsWithDetail();
+  const index = detailProjects.findIndex((p) => p.slug === project.slug);
+  const prev = index > 0 ? detailProjects[index - 1] : null;
+  const next =
+    index < detailProjects.length - 1 ? detailProjects[index + 1] : null;
 
   return (
     <article>
@@ -74,16 +78,20 @@ export default async function CaseStudyPage(
         </div>
       </section>
 
-      {/* Meta strip */}
+      {/* Meta strip — discipline + sector + location + year + role, in that order.
+          Tailwind class names must be literal so the safelist picks them up. */}
       <section className="border-y border-border bg-basalt">
         <dl
-          className={`mx-auto grid max-w-7xl grid-cols-2 gap-y-6 px-6 py-10 sm:px-10 ${
-            project.role ? "sm:grid-cols-4" : "sm:grid-cols-3"
-          }`}
+          className={`mx-auto grid max-w-7xl grid-cols-2 gap-y-6 px-6 py-10 sm:px-10 ${metaColsClass(
+            project,
+          )}`}
         >
           <MetaItem label="Discipline">
             {getDisciplineLabel(project.discipline)}
           </MetaItem>
+          {project.sector ? (
+            <MetaItem label="Sector">{project.sector}</MetaItem>
+          ) : null}
           <MetaItem label="Location">{project.location}</MetaItem>
           <MetaItem label="Year">{project.year}</MetaItem>
           {project.role ? (
@@ -213,6 +221,18 @@ export default async function CaseStudyPage(
       </nav>
     </article>
   );
+}
+
+/** Count visible meta items and pick a stable Tailwind grid class.
+ *  Literal class strings only so Tailwind v4's scanner picks them up. */
+function metaColsClass(project: {
+  sector?: string;
+  role?: string;
+}): string {
+  const count = 3 + (project.sector ? 1 : 0) + (project.role ? 1 : 0);
+  if (count >= 5) return "sm:grid-cols-5";
+  if (count === 4) return "sm:grid-cols-4";
+  return "sm:grid-cols-3";
 }
 
 function MetaItem({

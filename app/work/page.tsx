@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { DisciplineFilter } from "@/components/discipline-filter";
 import { WorkCard } from "@/components/work-card";
 import {
@@ -40,17 +41,48 @@ export default async function WorkPage({
         <DisciplineFilter active={active} />
       </header>
 
-      <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((p) => (
-          <WorkCard key={p.slug} project={p} />
-        ))}
-      </div>
-
-      {projects.length === 0 ? (
-        <p className="mt-16 font-serif text-xl italic text-smoke">
-          No projects yet in this discipline.
-        </p>
-      ) : null}
+      {projects.length > 0 ? (
+        <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((p) => (
+            <WorkCard key={p.slug} project={p} />
+          ))}
+        </div>
+      ) : (
+        <ComingSoonPanel discipline={active} />
+      )}
     </section>
+  );
+}
+
+/**
+ * Empty-state panel shown when a discipline filter matches no projects.
+ * Treated as deliberate "we don't have this in the portfolio yet" content
+ * — forward-looking copy + a /contact CTA — rather than a bare message.
+ */
+function ComingSoonPanel({
+  discipline,
+}: {
+  discipline: DisciplineSlug | null;
+}) {
+  const label = discipline ? getDisciplineLabel(discipline) : "This work";
+  return (
+    <div className="mt-16 max-w-3xl rounded-md border border-border bg-basalt p-10 md:p-14">
+      <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
+        Coming soon
+      </p>
+      <p className="mt-6 font-serif text-2xl leading-snug text-ash sm:text-3xl">
+        {label} work is coming to the portfolio soon.
+      </p>
+      <p className="mt-4 font-serif text-base leading-relaxed text-smoke">
+        Have a project in this space? We&rsquo;d love to hear about it — and
+        the studio is actively taking on briefs across every discipline.
+      </p>
+      <Link
+        href="/contact"
+        className="mt-8 inline-flex items-center rounded-full bg-lava px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-obsidian transition-colors hover:bg-ember"
+      >
+        Start a conversation
+      </Link>
+    </div>
   );
 }
