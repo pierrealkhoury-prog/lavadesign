@@ -267,10 +267,12 @@ function StudioIntroSection() {
 
         <Reveal delay={120}>
           <div className="relative mt-20">
-            {/* Soft ember underglow behind the stat strip — restrained warmth. */}
+            {/* Soft ember underglow behind the stat strip — restrained warmth.
+                Tighter inset below sm so the glow doesn't push past viewport
+                on phones (parent padding is px-6 there, vs sm:px-10 above). */}
             <div
               aria-hidden
-              className="pointer-events-none absolute -inset-x-8 -bottom-4 -top-4 -z-0"
+              className="pointer-events-none absolute -inset-x-2 -bottom-4 -top-4 -z-0 sm:-inset-x-8"
               style={{
                 background:
                   "radial-gradient(70% 90% at 50% 50%, rgba(245,176,75,0.10), transparent 75%)",
@@ -465,10 +467,16 @@ function PrinciplesSection() {
           </h2>
         </Reveal>
 
+        {/* <li> must be the direct child of <ol> — Reveal sits inside the
+            <li> so the IntersectionObserver wrapper doesn't break list
+            semantics for assistive tech / SEO. */}
         <ol className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {PRINCIPLES.map((p, i) => (
-            <Reveal key={p.title} delay={i * 80}>
-              <li className="flex flex-col gap-4 border-t border-border pt-6">
+            <li key={p.title}>
+              <Reveal
+                delay={i * 80}
+                className="flex flex-col gap-4 border-t border-border pt-6"
+              >
                 <span className="font-mono text-xs tabular-nums text-ember">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -478,8 +486,8 @@ function PrinciplesSection() {
                 <p className="font-serif text-base leading-relaxed text-smoke">
                   {p.body}
                 </p>
-              </li>
-            </Reveal>
+              </Reveal>
+            </li>
           ))}
         </ol>
       </div>
