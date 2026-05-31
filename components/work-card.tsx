@@ -21,7 +21,7 @@ export function WorkCard({
         className={[
           "relative aspect-[4/5] overflow-hidden rounded-md border border-border bg-basalt",
           isInteractive
-            ? "transition-transform duration-300 group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-lava"
+            ? "transition-[transform,border-color,box-shadow] duration-300 group-hover:-translate-y-1 group-hover:border-ember/40 group-hover:shadow-[0_12px_38px_-8px_rgba(245,176,75,0.32)] group-focus-visible:ring-2 group-focus-visible:ring-lava"
             : "",
         ].join(" ")}
         style={project.thumb ? undefined : { background: project.gradient }}

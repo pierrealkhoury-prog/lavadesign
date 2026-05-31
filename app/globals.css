@@ -56,3 +56,10 @@ body {
     transform: none !important;
   }
 }
+
+/* Soft ember halo used on small uppercase eyebrow labels for warmth. */
+.text-glow-ember {
+  text-shadow:
+    0 0 28px rgba(245, 176, 75, 0.45),
+    0 0 6px rgba(245, 176, 75, 0.25);
+}

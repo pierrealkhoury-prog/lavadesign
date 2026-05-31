@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AnimatedStat } from "@/components/animated-stat";
 import { ImageSlot } from "@/components/image-slot";
 import { Reveal } from "@/components/reveal";
 import { WorkCard } from "@/components/work-card";
@@ -15,36 +16,42 @@ const STATS = [
 
 const ENGINEERING = [
   {
+    slug: "architectural-design",
     title: "Architectural Design",
     body: "Creativity and functionality combined, from new builds to renovation. Conceptual planning, structural coordination, building-permit assistance.",
     gradient:
       "linear-gradient(135deg, #ff4d1c 0%, #7a1a0a 55%, #14100e 100%)",
   },
   {
+    slug: "structural-engineering",
     title: "Structural Engineering",
     body: "Building, foundation, CMU and wood-frame design, steel structure design and seismic analysis.",
     gradient:
       "linear-gradient(135deg, #8c7f78 0%, #2a221f 50%, #14100e 100%)",
   },
   {
+    slug: "mechanical-plumbing",
     title: "Mechanical & Plumbing",
     body: "Heat-load calculations, HVAC, refrigeration, plumbing and water-supply systems, energy compliance, control systems.",
     gradient:
       "linear-gradient(135deg, #f5b04b 0%, #ff4d1c 50%, #7a1a0a 100%)",
   },
   {
+    slug: "electrical-engineering",
     title: "Electrical Engineering",
     body: "Power distribution, interior/exterior lighting design, photometric study, energy-code compliance, low-current systems.",
     gradient:
       "linear-gradient(135deg, #f5b04b 0%, #8c7f78 50%, #1c1715 100%)",
   },
   {
+    slug: "civil-engineering",
     title: "Civil Engineering",
     body: "Site development, grading, drainage, paving, utilities, erosion control (SWPPP).",
     gradient:
       "linear-gradient(135deg, #ff4d1c 0%, #1c1715 100%)",
   },
   {
+    slug: "interior-design",
     title: "Interior Design & Renovation",
     body: "Space planning, material selection, lighting design, custom millwork, energy-efficient remodels.",
     gradient:
@@ -54,18 +61,22 @@ const ENGINEERING = [
 
 const DESIGN_SERVICES = [
   {
+    slug: "web-design",
     title: "Web Design & Development",
     body: "Distinct, high-performing digital identities that attract customers, provoke engagement, and inspire growth.",
   },
   {
+    slug: "branding-identity",
     title: "Logos & Branding",
     body: "Custom-design a new identity, or refresh an existing one — into a consistent system that carries across every touchpoint.",
   },
   {
+    slug: "artworking",
     title: "Artworking",
     body: "Specialized art-production support that extends the capacity of creative teams and agencies — hourly or on retainer.",
   },
   {
+    slug: "marketing-materials",
     title: "Marketing Materials",
     body: "Flyers, brochures, menus, and collateral that build recognition — designed and produced for print.",
   },
@@ -100,6 +111,27 @@ const STUDIOS = [
     address: "268 Foxtail Loop\nDavenport, FL 33837",
   },
 ];
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+/**
+ * Faint ember gradient hairline used to mark transitions between major
+ * sections. Sits 1px tall at the top edge of the parent (which must be
+ * position:relative). Pure decoration — pointer-events disabled, hidden
+ * from assistive tech.
+ */
+function EmberHairline() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-x-0 top-0 h-px"
+      style={{
+        background:
+          "linear-gradient(90deg, transparent, rgba(245,176,75,0.45), transparent)",
+      }}
+    />
+  );
+}
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
@@ -173,7 +205,7 @@ function HeroSection() {
 
       <Reveal>
         <div className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-32 sm:px-10 md:py-40">
-          <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
+          <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
             Multidisciplinary engineering &amp; design — Houston · Orlando
           </p>
           <h1 className="max-w-5xl font-display text-5xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-7xl md:text-8xl">
@@ -209,10 +241,11 @@ function HeroSection() {
 
 function StudioIntroSection() {
   return (
-    <section className="border-y border-border bg-basalt">
+    <section className="relative border-y border-border bg-basalt">
+      <EmberHairline />
       <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10 md:py-32">
         <Reveal>
-          <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
+          <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
             The studio
           </p>
           <blockquote className="mt-8 max-w-5xl">
@@ -233,18 +266,26 @@ function StudioIntroSection() {
         </Reveal>
 
         <Reveal delay={120}>
-          <dl className="mt-20 grid grid-cols-2 gap-y-10 border-t border-border pt-10 md:grid-cols-4">
-            {STATS.map((stat) => (
-              <div key={stat.label} className="flex flex-col gap-2">
-                <dt className="font-display text-5xl font-black tracking-[-0.02em] text-ash sm:text-6xl">
-                  {stat.value}
-                </dt>
-                <dd className="font-mono text-[11px] uppercase tracking-[0.22em] text-smoke">
-                  {stat.label}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <div className="relative mt-20">
+            {/* Soft ember underglow behind the stat strip — restrained warmth. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-x-8 -bottom-4 -top-4 -z-0"
+              style={{
+                background:
+                  "radial-gradient(70% 90% at 50% 50%, rgba(245,176,75,0.10), transparent 75%)",
+              }}
+            />
+            <dl className="relative grid grid-cols-2 gap-y-10 border-t border-border pt-10 md:grid-cols-4">
+              {STATS.map((stat) => (
+                <AnimatedStat
+                  key={stat.label}
+                  value={stat.value}
+                  label={stat.label}
+                />
+              ))}
+            </dl>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -260,7 +301,7 @@ function EngineeringSection() {
       <Reveal>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
-            <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
+            <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
               The focus
             </p>
             <h2 className="mt-6 font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-5xl md:text-6xl">
@@ -280,23 +321,31 @@ function EngineeringSection() {
 
       <div className="mt-20 grid grid-cols-1 gap-x-10 gap-y-20 md:grid-cols-2">
         {ENGINEERING.map((cap, i) => (
-          <Reveal key={cap.title} delay={(i % 2) * 80} className="flex flex-col gap-6">
-            <ImageSlot
-              gradient={cap.gradient}
-              aspect="aspect-[4/3]"
-              sizes="(min-width: 768px) 50vw, 100vw"
-            />
-            <div className="flex items-baseline gap-4">
-              <span className="font-mono text-xs tabular-nums text-ember">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="font-display text-2xl font-black uppercase tracking-[-0.01em] text-ash sm:text-3xl">
-                {cap.title}
-              </h3>
-            </div>
-            <p className="font-serif text-lg leading-relaxed text-smoke">
-              {cap.body}
-            </p>
+          <Reveal key={cap.slug} delay={(i % 2) * 80}>
+            <Link
+              href={`/services/${cap.slug}`}
+              className="group block focus:outline-none"
+            >
+              <div className="flex flex-col gap-6">
+                <ImageSlot
+                  gradient={cap.gradient}
+                  aspect="aspect-[4/3]"
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="transition-[border-color,box-shadow,transform] duration-300 group-hover:-translate-y-1 group-hover:border-ember/40 group-hover:shadow-[0_18px_42px_-12px_rgba(245,176,75,0.32)] group-focus-visible:ring-2 group-focus-visible:ring-lava"
+                />
+                <div className="flex items-baseline gap-4">
+                  <span className="font-mono text-xs tabular-nums text-ember">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="font-display text-2xl font-black uppercase tracking-[-0.01em] text-ash transition-colors group-hover:text-ember sm:text-3xl">
+                    {cap.title}
+                  </h3>
+                </div>
+                <p className="font-serif text-lg leading-relaxed text-smoke">
+                  {cap.body}
+                </p>
+              </div>
+            </Link>
           </Reveal>
         ))}
       </div>
@@ -310,12 +359,13 @@ function FeaturedWorkSection({
   featured: ReturnType<typeof getFeaturedProjects>;
 }) {
   return (
-    <section className="border-y border-border bg-basalt">
+    <section className="relative border-y border-border bg-basalt">
+      <EmberHairline />
       <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10 md:py-32">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
+              <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
                 Selected work
               </p>
               <h2 className="mt-4 font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-5xl">
@@ -331,13 +381,15 @@ function FeaturedWorkSection({
           </div>
         </Reveal>
 
-        <Reveal delay={120}>
-          <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4">
-            {featured.map((p) => (
-              <WorkCard key={p.slug} project={p} priority />
-            ))}
-          </div>
-        </Reveal>
+        {/* Per-card stagger so the four featured projects ripple in rather
+            than landing as one block. */}
+        <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4">
+          {featured.map((p, i) => (
+            <Reveal key={p.slug} delay={120 + i * 90}>
+              <WorkCard project={p} priority />
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -346,20 +398,12 @@ function FeaturedWorkSection({
 function DesignServicesSection() {
   return (
     <section className="relative bg-obsidian">
-      {/* Subtle top ember rule to mark a discipline shift */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, rgba(245,176,75,0.5), transparent)",
-        }}
-      />
+      <EmberHairline />
       <div className="mx-auto max-w-7xl px-6 py-32 sm:px-10 md:py-40">
         <Reveal>
           <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
             <div className="md:col-span-5">
-              <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
+              <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
                 Also offered
               </p>
               <h2 className="mt-6 font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-5xl md:text-6xl">
@@ -379,25 +423,23 @@ function DesignServicesSection() {
 
         <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {DESIGN_SERVICES.map((svc, i) => (
-            <Reveal
-              key={svc.title}
-              delay={i * 80}
-              className="flex h-full flex-col gap-6 bg-basalt p-10 transition-colors hover:bg-charcoal"
-            >
-              <span className="font-mono text-xs tabular-nums text-ember">
-                0{i + 1}
-              </span>
-              <h3 className="font-display text-2xl font-black uppercase tracking-[-0.01em] text-ash">
-                {svc.title}
-              </h3>
-              <p className="font-serif text-base leading-relaxed text-smoke">
-                {svc.body}
-              </p>
+            <Reveal key={svc.slug} delay={i * 80}>
               <Link
-                href="/contact"
-                className="mt-auto inline-flex items-center font-mono text-[11px] uppercase tracking-[0.22em] text-ash transition-colors hover:text-ember"
+                href={`/services/${svc.slug}`}
+                className="group flex h-full flex-col gap-6 bg-basalt p-10 transition-[background-color,box-shadow] duration-300 hover:bg-charcoal hover:shadow-[inset_0_0_64px_-12px_rgba(245,176,75,0.22)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ember"
               >
-                Start a project →
+                <span className="font-mono text-xs tabular-nums text-ember">
+                  0{i + 1}
+                </span>
+                <h3 className="font-display text-2xl font-black uppercase tracking-[-0.01em] text-ash transition-colors group-hover:text-ember">
+                  {svc.title}
+                </h3>
+                <p className="font-serif text-base leading-relaxed text-smoke">
+                  {svc.body}
+                </p>
+                <span className="mt-auto inline-flex items-center font-mono text-[11px] uppercase tracking-[0.22em] text-ash transition-colors group-hover:text-ember">
+                  Explore service →
+                </span>
               </Link>
             </Reveal>
           ))}
@@ -408,46 +450,52 @@ function DesignServicesSection() {
 }
 
 function PrinciplesSection() {
+  // Wrapped in a full-width band so the ember hairline + bg-basalt tonal lift
+  // span the viewport instead of being trapped inside max-w-7xl.
   return (
-    <section className="mx-auto max-w-7xl px-6 py-32 sm:px-10 md:py-40">
-      <Reveal>
-        <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
-          Why Lava Design
-        </p>
-        <h2 className="mt-6 max-w-4xl font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-5xl md:text-6xl">
-          A studio built on four principles.
-        </h2>
-      </Reveal>
+    <section className="relative border-y border-border bg-basalt">
+      <EmberHairline />
+      <div className="mx-auto max-w-7xl px-6 py-32 sm:px-10 md:py-40">
+        <Reveal>
+          <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
+            Why Lava Design
+          </p>
+          <h2 className="mt-6 max-w-4xl font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-5xl md:text-6xl">
+            A studio built on four principles.
+          </h2>
+        </Reveal>
 
-      <ol className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
-        {PRINCIPLES.map((p, i) => (
-          <Reveal key={p.title} delay={i * 80}>
-            <li className="flex flex-col gap-4 border-t border-border pt-6">
-              <span className="font-mono text-xs tabular-nums text-ember">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="font-display text-2xl font-black uppercase tracking-[-0.01em] text-ash">
-                {p.title}
-              </h3>
-              <p className="font-serif text-base leading-relaxed text-smoke">
-                {p.body}
-              </p>
-            </li>
-          </Reveal>
-        ))}
-      </ol>
+        <ol className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+          {PRINCIPLES.map((p, i) => (
+            <Reveal key={p.title} delay={i * 80}>
+              <li className="flex flex-col gap-4 border-t border-border pt-6">
+                <span className="font-mono text-xs tabular-nums text-ember">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="font-display text-2xl font-black uppercase tracking-[-0.01em] text-ash">
+                  {p.title}
+                </h3>
+                <p className="font-serif text-base leading-relaxed text-smoke">
+                  {p.body}
+                </p>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }
 
 function StudiosSection() {
   return (
-    <section className="border-y border-border bg-basalt">
+    <section className="relative border-y border-border bg-charcoal">
+      <EmberHairline />
       <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10 md:py-32">
         <Reveal>
           <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
             <div className="md:col-span-5">
-              <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
+              <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
                 Studios
               </p>
               <h2 className="mt-6 font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-5xl md:text-6xl">
