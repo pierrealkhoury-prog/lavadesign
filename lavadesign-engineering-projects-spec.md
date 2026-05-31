@@ -197,40 +197,171 @@ Grease-Waste & Floor Sinks · Kitchen Equipment Power · Rooftop HVAC
 
 ---
 
-## LIGHT ENTRIES (5) — card + thumb + one-line caption, NO detail page
+## PROJECTS 7–11 — NOW FULL CASE STUDIES (upgraded from light)
 
-Add these to lib/projects.ts with a flag (e.g. `light: true` or `noDetail: true`) so the /work
-grid renders a card + thumbnail but the card does NOT link to a detail page (or links to a
-shared lightbox/disabled state — implementer's call, just no full [slug] page). Thumb only.
+DECISION CHANGE: all 12 projects are now full case studies for consistency. The 5 below were
+previously light entries; they're upgraded to full pages with the same structure as 1–6
+(summary → body → capabilities → CTA). Remove the noDetail flag on these so they get [slug]
+pages and appear in prev/next nav and the sitemap.
 
-Folders (thumb.png 1:1 each): restaurant-remodel-fl-2024, restaurant-tx-2024, bakery-tx-2025,
-barber-shop-tx-2025, fire-sprinklers-ny-2024
+Each now needs 3 images (hero-desktop 16:9, hero-mobile 4:5, thumb 1:1) in its existing folder:
+restaurant-remodel-fl-2024, restaurant-tx-2024, bakery-tx-2025, barber-shop-tx-2025,
+fire-sprinklers-ny-2024
 
-7. Restaurant Remodel — MEP · Florida · 2024
-   Caption: Kitchen exhaust, make-up air, and dining comfort reworked for a restaurant remodel.
+---
 
-8. Restaurant — MEP · Texas · 2024
-   Caption: Full mechanical, electrical, and plumbing for a ground-up restaurant and kitchen.
+### 7. restaurant-remodel-fl-2024
+Title: Restaurant Remodel — MEP & Kitchen Ventilation
+Sector: Hospitality / Food Service
+Location: Florida
+Year: 2024
+Discipline: Engineering
+scopeTags: Mechanical · Electrical · Plumbing · Kitchen Exhaust · Make-Up Air · Grease Waste
+role: Full MEP engineering for restaurant remodel
 
-9. Bakery — MEP · Texas · 2025
-   Caption: Oven exhaust, refrigeration, and food-service plumbing for a working bakery.
+Summary: An existing restaurant brought up to current standards — kitchen exhaust, make-up air,
+and dining comfort re-engineered around a working commercial kitchen.
 
-10. Barber Shop — MEP Renovation · Texas · 2025
-    Caption: A compact interior renovation — HVAC, power, and plumbing for a barber shop fit-out.
+Body:
+Remodels are their own discipline: you engineer around what's already there. For this restaurant
+we reworked the commercial kitchen ventilation — exhaust hood, make-up air, and the pressure
+balance between them — so the space cleared cooking heat and odor while staying comfortable for
+guests, all tied back into the building's existing systems where it made sense to keep them.
 
-11. Residential Fire Sprinklers · New York · 2024
-    Caption: A three-level residential fire-sprinkler system, designed zone by zone for life safety.
+The plumbing scope carried a grease interceptor, floor sinks with proper air gaps for kitchen
+equipment, and the sanitary and grease-waste lines that a food-service remodel demands. The
+electrical package re-coordinated the kitchen equipment loads, lighting, and receptacles into a
+clean, code-current layout — the kind of unglamorous, exacting work that makes a remodel pass
+inspection and run for years.
+
+Capabilities shown: Kitchen Exhaust & Make-Up Air · Grease-Waste & Floor Sinks · Equipment Power
+Coordination · Existing-System Integration · Dining HVAC
+
+---
+
+### 8. restaurant-tx-2024
+Title: Restaurant — Full MEP
+Sector: Hospitality / Food Service
+Location: Texas
+Year: 2024
+Discipline: Engineering
+scopeTags: Mechanical · Electrical · Plumbing · Kitchen Ventilation · Gas · Rooftop HVAC
+role: Full MEP engineering
+
+Summary: A ground-up restaurant engineered end to end — kitchen, dining, and bar — with the
+commercial kitchen setting the pace for the whole building.
+
+Body:
+A from-scratch restaurant lets the engineering be done right from the first line. We designed the
+full mechanical, electrical, and plumbing systems around the commercial kitchen — exhaust hood and
+tempered make-up air balanced for correct building pressure, gas distribution to the cooking line
+and water heaters, and rooftop HVAC carrying comfort across the dining room and bar.
+
+The plumbing scope handled the grease interceptor, floor sinks and floor drains, prep and
+three-compartment sinks, and the full sanitary and grease-waste networks. The electrical design
+tied the kitchen equipment schedule into a coordinated power layout with the required shut-offs —
+a complete set of systems built to open a restaurant and keep it running.
+
+Capabilities shown: Commercial Kitchen Ventilation · Make-Up Air Balancing · Gas Distribution ·
+Grease-Waste Systems · Rooftop HVAC · Kitchen Equipment Power
+
+---
+
+### 9. bakery-tx-2025
+Title: Bakery — Full MEP
+Sector: Food Service / Retail
+Location: Texas
+Year: 2025
+Discipline: Engineering
+scopeTags: Mechanical · Electrical · Plumbing · Oven Exhaust · Refrigeration · Food-Service
+role: Full MEP engineering
+
+Summary: A working bakery where baking heat, refrigeration, and food-service plumbing all had to
+coexist in one tightly-planned space.
+
+Body:
+A bakery is a balancing act between hot and cold. We engineered the ventilation to clear oven
+heat and keep the production area workable, while coordinating the refrigeration and display
+equipment loads so the cold side held steady against the baking heat just feet away.
+
+The plumbing scope covered the food-service fixtures, floor sinks with proper air gaps, and the
+sanitary lines a working kitchen needs, with water heating sized for continuous demand. The
+electrical package laid out the equipment circuits — ovens, mixers, refrigeration, display
+cases — alongside lighting and receptacles in a layout coordinated to the equipment schedule and
+built to code.
+
+Capabilities shown: Oven & Kitchen Exhaust · Refrigeration Coordination · Food-Service Plumbing ·
+Equipment Power · Continuous Water Heating
+
+---
+
+### 10. barber-shop-tx-2025
+Title: Barber Shop — MEP Renovation
+Sector: Retail / Personal Care
+Location: Texas
+Year: 2025
+Discipline: Engineering
+scopeTags: Mechanical · Electrical · Plumbing · Zoned Exhaust · Anti-Scald Plumbing · Economizer
+role: Full MEP engineering for tenant renovation
+
+Summary: A compact barber-shop fit-out engineered with the same rigor as a far larger job —
+zoned ventilation, anti-scald shampoo plumbing, and a complete code-current electrical layout.
+
+Body:
+Small spaces don't mean small engineering. This barber-shop renovation packed a surprising amount
+into a tight tenant footprint: a packaged rooftop unit with an economizer and weather hood
+balancing outside air, and carefully zoned exhaust drawn from the wash, shampoo, restroom, and
+work areas so the space stayed fresh through a full day of service.
+
+The plumbing scope ran cold and hot water to lavatories and shampoo stations, each protected by
+thermostatic anti-scald mixing valves, with floor-sink indirect-waste connections, a private
+water sub-meter, and proper venting throughout. The electrical design covered the equipment and
+exhaust-fan circuits, occupancy-sensor and timed lighting controls, emergency lighting and exit
+signage with battery backup, and smoke/CO detection — a complete, inspection-ready package in a
+small but exacting space.
+
+Capabilities shown: Rooftop HVAC & Economizer · Zoned Exhaust · Anti-Scald Shampoo Plumbing ·
+Water Sub-Metering · Lighting Controls · Emergency & Life-Safety Electrical
+
+---
+
+### 11. fire-sprinklers-ny-2024
+Title: Residential Fire Sprinklers
+Sector: Residential / Life Safety
+Location: New York
+Year: 2024
+Discipline: Engineering
+scopeTags: Fire Protection · Residential Sprinklers · Zone Control · Backflow Prevention · CPVC
+role: Residential fire-sprinkler system design
+
+Summary: A multi-level home fitted with a residential fire-sprinkler system, designed zone by
+zone off a single street connection for life safety throughout.
+
+Body:
+Life-safety engineering is quiet until the moment it matters. For this multi-level residence we
+designed a residential fire-sprinkler system covering the living spaces across every floor —
+sprinkler heads laid out room by room and sized to the home's layout, fed through CPVC risers
+with zone control sets so each level can be isolated for service.
+
+The system ties into a 1½-inch main water connection from the street through a backflow preventer
+and pressure-reducing valve, with a test-and-drain arrangement at the riser for code-required
+maintenance and inspection. It's a system designed to disappear into the house — present in every
+room, visible almost nowhere, ready if it's ever needed.
+
+Capabilities shown: Residential Sprinkler Design · Zone Control · CPVC Riser System · Backflow
+Prevention · Test & Drain · Life-Safety Compliance
 
 ---
 
 ## Implementation notes
+- ALL 12 projects are now full case studies. Remove the noDetail flag from projects 7–11 so they
+  get [slug] pages, appear in prev/next nav, and are included in the sitemap.
 - Order in the grid: lead with the Charter School (flagship), then Recycling/Solar, Dental,
-  Retail, Office, Restaurant; light entries after. Keep the existing Texas residence wherever it
-  currently sits — it's a real full project too.
-- All 6 full projects use the same detail template as the residence (hero → summary → body →
-  capabilities → CTA). scopeTags render as the chip row.
-- Light entries: card + thumb + caption only, no [slug] page. Make sure the grid filter (?d=)
-  and any "engineering" discipline filter still include them.
-- Images arrive in /public/work/[folder]/. Until then, ImageSlot gradient fallback covers any
-  missing file — safe to wire copy first, drop images as they land.
-- Privacy: confirm no client names/addresses slipped into alt text or captions on build.
+  Retail, Office, Restaurant (2025); then the existing Texas residence; then 7–11.
+- All 12 use the same detail template (hero → summary → body → capabilities → CTA). scopeTags
+  render as the chip row. Sector and role populate the meta band.
+- Images: every project now needs 3 images (hero-desktop 16:9, hero-mobile 4:5, thumb 1:1) in
+  /public/work/[folder]/. Total is now 12 × 3 = 36 images. Until each lands, the ImageSlot
+  gradient fallback covers it — safe to wire copy first, drop images as they come.
+- Sitemap: now includes all 12 case studies (no more excluded light entries).
+- Privacy: confirm no client names/addresses slipped into copy, alt text, or captions on build.

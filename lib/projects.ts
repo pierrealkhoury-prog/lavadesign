@@ -258,53 +258,79 @@ export const PROJECTS: Project[] = [
     featured: true,
   },
 
-  // ─── Light entries (card + thumb + caption, no detail page) ────────────
+  // ─── Projects 7–11 (upgraded from light entries to full case studies) ──
   {
     slug: "restaurant-remodel-fl-2024",
-    title: "Restaurant Remodel — MEP",
+    title: "Restaurant Remodel — MEP & Kitchen Ventilation",
     discipline: "engineering",
     location: "Florida",
     year: 2024,
     sector: "Hospitality / Food Service",
-    // Light entries: summary + body unused but kept short for type safety.
+    role: "Full MEP engineering for restaurant remodel",
     summary:
-      "Kitchen exhaust, make-up air, and dining comfort reworked for a restaurant remodel.",
-    body: [],
-    caption:
-      "Kitchen exhaust, make-up air, and dining comfort reworked for a restaurant remodel.",
-    noDetail: true,
+      "An existing restaurant brought up to current standards — kitchen exhaust, make-up air, and dining comfort re-engineered around a working commercial kitchen.",
+    body: [
+      "Remodels are their own discipline: you engineer around what's already there. For this restaurant we reworked the commercial kitchen ventilation — exhaust hood, make-up air, and the pressure balance between them — so the space cleared cooking heat and odor while staying comfortable for guests, all tied back into the building's existing systems where it made sense to keep them.",
+      "The plumbing scope carried a grease interceptor, floor sinks with proper air gaps for kitchen equipment, and the sanitary and grease-waste lines that a food-service remodel demands. The electrical package re-coordinated the kitchen equipment loads, lighting, and receptacles into a clean, code-current layout — the kind of unglamorous, exacting work that makes a remodel pass inspection and run for years.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Kitchen Exhaust",
+      "Make-Up Air",
+      "Grease Waste",
+    ],
     gradient:
       "linear-gradient(135deg, #ff4d1c 0%, #7a1a0a 60%, #14100e 100%)",
   },
   {
     slug: "restaurant-tx-2024",
-    title: "Restaurant — MEP",
+    title: "Restaurant — Full MEP",
     discipline: "engineering",
     location: "Texas",
     year: 2024,
     sector: "Hospitality / Food Service",
+    role: "Full MEP engineering",
     summary:
-      "Full mechanical, electrical, and plumbing for a ground-up restaurant and kitchen.",
-    body: [],
-    caption:
-      "Full mechanical, electrical, and plumbing for a ground-up restaurant and kitchen.",
-    noDetail: true,
+      "A ground-up restaurant engineered end to end — kitchen, dining, and bar — with the commercial kitchen setting the pace for the whole building.",
+    body: [
+      "A from-scratch restaurant lets the engineering be done right from the first line. We designed the full mechanical, electrical, and plumbing systems around the commercial kitchen — exhaust hood and tempered make-up air balanced for correct building pressure, gas distribution to the cooking line and water heaters, and rooftop HVAC carrying comfort across the dining room and bar.",
+      "The plumbing scope handled the grease interceptor, floor sinks and floor drains, prep and three-compartment sinks, and the full sanitary and grease-waste networks. The electrical design tied the kitchen equipment schedule into a coordinated power layout with the required shut-offs — a complete set of systems built to open a restaurant and keep it running.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Kitchen Ventilation",
+      "Gas",
+      "Rooftop HVAC",
+    ],
     gradient:
       "linear-gradient(135deg, #f5b04b 0%, #ff4d1c 50%, #2a221f 100%)",
   },
   {
     slug: "bakery-tx-2025",
-    title: "Bakery — MEP",
+    title: "Bakery — Full MEP",
     discipline: "engineering",
     location: "Texas",
     year: 2025,
-    sector: "Food Service",
+    sector: "Food Service / Retail",
+    role: "Full MEP engineering",
     summary:
-      "Oven exhaust, refrigeration, and food-service plumbing for a working bakery.",
-    body: [],
-    caption:
-      "Oven exhaust, refrigeration, and food-service plumbing for a working bakery.",
-    noDetail: true,
+      "A working bakery where baking heat, refrigeration, and food-service plumbing all had to coexist in one tightly-planned space.",
+    body: [
+      "A bakery is a balancing act between hot and cold. We engineered the ventilation to clear oven heat and keep the production area workable, while coordinating the refrigeration and display equipment loads so the cold side held steady against the baking heat just feet away.",
+      "The plumbing scope covered the food-service fixtures, floor sinks with proper air gaps, and the sanitary lines a working kitchen needs, with water heating sized for continuous demand. The electrical package laid out the equipment circuits — ovens, mixers, refrigeration, display cases — alongside lighting and receptacles in a layout coordinated to the equipment schedule and built to code.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Oven Exhaust",
+      "Refrigeration",
+      "Food-Service",
+    ],
     gradient:
       "linear-gradient(135deg, #f5b04b 0%, #f4ede5 40%, #8c7f78 100%)",
   },
@@ -314,13 +340,22 @@ export const PROJECTS: Project[] = [
     discipline: "engineering",
     location: "Texas",
     year: 2025,
-    sector: "Retail / Personal Service",
+    sector: "Retail / Personal Care",
+    role: "Full MEP engineering for tenant renovation",
     summary:
-      "A compact interior renovation — HVAC, power, and plumbing for a barber shop fit-out.",
-    body: [],
-    caption:
-      "A compact interior renovation — HVAC, power, and plumbing for a barber shop fit-out.",
-    noDetail: true,
+      "A compact barber-shop fit-out engineered with the same rigor as a far larger job — zoned ventilation, anti-scald shampoo plumbing, and a complete code-current electrical layout.",
+    body: [
+      "Small spaces don't mean small engineering. This barber-shop renovation packed a surprising amount into a tight tenant footprint: a packaged rooftop unit with an economizer and weather hood balancing outside air, and carefully zoned exhaust drawn from the wash, shampoo, restroom, and work areas so the space stayed fresh through a full day of service.",
+      "The plumbing scope ran cold and hot water to lavatories and shampoo stations, each protected by thermostatic anti-scald mixing valves, with floor-sink indirect-waste connections, a private water sub-meter, and proper venting throughout. The electrical design covered the equipment and exhaust-fan circuits, occupancy-sensor and timed lighting controls, emergency lighting and exit signage with battery backup, and smoke/CO detection — a complete, inspection-ready package in a small but exacting space.",
+    ],
+    scopeTags: [
+      "Mechanical",
+      "Electrical",
+      "Plumbing",
+      "Zoned Exhaust",
+      "Anti-Scald Plumbing",
+      "Economizer",
+    ],
     gradient:
       "linear-gradient(135deg, #f4ede5 0%, #8c7f78 50%, #2a221f 100%)",
   },
@@ -331,12 +366,20 @@ export const PROJECTS: Project[] = [
     location: "New York",
     year: 2024,
     sector: "Residential / Life Safety",
+    role: "Residential fire-sprinkler system design",
     summary:
-      "A three-level residential fire-sprinkler system, designed zone by zone for life safety.",
-    body: [],
-    caption:
-      "A three-level residential fire-sprinkler system, designed zone by zone for life safety.",
-    noDetail: true,
+      "A multi-level home fitted with a residential fire-sprinkler system, designed zone by zone off a single street connection for life safety throughout.",
+    body: [
+      "Life-safety engineering is quiet until the moment it matters. For this multi-level residence we designed a residential fire-sprinkler system covering the living spaces across every floor — sprinkler heads laid out room by room and sized to the home's layout, fed through CPVC risers with zone control sets so each level can be isolated for service.",
+      "The system ties into a 1½-inch main water connection from the street through a backflow preventer and pressure-reducing valve, with a test-and-drain arrangement at the riser for code-required maintenance and inspection. It's a system designed to disappear into the house — present in every room, visible almost nowhere, ready if it's ever needed.",
+    ],
+    scopeTags: [
+      "Fire Protection",
+      "Residential Sprinklers",
+      "Zone Control",
+      "Backflow Prevention",
+      "CPVC",
+    ],
     gradient:
       "linear-gradient(135deg, #8c7f78 0%, #2a221f 50%, #7a1a0a 100%)",
   },
