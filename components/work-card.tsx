@@ -47,7 +47,7 @@ export function WorkCard({
             // motion-reduce users get only the opacity change.
             className={
               isInteractive
-                ? "object-cover opacity-30 transition duration-300 ease-out group-hover:opacity-100 motion-safe:scale-[1.4] motion-safe:group-hover:scale-100"
+                ? "object-cover opacity-50 transition duration-300 ease-out group-hover:opacity-100 motion-safe:scale-[1.4] motion-safe:group-hover:scale-100"
                 : "object-cover"
             }
             priority={priority}
