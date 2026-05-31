@@ -3,27 +3,27 @@ import Link from "next/link";
 import { DISCIPLINES } from "@/lib/projects";
 
 export const metadata: Metadata = {
-  title: "Studio",
+  title: "Studio — Lava Design",
   description:
-    "Lava is a Dubai-based multidisciplinary design studio working across 2D & 3D, interiors & architecture, events & activations, and engineering.",
+    "Lava Design is a multidisciplinary studio led by engineering and architecture in the US, with 2D & 3D design, branding, and event activations across the wider practice. Studios in Houston, Orlando, and Dubai.",
 };
 
 const PRINCIPLES = [
   {
     title: "One studio, every discipline.",
-    body: "We design end-to-end — from a wordmark to the building that carries it. Holding it all in-house is what keeps the work coherent.",
+    body: "We design end-to-end, from a full set of building systems to the wordmark on the door. Holding every discipline in-house is what keeps the work coherent.",
   },
   {
     title: "Material before motif.",
-    body: "We start with what a project is physically made of — stone, ink, code, hot metal — and let the visual language fall out of that.",
+    body: "We start with what a project is physically made of — steel, concrete, ink, code — and let the language follow from that.",
+  },
+  {
+    title: "Engineering you can build from.",
+    body: "Our US practice delivers permit-ready, contractor-biddable documents across mechanical, electrical, plumbing, structural, and civil scopes. The drawings are made to be built, not just approved.",
   },
   {
     title: "Productized where it serves.",
-    body: "For the work that suits it — websites, packaging, branding — we sell as fixed-scope packages so clients know what they're buying.",
-  },
-  {
-    title: "Made in the region.",
-    body: "We work with suppliers and craftspeople across the GCC. Most of what we ship is fabricated within an afternoon's drive.",
+    body: "For the work that suits it — websites, branding, artworking — we sell as clear, fixed-scope packages, so clients know exactly what they're buying.",
   },
 ];
 
@@ -35,24 +35,32 @@ export default function AboutPage() {
           Studio
         </p>
         <h1 className="mt-6 max-w-4xl font-display text-5xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-7xl md:text-8xl">
-          A small studio that
+          A studio that designs
           <span className="block font-serif text-4xl font-normal italic tracking-normal text-ember sm:text-5xl md:text-6xl">
-            ships at heat.
+            across every dimension.
           </span>
         </h1>
-        <div className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-12">
-          <p className="font-serif text-2xl leading-snug text-ash md:col-span-7">
-            Lava is a Dubai-based design studio working across four
-            disciplines. We treat them as one practice — every project
-            inherits the same material attention, whether it's a wordmark, a
-            restaurant interior, an event activation or a piece of mechanical
-            hardware.
+        <div className="mt-12 max-w-4xl space-y-8">
+          <p className="font-serif text-2xl leading-snug text-ash md:text-3xl">
+            Lava Design is a multidisciplinary studio. In the United States,
+            our work is led by engineering and architecture — full building
+            systems, structural and MEP design, and the site infrastructure
+            that carries them — delivered out of our studios in Houston and
+            Orlando.
           </p>
-          <p className="font-serif text-lg leading-relaxed text-smoke md:col-span-5">
-            Founded in 2020, the studio is led by a small senior team that
-            takes every project from first conversation through delivery. We
-            stay deliberately small so the people you meet are the people who
-            do the work.
+          <p className="font-serif text-lg leading-relaxed text-smoke">
+            That engineering practice sits inside a wider studio. Across the
+            group, we also design in 2D and 3D, build brands, and stage
+            events and activations — disciplines anchored in our Dubai
+            studio and the wider region. We treat it all as one practice:
+            the same material attention runs through a set of building
+            systems and a wordmark alike.
+          </p>
+          <p className="font-serif text-lg italic leading-relaxed text-smoke">
+            Founded in 2012, the studio stays deliberately small and senior.
+            Every project is taken from first conversation through delivery
+            by the people you actually meet — wherever in the world it&rsquo;s
+            based.
           </p>
         </div>
       </section>
