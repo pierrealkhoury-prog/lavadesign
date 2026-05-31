@@ -157,43 +157,50 @@ export default function HomePage() {
 function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden">
-      {/* Background image — native <picture> for art direction between mobile
-          (4:5 portrait crop) and desktop (16:9 wide). WebP primary, JPEG
-          fallback. fetchPriority=high so it's the LCP candidate. */}
-      <picture>
-        <source
-          media="(min-width: 768px)"
-          type="image/webp"
-          srcSet="/home/hero-desktop.webp"
-        />
-        <source
-          media="(min-width: 768px)"
-          type="image/jpeg"
-          srcSet="/home/hero-desktop.jpg"
-        />
-        <source type="image/webp" srcSet="/home/hero-mobile.webp" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/home/hero-mobile.jpg"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 -z-20 h-full w-full object-cover"
-          fetchPriority="high"
-        />
-      </picture>
+      {/* Media — TWO layouts in one element:
+          · Mobile: in-flow 16:9 banner at the top of the section. Text
+            stacks below on the obsidian background (no overlay), so the
+            headline can't clip and there's no scrim/contrast problem.
+          · Desktop (md+): absolutely fills the section, sits at -z-20 so
+            the headline overlays it in the existing dark-left zone.
+          Single <picture>/<video> pair — no duplicate fetch. The desktop
+          poster is used on mobile too because the mobile layout is now a
+          16:9 landscape banner (the old 4:5 mobile crop would distort). */}
+      <div className="relative aspect-video w-full md:absolute md:inset-0 md:-z-20 md:aspect-auto md:h-full">
+        <picture>
+          <source type="image/webp" srcSet="/home/hero-desktop.webp" />
+          <source type="image/jpeg" srcSet="/home/hero-desktop.jpg" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/home/hero-desktop.jpg"
+            alt=""
+            aria-hidden
+            className="absolute inset-0 h-full w-full object-cover"
+            fetchPriority="high"
+          />
+        </picture>
 
-      {/* Mobile scrim — strong at the top (headline), moderate at the bottom
-          so the CTAs read clearly without hiding the wireframe glow. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 md:hidden"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(10,7,6,0.92) 0%, rgba(10,7,6,0.78) 50%, rgba(10,7,6,0.55) 100%)",
-        }}
-      />
-      {/* Desktop scrim — darkens the left zone where the headline sits,
-          lets the wireframe-half of the image show through on the right. */}
+        {/* Hero video — plays ONCE on load (no loop attribute), muted +
+            playsInline so autoplay is allowed on every browser/OS, and
+            holds on its last frame when ended (default <video> behavior).
+            Hidden entirely for prefers-reduced-motion users; the poster
+            <picture> beneath it stays visible. */}
+        <video
+          src="/home/hero.mp4"
+          poster="/home/hero-desktop.jpg"
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+        />
+      </div>
+
+      {/* Desktop scrim only — darkens the left zone where the headline
+          sits, lets the wireframe-half of the image show through on the
+          right. Not rendered on mobile since the text now lives below
+          the banner on plain obsidian. */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10 hidden md:block"
@@ -204,17 +211,21 @@ function HeroSection() {
       />
 
       <Reveal>
-        <div className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-32 sm:px-10 md:py-40">
-          <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
+        <div className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-16 sm:px-10 md:py-40">
+          {/* min-w-0 on each child overrides flex-column's default
+              min-width:auto (= min-content), so long words like
+              "Multidisciplinary" can shrink + wrap instead of forcing the
+              line wider than the 390px viewport and getting clipped. */}
+          <p className="min-w-0 font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
             Multidisciplinary engineering &amp; design — Houston · Orlando
           </p>
-          <h1 className="max-w-5xl font-display text-5xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-7xl md:text-8xl">
+          <h1 className="min-w-0 max-w-5xl font-display text-5xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-7xl md:text-8xl">
             We design across every
             <span className="block font-serif text-4xl font-normal italic tracking-normal text-ember sm:text-5xl md:text-6xl">
               <span className="text-lava">dimension</span>.
             </span>
           </h1>
-          <p className="max-w-xl font-serif text-xl leading-relaxed text-smoke md:text-2xl">
+          <p className="min-w-0 max-w-xl font-serif text-xl leading-relaxed text-smoke md:text-2xl">
             From permit-ready engineering to brands, interiors, and live
             activations — Lava Design is a multidisciplinary studio that
             carries an idea from the first sketch to the lights coming on.

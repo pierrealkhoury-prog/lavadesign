@@ -19,7 +19,29 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <section className="relative isolate overflow-hidden">
-      {/* Subtle molten ambient — same vocabulary as the home hero, gentler. */}
+      {/* Art-directed background — 4:5 on mobile, 16:9 on desktop. Eager-loaded
+          since it IS the page; the radial overlay + obsidian fade sit on top
+          to keep type legible. */}
+      <picture>
+        <source
+          media="(min-width: 768px)"
+          srcSet="/404/bg-desktop.webp"
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/404/bg-mobile.webp"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 -z-20 h-full w-full object-cover opacity-70"
+          fetchPriority="high"
+        />
+      </picture>
+      {/* Obsidian wash so the hero copy stays readable over the imagery. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-obsidian via-obsidian/70 to-obsidian/40"
+      />
+      {/* Molten ambient — same vocabulary as the home hero, gentler. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 opacity-80"

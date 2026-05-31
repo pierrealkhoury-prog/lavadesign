@@ -52,10 +52,14 @@ export default async function CaseStudyPage(
 
   return (
     <article>
-      {/* Hero — art-directed <picture>: 4:5 portrait on mobile, true 16:9 on desktop.
-          max-h-[85vh] keeps the hero from dominating widescreens; combined with
-          md:object-contain that means on wide viewports the image letterboxes
-          (against basalt) rather than crops, so the full plan stays visible. */}
+      {/* Hero — full-bleed: spans the entire viewport width edge to edge,
+          no max-width, no horizontal padding. Art-directed <picture> swaps
+          4:5 portrait on mobile, 16:9 on desktop. object-cover (both
+          viewports) means the image always FILLS its container — no side
+          letterbox bands when max-h-[85vh] makes the container wider than
+          the image's natural ratio. Small vertical crop is acceptable on
+          short viewports; the alternative was dark margins on every wide
+          screen. */}
       <section className="relative aspect-[4/5] max-h-[85vh] w-full overflow-hidden md:aspect-video">
         {project.heroDesktop && project.heroMobile ? (
           <picture>
@@ -67,7 +71,7 @@ export default async function CaseStudyPage(
             <img
               src={project.heroMobile}
               alt={project.title}
-              className="absolute inset-0 h-full w-full object-cover md:object-contain"
+              className="absolute inset-0 h-full w-full object-cover"
               fetchPriority="high"
             />
           </picture>
@@ -154,7 +158,9 @@ export default async function CaseStudyPage(
         </div>
       </section>
 
-      {/* Gallery */}
+      {/* Gallery — 2 per row on sm+, contained inside max-w-7xl with page
+          padding. Each image sits in a 3:2 framed card with object-contain
+          so plans of any aspect display in full without crop. */}
       {project.gallery ? (
         <section className="mx-auto grid max-w-7xl grid-cols-1 gap-x-6 gap-y-12 px-6 pb-24 sm:grid-cols-2 sm:px-10">
           {project.gallery.map((item) => (

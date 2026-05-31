@@ -40,8 +40,6 @@ export type Project = {
    */
   heroDesktop?: string;
   heroMobile?: string;
-  /** Square (1:1) thumbnail used on WorkCard grids. Falls back to gradient. */
-  thumb?: string;
   /** Public-folder paths + atmospheric captions. Falls back to gradient blocks when unset. */
   gallery?: GalleryItem[];
   /** Tailwind gradient used as a hero/card placeholder until real imagery lands. */
@@ -82,6 +80,26 @@ export const PROJECTS: Project[] = [
       "Solar-Ready",
       "EV Charging",
     ],
+    heroDesktop: "/work/charter-school-tx-2025/hero-desktop.webp",
+    heroMobile: "/work/charter-school-tx-2025/hero-mobile.webp",
+    gallery: [
+      {
+        src: "/work/charter-school-tx-2025/gallery-01.webp",
+        caption: "Classrooms, zoned room by room.",
+      },
+      {
+        src: "/work/charter-school-tx-2025/gallery-02.webp",
+        caption: "Site electrical, reaching beyond the walls.",
+      },
+      {
+        src: "/work/charter-school-tx-2025/gallery-03.webp",
+        caption: "Power staged for what comes next.",
+      },
+      {
+        src: "/work/charter-school-tx-2025/gallery-04.webp",
+        caption: "A campus, engineered to grow.",
+      },
+    ],
     gradient:
       "linear-gradient(135deg, #ff4d1c 0%, #f5b04b 55%, #14100e 100%)",
     featured: true,
@@ -106,6 +124,26 @@ export const PROJECTS: Project[] = [
       "Plumbing",
       "Solar PV",
       "Renewable Energy",
+    ],
+    heroDesktop: "/work/recycling-facility-ny-2024/hero-desktop.webp",
+    heroMobile: "/work/recycling-facility-ny-2024/hero-mobile.webp",
+    gallery: [
+      {
+        src: "/work/recycling-facility-ny-2024/gallery-01.webp",
+        caption: "Industry at the volume the work demands.",
+      },
+      {
+        src: "/work/recycling-facility-ny-2024/gallery-02.webp",
+        caption: "Air turned over, again and again.",
+      },
+      {
+        src: "/work/recycling-facility-ny-2024/gallery-03.webp",
+        caption: "Sun on the roof, current to the grid.",
+      },
+      {
+        src: "/work/recycling-facility-ny-2024/gallery-04.webp",
+        caption: "The yard, kept at pace.",
+      },
     ],
     gradient:
       "linear-gradient(135deg, #8c7f78 0%, #7a1a0a 55%, #14100e 100%)",
@@ -132,6 +170,22 @@ export const PROJECTS: Project[] = [
       "Medical Gas",
       "Specialized Exhaust",
     ],
+    heroDesktop: "/work/dental-clinic-tx-2024/hero-desktop.webp",
+    heroMobile: "/work/dental-clinic-tx-2024/hero-mobile.webp",
+    gallery: [
+      {
+        src: "/work/dental-clinic-tx-2024/gallery-01.webp",
+        caption: "Quiet rooms, calibrated air.",
+      },
+      {
+        src: "/work/dental-clinic-tx-2024/gallery-02.webp",
+        caption: "Where care meets engineering.",
+      },
+      {
+        src: "/work/dental-clinic-tx-2024/gallery-03.webp",
+        caption: "Clean lines, hidden systems.",
+      },
+    ],
     gradient:
       "linear-gradient(135deg, #f4ede5 0%, #8c7f78 50%, #14100e 100%)",
   },
@@ -155,6 +209,42 @@ export const PROJECTS: Project[] = [
       "Plumbing",
       "Rooftop HVAC",
       "Tenant Build-Out",
+    ],
+    heroDesktop: "/work/retail-buildout-tx-2024/hero-desktop.webp",
+    heroMobile: "/work/retail-buildout-tx-2024/hero-mobile.webp",
+    gallery: [
+      {
+        src: "/work/retail-buildout-tx-2024/gallery-01.webp",
+        caption: "Showroom and stockroom, one system.",
+      },
+      {
+        src: "/work/retail-buildout-tx-2024/gallery-02.webp",
+        caption: "Diffusers laid to the grid.",
+      },
+      {
+        src: "/work/retail-buildout-tx-2024/gallery-03.webp",
+        caption: "Power placed where the work happens.",
+      },
+      {
+        src: "/work/retail-buildout-tx-2024/gallery-04.webp",
+        caption: "Light on the merchandise.",
+      },
+      {
+        src: "/work/retail-buildout-tx-2024/gallery-05.webp",
+        caption: "Back-of-house, kept moving.",
+      },
+      {
+        src: "/work/retail-buildout-tx-2024/gallery-06.webp",
+        caption: "Service tied cleanly back.",
+      },
+      {
+        src: "/work/retail-buildout-tx-2024/gallery-07.webp",
+        caption: "Comfortable from the door.",
+      },
+      {
+        src: "/work/retail-buildout-tx-2024/gallery-08.webp",
+        caption: "Built for the bid.",
+      },
     ],
     gradient:
       "linear-gradient(135deg, #f5b04b 0%, #ff4d1c 60%, #2a221f 100%)",
@@ -180,6 +270,34 @@ export const PROJECTS: Project[] = [
       "Split-System HVAC",
       "Data/Low-Voltage",
     ],
+    heroDesktop: "/work/office-fitout-fl-2025/hero-desktop.webp",
+    heroMobile: "/work/office-fitout-fl-2025/hero-mobile.webp",
+    gallery: [
+      {
+        src: "/work/office-fitout-fl-2025/gallery-01.webp",
+        caption: "Open work, kept comfortable.",
+      },
+      {
+        src: "/work/office-fitout-fl-2025/gallery-02.webp",
+        caption: "Zones for how a building gets used.",
+      },
+      {
+        src: "/work/office-fitout-fl-2025/gallery-03.webp",
+        caption: "Quiet split-system air.",
+      },
+      {
+        src: "/work/office-fitout-fl-2025/gallery-04.webp",
+        caption: "Power and data, where the desks land.",
+      },
+      {
+        src: "/work/office-fitout-fl-2025/gallery-05.webp",
+        caption: "Conference rooms, isolated and ready.",
+      },
+      {
+        src: "/work/office-fitout-fl-2025/gallery-06.webp",
+        caption: "A building that conditions only what's in use.",
+      },
+    ],
     gradient:
       "linear-gradient(135deg, #f4ede5 0%, #f5b04b 40%, #2a221f 100%)",
   },
@@ -204,6 +322,38 @@ export const PROJECTS: Project[] = [
       "Kitchen Hood",
       "Make-Up Air",
       "Grease Waste",
+    ],
+    heroDesktop: "/work/restaurant-tx-2025/hero-desktop.webp",
+    heroMobile: "/work/restaurant-tx-2025/hero-mobile.webp",
+    gallery: [
+      {
+        src: "/work/restaurant-tx-2025/gallery-01.webp",
+        caption: "Hood, make-up, balance.",
+      },
+      {
+        src: "/work/restaurant-tx-2025/gallery-02.webp",
+        caption: "Gas to the line, water to the prep.",
+      },
+      {
+        src: "/work/restaurant-tx-2025/gallery-03.webp",
+        caption: "The dining room, held in tune.",
+      },
+      {
+        src: "/work/restaurant-tx-2025/gallery-04.webp",
+        caption: "Floor sinks at every appliance.",
+      },
+      {
+        src: "/work/restaurant-tx-2025/gallery-05.webp",
+        caption: "Power scheduled to the kitchen.",
+      },
+      {
+        src: "/work/restaurant-tx-2025/gallery-06.webp",
+        caption: "Grease waste, routed clean.",
+      },
+      {
+        src: "/work/restaurant-tx-2025/gallery-07.webp",
+        caption: "Built to open, built to last.",
+      },
     ],
     gradient:
       "linear-gradient(135deg, #ff4d1c 0%, #7a1a0a 60%, #14100e 100%)",
@@ -234,7 +384,6 @@ export const PROJECTS: Project[] = [
     ],
     heroDesktop: "/work/private-residence-tx-2023/hero-desktop.png",
     heroMobile: "/work/private-residence-tx-2023/hero-mobile.png",
-    thumb: "/work/private-residence-tx-2023/thumb.png",
     gallery: [
       {
         src: "/work/private-residence-tx-2023/plan-01.png",
@@ -281,6 +430,34 @@ export const PROJECTS: Project[] = [
       "Make-Up Air",
       "Grease Waste",
     ],
+    heroDesktop: "/work/restaurant-remodel-fl-2024/hero-desktop.webp",
+    heroMobile: "/work/restaurant-remodel-fl-2024/hero-mobile.webp",
+    gallery: [
+      {
+        src: "/work/restaurant-remodel-fl-2024/gallery-01.webp",
+        caption: "Old room, new circulation.",
+      },
+      {
+        src: "/work/restaurant-remodel-fl-2024/gallery-02.webp",
+        caption: "Heat managed, balance restored.",
+      },
+      {
+        src: "/work/restaurant-remodel-fl-2024/gallery-03.webp",
+        caption: "Service that doesn't show its work.",
+      },
+      {
+        src: "/work/restaurant-remodel-fl-2024/gallery-04.webp",
+        caption: "The dining side, kept comfortable.",
+      },
+      {
+        src: "/work/restaurant-remodel-fl-2024/gallery-05.webp",
+        caption: "Grease and water, routed for the long haul.",
+      },
+      {
+        src: "/work/restaurant-remodel-fl-2024/gallery-06.webp",
+        caption: "A kitchen, brought current.",
+      },
+    ],
     gradient:
       "linear-gradient(135deg, #ff4d1c 0%, #7a1a0a 60%, #14100e 100%)",
   },
@@ -306,6 +483,34 @@ export const PROJECTS: Project[] = [
       "Gas",
       "Rooftop HVAC",
     ],
+    heroDesktop: "/work/restaurant-tx-2024/hero-desktop.webp",
+    heroMobile: "/work/restaurant-tx-2024/hero-mobile.webp",
+    gallery: [
+      {
+        src: "/work/restaurant-tx-2024/gallery-01.webp",
+        caption: "The kitchen as the heart of the plan.",
+      },
+      {
+        src: "/work/restaurant-tx-2024/gallery-02.webp",
+        caption: "Hood and flame, in balance.",
+      },
+      {
+        src: "/work/restaurant-tx-2024/gallery-03.webp",
+        caption: "Make-up air to match the exhaust.",
+      },
+      {
+        src: "/work/restaurant-tx-2024/gallery-04.webp",
+        caption: "Every appliance, served at the floor.",
+      },
+      {
+        src: "/work/restaurant-tx-2024/gallery-05.webp",
+        caption: "Dining heat tempered, bar held cool.",
+      },
+      {
+        src: "/work/restaurant-tx-2024/gallery-06.webp",
+        caption: "Open from day one.",
+      },
+    ],
     gradient:
       "linear-gradient(135deg, #f5b04b 0%, #ff4d1c 50%, #2a221f 100%)",
   },
@@ -330,6 +535,38 @@ export const PROJECTS: Project[] = [
       "Oven Exhaust",
       "Refrigeration",
       "Food-Service",
+    ],
+    heroDesktop: "/work/bakery-tx-2025/hero-desktop.webp",
+    heroMobile: "/work/bakery-tx-2025/hero-mobile.webp",
+    gallery: [
+      {
+        src: "/work/bakery-tx-2025/gallery-01.webp",
+        caption: "Ovens at one end, coolers at the other.",
+      },
+      {
+        src: "/work/bakery-tx-2025/gallery-02.webp",
+        caption: "Air balanced for the long shift.",
+      },
+      {
+        src: "/work/bakery-tx-2025/gallery-03.webp",
+        caption: "Heat cleared, cold held.",
+      },
+      {
+        src: "/work/bakery-tx-2025/gallery-04.webp",
+        caption: "Equipment circuits, laid out by load.",
+      },
+      {
+        src: "/work/bakery-tx-2025/gallery-05.webp",
+        caption: "Plumbing for the production line.",
+      },
+      {
+        src: "/work/bakery-tx-2025/gallery-06.webp",
+        caption: "Light placed for the work.",
+      },
+      {
+        src: "/work/bakery-tx-2025/gallery-07.webp",
+        caption: "Open early, every morning.",
+      },
     ],
     gradient:
       "linear-gradient(135deg, #f5b04b 0%, #f4ede5 40%, #8c7f78 100%)",
