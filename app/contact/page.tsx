@@ -25,21 +25,52 @@ export default function ContactPage() {
           for, and when you need it. We reply to every serious enquiry within
           two working days.
         </p>
-        <dl className="mt-12 space-y-6">
+        <dl className="mt-12 space-y-8">
           <div>
             <dt className="font-mono text-[10px] uppercase tracking-[0.3em] text-smoke">
               Direct
             </dt>
-            <dd className="mt-2 font-serif text-base text-ash">
-              hello@lavadesign.us
+            <dd className="mt-2 space-y-1 font-serif text-base text-ash">
+              <p>
+                <a
+                  href="mailto:info@lavadesign.us"
+                  className="transition-colors hover:text-ember"
+                >
+                  info@lavadesign.us
+                </a>
+              </p>
+              <p>
+                <a
+                  href="tel:+13212701208"
+                  className="transition-colors hover:text-ember"
+                >
+                  +1 321 270 1208
+                </a>
+              </p>
             </dd>
           </div>
           <div>
             <dt className="font-mono text-[10px] uppercase tracking-[0.3em] text-smoke">
-              Studio
+              Houston Studio
+            </dt>
+            <dd className="mt-2 whitespace-pre-line font-serif text-base leading-relaxed text-ash">
+              {"12500 Barker Cypress Rd #18205\nCypress, TX 77429"}
+            </dd>
+          </div>
+          <div>
+            <dt className="font-mono text-[10px] uppercase tracking-[0.3em] text-smoke">
+              Orlando Studio
+            </dt>
+            <dd className="mt-2 whitespace-pre-line font-serif text-base leading-relaxed text-ash">
+              {"268 Foxtail Loop\nDavenport, FL 33837"}
+            </dd>
+          </div>
+          <div>
+            <dt className="font-mono text-[10px] uppercase tracking-[0.3em] text-smoke">
+              Hours
             </dt>
             <dd className="mt-2 font-serif text-base text-ash">
-              Al Quoz, Dubai
+              Mon–Sat · 9–5
             </dd>
           </div>
         </dl>

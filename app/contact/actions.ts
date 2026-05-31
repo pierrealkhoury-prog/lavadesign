@@ -45,21 +45,33 @@ export async function submitInquiry(
   const discipline =
     disciplineRaw && isDisciplineSlug(disciplineRaw) ? disciplineRaw : null;
 
+  // DB write and email notification run independently — the inquiry is
+  // captured as long as ONE of them succeeds (durable record OR studio
+  // notification). Both failing is treated as a real failure.
+  let dbOk = false;
   try {
     await prisma.inquiry.create({
       data: { name, email, message, discipline },
     });
+    dbOk = true;
   } catch (error) {
     console.error("[contact] failed to persist inquiry", error);
+  }
+
+  const emailResult = await sendInquiryNotification({
+    name,
+    email,
+    message,
+    discipline,
+  });
+
+  if (!dbOk && !emailResult.ok) {
     return {
       status: "error",
       message:
-        "We couldn't record your inquiry. Try again, or email hello@lavadesign.us directly.",
+        "We couldn't process your inquiry. Please try again or email info@lavadesign.us directly.",
     };
   }
-
-  // Email send is stubbed for Phase 1 — see lib/email.ts.
-  await sendInquiryNotification({ name, email, message, discipline });
 
   return {
     status: "success",
