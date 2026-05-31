@@ -25,11 +25,11 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Lava — Multidisciplinary Design Studio",
-    template: "%s · Lava",
+    default: "Lava Design — Engineering, Architecture & Design Studio",
+    template: "%s · Lava Design",
   },
   description:
-    "Lava is a multidisciplinary design studio working across 2D & 3D, interiors & architecture, events & activations, and engineering.",
+    "Lava Design is an engineering and architecture studio in Houston and Orlando, delivering permit-ready MEP, structural, and civil design — part of a multidisciplinary practice spanning 2D & 3D, branding, and event activations.",
   metadataBase: new URL("https://lavadesign.us"),
 };
 

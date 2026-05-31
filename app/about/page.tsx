@@ -3,7 +3,7 @@ import Link from "next/link";
 import { DISCIPLINES } from "@/lib/projects";
 
 export const metadata: Metadata = {
-  title: "Studio — Lava Design",
+  title: "Studio",
   description:
     "Lava Design is a multidisciplinary studio led by engineering and architecture in the US, with 2D & 3D design, branding, and event activations across the wider practice. Studios in Houston, Orlando, and Dubai.",
 };

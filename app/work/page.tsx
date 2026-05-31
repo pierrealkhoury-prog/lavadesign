@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Selected projects across 2D & 3D, interiors & architecture, events & activations, and engineering.",
+    "A portfolio of engineering and architecture projects — full MEP, structural, civil, and site design across education, healthcare, retail, hospitality, and industrial work in the US.",
 };
 
 export default async function WorkPage({
