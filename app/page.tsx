@@ -124,15 +124,53 @@ export default function HomePage() {
 
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative isolate overflow-hidden">
+      {/* Background image — native <picture> for art direction between mobile
+          (4:5 portrait crop) and desktop (16:9 wide). WebP primary, JPEG
+          fallback. fetchPriority=high so it's the LCP candidate. */}
+      <picture>
+        <source
+          media="(min-width: 768px)"
+          type="image/webp"
+          srcSet="/home/hero-desktop.webp"
+        />
+        <source
+          media="(min-width: 768px)"
+          type="image/jpeg"
+          srcSet="/home/hero-desktop.jpg"
+        />
+        <source type="image/webp" srcSet="/home/hero-mobile.webp" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/home/hero-mobile.jpg"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 -z-20 h-full w-full object-cover"
+          fetchPriority="high"
+        />
+      </picture>
+
+      {/* Mobile scrim — strong at the top (headline), moderate at the bottom
+          so the CTAs read clearly without hiding the wireframe glow. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-80"
+        className="absolute inset-0 -z-10 md:hidden"
         style={{
           background:
-            "radial-gradient(60% 50% at 20% 10%, rgba(255,77,28,0.28), transparent 70%), radial-gradient(40% 40% at 85% 90%, rgba(245,176,75,0.18), transparent 70%)",
+            "linear-gradient(to bottom, rgba(10,7,6,0.92) 0%, rgba(10,7,6,0.78) 50%, rgba(10,7,6,0.55) 100%)",
         }}
       />
+      {/* Desktop scrim — darkens the left zone where the headline sits,
+          lets the wireframe-half of the image show through on the right. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 hidden md:block"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(10,7,6,0.92) 0%, rgba(10,7,6,0.7) 35%, rgba(10,7,6,0.1) 72%, rgba(10,7,6,0) 100%)",
+        }}
+      />
+
       <Reveal>
         <div className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-32 sm:px-10 md:py-40">
           <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember">
@@ -144,7 +182,7 @@ function HeroSection() {
               <span className="text-lava">dimension</span>.
             </span>
           </h1>
-          <p className="max-w-3xl font-serif text-xl leading-relaxed text-smoke md:text-2xl">
+          <p className="max-w-xl font-serif text-xl leading-relaxed text-smoke md:text-2xl">
             From permit-ready engineering to brands, interiors, and live
             activations — Lava Design is a multidisciplinary studio that
             carries an idea from the first sketch to the lights coming on.
