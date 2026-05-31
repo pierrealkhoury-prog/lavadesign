@@ -40,11 +40,11 @@ export const TEAM: DisciplineGroup[] = [
     description: "Senior direction across both regions.",
     members: [
       {
-        name: "Marcus Reyna",
-        role: "Founder / Principal",
-        office: "Houston",
-        bio: "Founded the studio in 2012 and still puts pencil to the first sketch on most projects. Splits time between Houston and the site, in roughly that order.",
-        photo: face(1),
+        name: "Pierre Alkhoury",
+        role: "Group Creative Director · Managing Director, Dubai",
+        office: "Dubai",
+        bio: "Pierre brings over 20 years in creative and production across the region's leading agencies and branding firms — from artworking and press production to digital and Arabic copywriting — having learned the craft from the studio floor up. As Group Creative Director, he sets the creative direction across Lava Design's studios in the US and Dubai, and as Managing Director of the Dubai studio he leads its 2D, 3D, branding, and activation work. His hands-on background lets him take a project from first strategy through final delivery.",
+        photo: "/team/pierre-alkhoury.webp",
       },
       {
         name: "Lina Hadid",
