@@ -4,6 +4,7 @@ const NAV_LINKS = [
   { href: "/work", label: "Work" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "Studio" },
+  { href: "/team", label: "Team" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
