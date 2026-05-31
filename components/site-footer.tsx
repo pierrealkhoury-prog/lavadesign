@@ -21,8 +21,8 @@ export function SiteFooter() {
             Lava<span className="text-lava">.</span>
           </Link>
           <p className="mt-4 max-w-sm font-serif text-base italic text-smoke">
-            A multidisciplinary design studio working across 2D &amp; 3D,
-            interiors &amp; architecture, events &amp; engineering.
+            Engineering, architecture, and the design that surrounds
+            them. Studios in Houston, Orlando, and Dubai.
           </p>
         </div>
 
@@ -40,7 +40,15 @@ export function SiteFooter() {
             ))}
           </ul>
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-smoke">
-            &copy; {year} Lava Design Studio — Dubai
+            <a
+              href="mailto:info@lavadesign.us"
+              className="transition-colors hover:text-ash"
+            >
+              info@lavadesign.us
+            </a>
+          </p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-smoke">
+            &copy; {year} Lava Design — Houston · Orlando · Dubai
           </p>
         </div>
       </div>
