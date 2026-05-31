@@ -9,10 +9,23 @@ import {
   type DisciplineSlug,
 } from "@/lib/projects";
 
+const PAGE_DESCRIPTION =
+  "A portfolio of engineering and architecture projects — full MEP, structural, civil, and site design across education, healthcare, retail, hospitality, and industrial work in the US.";
+
 export const metadata: Metadata = {
   title: "Work",
-  description:
-    "A portfolio of engineering and architecture projects — full MEP, structural, civil, and site design across education, healthcare, retail, hospitality, and industrial work in the US.",
+  description: PAGE_DESCRIPTION,
+  openGraph: {
+    title: "Work",
+    description: PAGE_DESCRIPTION,
+    url: "/work",
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    title: "Work",
+    description: PAGE_DESCRIPTION,
+    images: ["/opengraph-image"],
+  },
 };
 
 export default async function WorkPage({

@@ -1,10 +1,23 @@
 import type { Metadata } from "next";
 import { ContactForm } from "./contact-form";
 
+const PAGE_DESCRIPTION =
+  "Tell us about your project. We reply to every serious enquiry within two working days.";
+
 export const metadata: Metadata = {
   title: "Contact",
-  description:
-    "Tell us about your project. We reply to every serious enquiry within two working days.",
+  description: PAGE_DESCRIPTION,
+  openGraph: {
+    title: "Contact",
+    description: PAGE_DESCRIPTION,
+    url: "/contact",
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    title: "Contact",
+    description: PAGE_DESCRIPTION,
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function ContactPage() {

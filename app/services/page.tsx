@@ -7,10 +7,23 @@ import {
   getServicesByCategory,
 } from "@/lib/services";
 
+const PAGE_DESCRIPTION =
+  "Engineering and architecture services — alongside the brand, web, and packaging design that surrounds them. Two studios, one team.";
+
 export const metadata: Metadata = {
   title: "Services",
-  description:
-    "Engineering and architecture services — alongside the brand, web, and packaging design that surrounds them. Two studios, one team.",
+  description: PAGE_DESCRIPTION,
+  openGraph: {
+    title: "Services",
+    description: PAGE_DESCRIPTION,
+    url: "/services",
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    title: "Services",
+    description: PAGE_DESCRIPTION,
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function ServicesPage() {

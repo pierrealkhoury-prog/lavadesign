@@ -2,10 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DISCIPLINES } from "@/lib/projects";
 
+const PAGE_DESCRIPTION =
+  "Lava Design is a multidisciplinary studio led by engineering and architecture in the US, with 2D & 3D design, branding, and event activations across the wider practice. Studios in Houston, Orlando, and Dubai.";
+
 export const metadata: Metadata = {
   title: "Studio",
-  description:
-    "Lava Design is a multidisciplinary studio led by engineering and architecture in the US, with 2D & 3D design, branding, and event activations across the wider practice. Studios in Houston, Orlando, and Dubai.",
+  description: PAGE_DESCRIPTION,
+  openGraph: {
+    title: "Studio",
+    description: PAGE_DESCRIPTION,
+    url: "/about",
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    title: "Studio",
+    description: PAGE_DESCRIPTION,
+    images: ["/opengraph-image"],
+  },
 };
 
 const PRINCIPLES = [
