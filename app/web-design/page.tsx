@@ -677,10 +677,11 @@ function MaintenanceCard({ plan }: { plan: MaintenancePlan }) {
           </li>
         ))}
       </ul>
-      {/* Subscription start CTA — wired to Stripe subscription Checkout
-          in Stage E. For Stage A, points at /contact as a placeholder. */}
+      {/* Subscription buttons live on the dedicated /web-design/maintenance
+          page since Stripe Checkout can't mix payment + subscription line
+          items. Card here is presentational; CTA points at that page. */}
       <Link
-        href="/contact"
+        href="/web-design/maintenance"
         className="mt-auto inline-flex items-center justify-center rounded-full border border-border px-6 py-3 font-mono text-xs uppercase tracking-[0.22em] text-ash transition-colors hover:border-ash"
       >
         Subscribe →

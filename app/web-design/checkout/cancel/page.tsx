@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getPackage } from "@/lib/web-design";
+import { getMaintenancePlan, getPackage } from "@/lib/web-design";
 
 export const metadata: Metadata = {
   title: "Checkout cancelled",
@@ -12,10 +12,22 @@ export default async function CheckoutCancelPage(
   props: PageProps<"/web-design/checkout/cancel">,
 ) {
   const params = await props.searchParams;
-  const slug = typeof params.package === "string" ? params.package : null;
-  const pkg = slug ? getPackage(slug) : null;
-  const backHref = pkg ? `/web-design/${pkg.slug}` : "/web-design";
-  const backLabel = pkg ? `Back to ${pkg.name}` : "All packages";
+  const pkgSlug = typeof params.package === "string" ? params.package : null;
+  const maintenanceSlug =
+    typeof params.maintenance === "string" ? params.maintenance : null;
+  const pkg = pkgSlug ? getPackage(pkgSlug) : null;
+  const plan = maintenanceSlug ? getMaintenancePlan(maintenanceSlug) : null;
+
+  const backHref = pkg
+    ? `/web-design/${pkg.slug}`
+    : plan
+      ? "/web-design/maintenance"
+      : "/web-design";
+  const backLabel = pkg
+    ? `Back to ${pkg.name}`
+    : plan
+      ? "Back to Maintenance"
+      : "All packages";
 
   return (
     <section className="relative isolate overflow-hidden">
