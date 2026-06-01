@@ -46,16 +46,32 @@ export function Configurator({
     });
   }
 
-  // Stage B: button is non-functional. Stage C wires this to POST to
-  // /api/checkout/session and redirect to the Stripe-hosted page.
+  const [error, setError] = useState<string | null>(null);
+
   async function handleCheckout() {
-    // eslint-disable-next-line no-console
-    console.log("[configurator] would POST:", {
-      packageSlug: pkg.slug,
-      addonSlugs: [...selected],
-    });
     setSubmitting(true);
-    setTimeout(() => setSubmitting(false), 600);
+    setError(null);
+    try {
+      const res = await fetch("/api/checkout/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          packageSlug: pkg.slug,
+          addonSlugs: [...selected],
+        }),
+      });
+      const data = (await res.json()) as { url?: string; error?: string };
+      if (!res.ok || !data.url) {
+        throw new Error(data.error ?? `Checkout failed (HTTP ${res.status})`);
+      }
+      // Hand the user off to Stripe's hosted Checkout page.
+      window.location.href = data.url;
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      console.error("[configurator] checkout error", message);
+      setError(message);
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -162,11 +178,20 @@ export function Configurator({
           disabled={submitting}
           className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-lava px-6 py-4 font-mono text-xs uppercase tracking-[0.22em] text-obsidian transition-colors hover:bg-ember disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {submitting ? "Wiring next stage…" : "Proceed to checkout →"}
+          {submitting ? "Opening Stripe…" : "Proceed to checkout →"}
         </button>
-        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-smoke">
-          Stage C will wire Stripe — test mode, 4242 cards.
-        </p>
+        {error ? (
+          <p
+            role="alert"
+            className="mt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-lava"
+          >
+            {error}
+          </p>
+        ) : (
+          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-smoke">
+            Card details captured by Stripe — never seen by our servers.
+          </p>
+        )}
       </div>
 
       {/* Trust strip */}
