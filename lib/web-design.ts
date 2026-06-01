@@ -1,11 +1,14 @@
 // Phase 1 — /web-design product data.
 //
 // PLACEHOLDER PRICES — the USD numbers below are rough AED→USD conversions
-// from the lavaprintshop.com source page, used purely so Stage A renders
-// with realistic-looking copy. Pierre is confirming the real USD prices
-// separately and will replace them, along with the Stripe Price IDs,
-// before Stage C wires checkout. Until then, `stripePriceId` is left
-// unset and the page renders prices as display-only.
+// from the lavaprintshop.com source page. Display-only; Stripe Checkout is
+// driven by `stripePriceId` (the canonical source of truth at payment time).
+// If the display number and the Stripe Price diverge, the customer pays
+// whatever Stripe says.
+//
+// STRIPE PRICE IDs are TEST mode (pk/sk_test_, price_1Td...) — swap to live
+// IDs before flipping the env. Use the Stripe Dashboard's TEST/LIVE toggle
+// to confirm which mode each Price belongs to.
 //
 // Voice: studio tone (editorial, calm, declarative). NOT the source page's
 // "ship in days / no agency runaround" sales voice — that was a different
@@ -16,7 +19,7 @@ export type WebDesignPackage = {
   name: string;
   /** One-line "what this is". */
   tagline: string;
-  /** USD, placeholder. */
+  /** USD, display number. */
   basePrice: number;
   /** Display label, e.g. "10–14 days". */
   timeline: string;
@@ -26,31 +29,31 @@ export type WebDesignPackage = {
   bestFor: string;
   /** ★ Most popular badge on the landing card. */
   featured?: boolean;
-  /** Filled in Stage C when the Stripe Price exists. */
-  stripePriceId?: string;
+  /** Stripe Price ID — required for checkout to work. */
+  stripePriceId: string;
 };
 
 export type WebDesignAddon = {
   slug: string;
   name: string;
-  /** USD, placeholder. */
+  /** USD, display number. */
   price: number;
-  /** Filled in Stage C. */
-  stripePriceId?: string;
+  /** Stripe Price ID — required for checkout to work. */
+  stripePriceId: string;
 };
 
 export type MaintenancePlan = {
   slug: string;
   name: string;
-  /** USD per month, placeholder. */
+  /** USD per month, display number. */
   monthlyPrice: number;
   /** Short positioning line. */
   summary: string;
   /** What's included this tier. */
   includes: string[];
   featured?: boolean;
-  /** Filled in Stage C (recurring Stripe Price). */
-  stripePriceId?: string;
+  /** Stripe Price ID — recurring monthly. */
+  stripePriceId: string;
 };
 
 export type HostingPlan = {
@@ -92,6 +95,7 @@ export const PACKAGES: WebDesignPackage[] = [
       "One round of revisions",
     ],
     bestFor: "Clients with their own designer or finished design files.",
+    stripePriceId: "price_1TdJ25JLdo4fARiSg4qAHKHd",
   },
   {
     slug: "landing-page",
@@ -111,6 +115,7 @@ export const PACKAGES: WebDesignPackage[] = [
       "Two rounds of revisions",
     ],
     bestFor: "Product launches, services, campaigns, lead generation.",
+    stripePriceId: "price_1TdJ2wJLdo4fARiS9d8rXyf5",
   },
   {
     slug: "business-website",
@@ -134,6 +139,7 @@ export const PACKAGES: WebDesignPackage[] = [
     bestFor:
       "SMEs, professional services, clinics, real estate, restaurants, agencies.",
     featured: true,
+    stripePriceId: "price_1TdJ3GJLdo4fARiSlqgsMB1e",
   },
   {
     slug: "ecommerce",
@@ -158,6 +164,7 @@ export const PACKAGES: WebDesignPackage[] = [
       "Three rounds of revisions",
     ],
     bestFor: "Retail, D2C brands, restaurants taking online orders, marketplaces.",
+    stripePriceId: "price_1TdJ3wJLdo4fARiSZVzwITgF",
   },
   {
     slug: "brand-website",
@@ -179,25 +186,67 @@ export const PACKAGES: WebDesignPackage[] = [
       "Three rounds of revisions per phase",
     ],
     bestFor: "New businesses, rebrands, founders launching something new.",
+    stripePriceId: "price_1TdJ4CJLdo4fARiSflK7ieSg",
   },
 ];
 
 // ─── Add-ons ────────────────────────────────────────────────────────────────
 
 export const ADDONS: WebDesignAddon[] = [
-  { slug: "arabic-version", name: "Arabic version of the site", price: 500 },
-  { slug: "extra-page", name: "Extra page (custom design + copy)", price: 165 },
-  { slug: "logo-only", name: "Logo design only", price: 410 },
-  { slug: "blog-post", name: "Blog post (writing + on-page SEO)", price: 110 },
-  { slug: "booking-system", name: "Booking / appointment system", price: 500 },
-  { slug: "multilingual", name: "Multilingual setup (3+ languages)", price: 680 },
+  {
+    slug: "arabic-version",
+    name: "Arabic version of the site",
+    price: 500,
+    stripePriceId: "price_1TdJS0JLdo4fARiSlD12ZnN0",
+  },
+  {
+    slug: "extra-page",
+    name: "Extra page (custom design + copy)",
+    price: 165,
+    stripePriceId: "price_1TdJSMJLdo4fARiScbiSUlFs",
+  },
+  {
+    slug: "logo-only",
+    name: "Logo design only",
+    price: 410,
+    stripePriceId: "price_1TdJSyJLdo4fARiS1w9yjjQf",
+  },
+  {
+    slug: "blog-post",
+    name: "Blog post (writing + on-page SEO)",
+    price: 110,
+    stripePriceId: "price_1TdJTMJLdo4fARiScRSkoS4w",
+  },
+  {
+    slug: "booking-system",
+    name: "Booking / appointment system",
+    price: 500,
+    stripePriceId: "price_1TdJThJLdo4fARiSBWJshGzn",
+  },
+  {
+    slug: "multilingual",
+    name: "Multilingual setup (3+ languages)",
+    price: 680,
+    stripePriceId: "price_1TdJUDJLdo4fARiS7pYa5AdT",
+  },
   {
     slug: "crm-integration",
     name: "CRM integration (HubSpot, Zoho, Salesforce)",
     price: 410,
+    stripePriceId: "price_1TdJUbJLdo4fARiSQ4rMCK6f",
   },
-  { slug: "live-chat", name: "Live chat / WhatsApp integration", price: 165 },
-  { slug: "redesign-audit", name: "Existing site redesign audit", price: 410 },
+  {
+    slug: "live-chat",
+    name: "Live chat / WhatsApp integration",
+    price: 165,
+    stripePriceId: "price_1TdJUyJLdo4fARiSOtcg7HKP",
+  },
+  {
+    slug: "redesign-audit",
+    name: "Existing site redesign audit",
+    price: 410,
+    stripePriceId: "price_1TdJVQJLdo4fARiSXo8b9zvW",
+  },
 ];
 
 // ─── Maintenance plans (recurring) ──────────────────────────────────────────
@@ -216,6 +265,7 @@ export const MAINTENANCE: MaintenancePlan[] = [
       "Uptime monitoring",
       "Monthly health report",
     ],
+    stripePriceId: "price_1TdJE5JLdo4fARiSxtWkfWMq",
   },
   {
     slug: "care-plus",
@@ -230,6 +280,7 @@ export const MAINTENANCE: MaintenancePlan[] = [
       "Quarterly performance review",
     ],
     featured: true,
+    stripePriceId: "price_1TdJEeJLdo4fARiSpBMW554C",
   },
   {
     slug: "growth",
@@ -244,6 +295,7 @@ export const MAINTENANCE: MaintenancePlan[] = [
       "Monthly analytics report",
       "Quarterly strategy call",
     ],
+    stripePriceId: "price_1TdJF8JLdo4fARiSrOuOSKhe",
   },
 ];
 
@@ -302,6 +354,10 @@ export function getPackage(slug: string): WebDesignPackage | undefined {
 
 export function getAddon(slug: string): WebDesignAddon | undefined {
   return ADDONS.find((a) => a.slug === slug);
+}
+
+export function getMaintenancePlan(slug: string): MaintenancePlan | undefined {
+  return MAINTENANCE.find((m) => m.slug === slug);
 }
 
 /** Format a USD whole-dollar price for display. */
