@@ -89,11 +89,11 @@ function HeroSection() {
       />
 
       <Reveal>
-        {/* Tighter vertical rhythm than before: gap-6/gap-8 instead of gap-14,
-            top padding cut to roughly 30% on desktop (py-12 vs py-40) so the
-            text block sits higher against the wireframe. CTAs keep generous
-            spacing so the buttons still feel placed. */}
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 pb-12 pt-6 sm:px-10 md:gap-8 md:pb-32 md:pt-16">
+        {/* Cinematic desktop spacing restored: generous pt + pb on md+ so
+            the hero breathes against the wireframe-render. Mobile stays
+            tight. Extra mt-10 on the CTA cluster pushes the buttons
+            slightly lower from the body copy per brief. */}
+        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 pb-16 pt-10 sm:px-10 md:gap-10 md:pb-40 md:pt-28">
           <p className="min-w-0 font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
             Engineering-led technical design partner
           </p>
@@ -103,17 +103,15 @@ function HeroSection() {
               behind ambitious spaces.
             </span>
           </h1>
-          {/* Lighter body copy — ash at 75% reads brighter than the previous
-              smoke (#8c7f78) while staying premium against the dark hero. */}
+          {/* Lighter body copy — ash at 75% reads brighter than smoke. */}
           <p className="min-w-0 max-w-3xl font-serif text-lg leading-relaxed text-ash/75 sm:text-xl md:text-2xl">
             Lava Design supports architects, agencies, developers and
             project teams with coordinated engineering, documentation
             and design-development support across the built
             environment.
           </p>
-          <div className="mt-2 flex flex-wrap gap-4 md:mt-6">
-            {/* Primary: filled lava, WHITE text for max readability on the
-                molten orange. Secondary: ash/30 border for visible stroke. */}
+          <div className="mt-6 flex flex-wrap gap-4 md:mt-10">
+            {/* Primary: filled lava, WHITE text. Secondary: ash/40 stroke. */}
             <Link
               href="/contact"
               className="rounded-full bg-lava px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-white transition-colors hover:bg-ember hover:text-obsidian"
@@ -210,20 +208,27 @@ const IMPACT_CARD =
 const IMPACT_CARD_COMPACT =
   "group flex h-full flex-col gap-3 rounded-md border border-ash/15 bg-charcoal/60 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)] sm:gap-5 sm:p-7";
 
+// Card layout: integrated technical diagram fills a full-bleed banner at
+// the top of every card, then the number/title/label/body sit below.
+// The diagrams are large, intentional, and read as embedded engineering
+// drawings rather than tiny corner icons.
+
 function ProjectsCard() {
   return (
     <article className={IMPACT_CARD}>
-      <ProjectsMetaphor />
+      <DiagramBanner>
+        <ProjectsDiagram />
+      </DiagramBanner>
       <p className="font-display text-6xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash sm:text-7xl">
         120+
       </p>
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
         Projects
       </p>
-      <CardBody>
+      <p className="font-serif text-base leading-relaxed text-ash/75">
         Shaped, documented or delivered across the built environment —
         from single-site fit-outs to multi-discipline campus work.
-      </CardBody>
+      </p>
     </article>
   );
 }
@@ -231,16 +236,18 @@ function ProjectsCard() {
 function DisciplinesCard() {
   return (
     <article className={IMPACT_CARD_COMPACT}>
-      <DisciplinesMetaphor />
+      <DiagramBanner compact>
+        <DisciplinesDiagram />
+      </DiagramBanner>
       <p className="font-display text-4xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash sm:text-5xl">
         4+
       </p>
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
         Core engineering disciplines
       </p>
-      <CardBody>
+      <p className="font-serif text-sm leading-relaxed text-ash/75 sm:text-base">
         Structural, mechanical, electrical, civil — coordinated in-house.
-      </CardBody>
+      </p>
     </article>
   );
 }
@@ -248,16 +255,18 @@ function DisciplinesCard() {
 function StudiosCard() {
   return (
     <article className={IMPACT_CARD_COMPACT}>
-      <StudiosMetaphor />
+      <DiagramBanner compact>
+        <StudiosDiagram />
+      </DiagramBanner>
       <p className="font-display text-4xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash sm:text-5xl">
         2
       </p>
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
         US studios
       </p>
-      <CardBody>
+      <p className="font-serif text-sm leading-relaxed text-ash/75 sm:text-base">
         Houston and Orlando, with shared delivery across both.
-      </CardBody>
+      </p>
     </article>
   );
 }
@@ -265,16 +274,18 @@ function StudiosCard() {
 function YearsCard() {
   return (
     <article className={IMPACT_CARD_COMPACT}>
-      <YearsMetaphor />
+      <DiagramBanner compact>
+        <YearsDiagram />
+      </DiagramBanner>
       <p className="font-display text-4xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash sm:text-5xl">
         15+
       </p>
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
         Years of cross-disciplinary experience
       </p>
-      <CardBody>
+      <p className="font-serif text-sm leading-relaxed text-ash/75 sm:text-base">
         Senior leadership with a track record across markets.
-      </CardBody>
+      </p>
     </article>
   );
 }
@@ -282,7 +293,9 @@ function YearsCard() {
 function MultiRegionCard() {
   return (
     <article className={IMPACT_CARD}>
-      <RegionsMetaphor />
+      <DiagramBanner>
+        <RegionsDiagram />
+      </DiagramBanner>
       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
         <h3 className="font-display text-3xl font-black uppercase leading-tight tracking-[-0.01em] text-ash sm:text-4xl">
           Multi-region reach
@@ -291,237 +304,526 @@ function MultiRegionCard() {
           USA · UAE · GCC
         </span>
       </div>
-      <CardBody>
+      <p className="font-serif text-base leading-relaxed text-ash/75">
         Projects, clients and collaborators across key markets, with
         regional insight and cross-border delivery support.
-      </CardBody>
+      </p>
     </article>
   );
 }
 
 /**
- * Mobile-collapsible body for impact cards. On <sm the body is hidden
- * behind a "More" affordance using native <details> (no JS needed). On
- * sm+ the body always shows and the toggle disappears — desktop sees
- * full prose, mobile sees the icon/number/label first.
+ * Full-bleed banner at the top of an Impact card. Cancels the card's
+ * own padding via negative margins so the diagram sits edge-to-edge
+ * inside the card frame, then re-establishes a faint top-radius and a
+ * hairline divider underneath.
  *
- * Using <details> means the toggle is keyboard + screen-reader
- * accessible without a client component, which keeps the page server-
- * rendered end-to-end.
+ * - Featured cards (no `compact`): bg deeper, banner extends to p-7.
+ * - Compact cards (supporting): banner extends to p-5 on mobile, p-7 sm+.
+ *
+ * The bg-obsidian/60 inside the banner gives the diagram a slightly
+ * darker stage than the card body, so the technical lines pop without
+ * needing high stroke contrast.
  */
-function CardBody({ children }: { children: React.ReactNode }) {
+function DiagramBanner({
+  compact,
+  children,
+}: {
+  compact?: boolean;
+  children: React.ReactNode;
+}) {
   return (
-    <>
-      {/* Mobile: collapsed by default, toggleable. Hidden at sm+. */}
-      <details className="group/body sm:hidden">
-        <summary className="flex cursor-pointer list-none items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-smoke transition-colors hover:text-ash">
-          <span className="group-open/body:hidden">More</span>
-          <span className="hidden group-open/body:inline">Less</span>
-          <span
-            aria-hidden
-            className="text-ember transition-transform duration-200 group-open/body:rotate-45"
-          >
-            +
-          </span>
-        </summary>
-        <p className="mt-3 font-serif text-sm leading-relaxed text-ash/75">
-          {children}
-        </p>
-      </details>
-      {/* Desktop: always-on body. */}
-      <p className="hidden font-serif text-base leading-relaxed text-ash/75 sm:block">
-        {children}
-      </p>
-    </>
+    <div
+      className={[
+        "relative overflow-hidden rounded-t-[5px] border-b border-ash/10 bg-obsidian/60",
+        // aspect 2:1 matches the 240x120 SVG viewBox so the diagrams
+        // never stretch awkwardly.
+        "aspect-[2/1]",
+        compact
+          ? "-mx-5 -mt-5 sm:-mx-7 sm:-mt-7"
+          : "-mx-7 -mt-7",
+      ].join(" ")}
+    >
+      {children}
+    </div>
   );
 }
 
-// ─── Impact metaphors ───────────────────────────────────────────────────────
-// Lightweight inline SVGs. Each one's stroke colors carry an opacity that
-// lifts on group-hover via Tailwind's `group-hover:opacity-100` on the
-// wrapping <g>. Pure SVG, no external deps.
+// ─── Impact technical diagrams ──────────────────────────────────────────────
+//
+// Each diagram lives in a 240×120 viewBox (2:1, matches the banner).
+// Common visual rules:
+//   - Faint coordinate grid in the background (ash @ 6% opacity)
+//   - Thin technical-drawing strokes
+//   - Molten orange (lava) for primary highlight elements
+//   - Soft ash strokes for supporting structure
+//   - Small uppercase mono labels at low opacity
+// Hover lifts each diagram via group-hover utilities — no constant
+// animation except the Multi-region card's slow dash flow.
 
-function ProjectsMetaphor() {
-  // Three stacked drawing sheets — each offset diagonally, the topmost
-  // tinted lava to read as the "live" sheet. The front sheet floats
-  // gently up and down via the impact-anim-float keyframes.
+/** Shared SVG defs — faint grid pattern reused across all 5 diagrams. */
+function DiagramGrid({ id }: { id: string }) {
+  return (
+    <defs>
+      <pattern id={id} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+        <path
+          d="M 20 0 L 0 0 0 20"
+          fill="none"
+          stroke="rgba(244,237,229,0.06)"
+          strokeWidth="0.5"
+        />
+      </pattern>
+    </defs>
+  );
+}
+
+function ProjectsDiagram() {
+  // Five offset technical drawing sheets stacked from back to front.
+  // Each sheet shows faint plan-style line marks; the front sheet has
+  // a tiny title block ("A-101") and a molten orange edge that glows
+  // on hover. Sheets shift apart subtly on hover.
   return (
     <svg
       aria-hidden
-      viewBox="0 0 80 56"
-      className="h-16 w-24"
+      viewBox="0 0 240 120"
+      preserveAspectRatio="xMidYMid meet"
+      className="block h-full w-full"
       fill="none"
     >
-      <g
-        className="opacity-85 transition-opacity duration-300 group-hover:opacity-100"
-        strokeLinecap="square"
+      <DiagramGrid id="proj-grid" />
+      <rect width="240" height="120" fill="url(#proj-grid)" />
+
+      {/* Far back sheet */}
+      <g className="opacity-50 transition-transform duration-500 group-hover:-translate-x-1 group-hover:-translate-y-1">
+        <rect x="32" y="20" width="120" height="80" rx="1" stroke="rgba(244,237,229,0.20)" />
+      </g>
+      {/* Mid-back sheet */}
+      <g className="opacity-65 transition-transform duration-500 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">
+        <rect x="44" y="26" width="120" height="80" rx="1" stroke="rgba(244,237,229,0.28)" />
+      </g>
+      {/* Mid sheet */}
+      <g className="opacity-80 transition-transform duration-500">
+        <rect x="56" y="32" width="120" height="80" rx="1" stroke="rgba(244,237,229,0.40)" />
+      </g>
+      {/* Mid-front sheet */}
+      <g className="opacity-90 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:translate-y-0.5">
+        <rect x="68" y="38" width="120" height="80" rx="1" stroke="rgba(244,237,229,0.55)" />
+      </g>
+      {/* Front "live" sheet with the plan, title block, lava edge */}
+      <g className="transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1">
+        <rect
+          x="80"
+          y="44"
+          width="120"
+          height="80"
+          rx="1"
+          fill="rgba(10,7,6,0.65)"
+          stroke="rgba(255,81,0,0.85)"
+          strokeWidth="0.9"
+        />
+        {/* Inner drawing area lines — plan marks */}
+        <line x1="92" y1="58" x2="184" y2="58" stroke="rgba(244,237,229,0.55)" strokeWidth="0.5" />
+        <line x1="92" y1="68" x2="160" y2="68" stroke="rgba(244,237,229,0.35)" strokeWidth="0.5" />
+        <line x1="92" y1="78" x2="172" y2="78" stroke="rgba(244,237,229,0.35)" strokeWidth="0.5" />
+        <line x1="92" y1="88" x2="148" y2="88" stroke="rgba(244,237,229,0.35)" strokeWidth="0.5" />
+        <line x1="92" y1="98" x2="138" y2="98" stroke="rgba(244,237,229,0.3)" strokeWidth="0.5" />
+        {/* Annotation tick */}
+        <line x1="178" y1="58" x2="178" y2="98" stroke="rgba(244,237,229,0.25)" strokeWidth="0.4" />
+        <line x1="175" y1="58" x2="181" y2="58" stroke="rgba(244,237,229,0.4)" strokeWidth="0.5" />
+        <line x1="175" y1="98" x2="181" y2="98" stroke="rgba(244,237,229,0.4)" strokeWidth="0.5" />
+        {/* Title block — bottom-right */}
+        <rect
+          x="165"
+          y="107"
+          width="34"
+          height="14"
+          stroke="rgba(255,81,0,0.7)"
+          strokeWidth="0.6"
+        />
+        <text
+          x="182"
+          y="116.5"
+          textAnchor="middle"
+          fontFamily="var(--font-mono)"
+          fontSize="6"
+          fill="rgba(244,237,229,0.7)"
+          letterSpacing="0.8"
+        >
+          A-101
+        </text>
+        {/* Lava edge accent on the right edge — brightens on hover */}
+        <line
+          x1="200"
+          y1="44"
+          x2="200"
+          y2="124"
+          stroke="rgba(255,81,0,1)"
+          strokeWidth="1.2"
+          opacity="0.7"
+          className="transition-opacity duration-300 group-hover:opacity-100"
+        />
+      </g>
+
+      {/* Subtle mono label, top-left */}
+      <text
+        x="12"
+        y="14"
+        fontFamily="var(--font-mono)"
+        fontSize="6"
+        fill="rgba(244,237,229,0.35)"
+        letterSpacing="1.5"
+      >
+        SHEET LOG
+      </text>
+    </svg>
+  );
+}
+
+function RegionsDiagram() {
+  // Three nodes (USA / UAE apex / GCC) on a faint latitude grid,
+  // connected by molten orange arcs that flow slowly (the one
+  // constant motion in the section — calm and premium).
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 240 120"
+      preserveAspectRatio="xMidYMid meet"
+      className="block h-full w-full"
+      fill="none"
+    >
+      <DiagramGrid id="region-grid" />
+      <rect width="240" height="120" fill="url(#region-grid)" />
+
+      {/* Latitude-style horizontal lines, faint */}
+      <line x1="0" y1="40" x2="240" y2="40" stroke="rgba(244,237,229,0.08)" strokeWidth="0.4" strokeDasharray="2 4" />
+      <line x1="0" y1="70" x2="240" y2="70" stroke="rgba(244,237,229,0.10)" strokeWidth="0.4" strokeDasharray="2 4" />
+      <line x1="0" y1="100" x2="240" y2="100" stroke="rgba(244,237,229,0.08)" strokeWidth="0.4" strokeDasharray="2 4" />
+
+      {/* Connection arcs — flowing dash (the one constant calm motion) */}
+      <path
+        d="M 40 75 Q 90 30 130 50"
+        stroke="rgba(255,81,0,0.85)"
         strokeWidth="1.1"
-      >
-        <rect x="4" y="20" width="46" height="32" rx="1" stroke="rgba(245,176,75,0.55)" />
-        <rect x="13" y="12" width="46" height="32" rx="1" stroke="rgba(245,176,75,0.75)" />
-        <g className="impact-anim-float">
-          <rect
-            x="22"
-            y="4"
-            width="46"
-            height="32"
-            rx="1"
-            fill="rgba(255,77,28,0.10)"
-            stroke="rgba(255,77,28,0.95)"
-          />
-          {/* Drawing-line items on the front sheet */}
-          <line x1="28" y1="14" x2="60" y2="14" stroke="rgba(245,176,75,0.85)" strokeWidth="0.7" />
-          <line x1="28" y1="20" x2="52" y2="20" stroke="rgba(245,176,75,0.65)" strokeWidth="0.6" />
-          <line x1="28" y1="26" x2="56" y2="26" stroke="rgba(245,176,75,0.65)" strokeWidth="0.6" />
-          <line x1="28" y1="32" x2="48" y2="32" stroke="rgba(245,176,75,0.5)" strokeWidth="0.6" />
-        </g>
-      </g>
+        fill="none"
+        strokeDasharray="6 4"
+        className="impact-anim-flow"
+      />
+      <path
+        d="M 130 50 Q 175 70 205 80"
+        stroke="rgba(255,81,0,0.85)"
+        strokeWidth="1.1"
+        fill="none"
+        strokeDasharray="6 4"
+        className="impact-anim-flow"
+      />
+      {/* Static return connection — very faint */}
+      <line
+        x1="40"
+        y1="75"
+        x2="205"
+        y2="80"
+        stroke="rgba(244,237,229,0.18)"
+        strokeWidth="0.5"
+        strokeDasharray="2 4"
+      />
+
+      {/* USA — left */}
+      <RegionNode cx={40} cy={75} label="USA" />
+      {/* UAE — apex, slightly brighter */}
+      <RegionNode cx={130} cy={50} label="UAE" bright />
+      {/* GCC — right */}
+      <RegionNode cx={205} cy={80} label="GCC" />
     </svg>
   );
 }
 
-function DisciplinesMetaphor() {
-  // Four parallel system lines. The interface dots pulse in sequence
-  // (impact-anim-pulse-1..4) so the system reads as "live" without
-  // anything else moving.
+function RegionNode({
+  cx,
+  cy,
+  label,
+  bright,
+}: {
+  cx: number;
+  cy: number;
+  label: string;
+  bright?: boolean;
+}) {
+  const coreOpacity = bright ? 1 : 0.9;
+  const haloOpacity = bright ? 0.2 : 0.12;
   return (
-    <svg
-      aria-hidden
-      viewBox="0 0 80 56"
-      className="h-10 w-16 sm:h-14 sm:w-24"
-      fill="none"
-    >
-      <g
-        className="opacity-90 transition-opacity duration-300 group-hover:opacity-100"
-        strokeLinecap="round"
+    <g className="transition-opacity duration-300">
+      <circle cx={cx} cy={cy} r="14" fill={`rgba(255,81,0,${haloOpacity})`} />
+      <circle
+        cx={cx}
+        cy={cy}
+        r="8"
+        fill="none"
+        stroke="rgba(255,81,0,0.55)"
+        strokeWidth="0.6"
+        className="transition-all duration-300 group-hover:[r:10]"
+      />
+      <circle
+        cx={cx}
+        cy={cy}
+        r="3.5"
+        fill={`rgba(255,81,0,${coreOpacity})`}
+        className="transition-opacity duration-300 group-hover:opacity-100"
+      />
+      <text
+        x={cx}
+        y={cy + 22}
+        textAnchor="middle"
+        fontFamily="var(--font-mono)"
+        fontSize="7"
+        fill="rgba(244,237,229,0.6)"
+        letterSpacing="1.4"
       >
-        <line x1="4" y1="12" x2="76" y2="12" stroke="rgba(245,176,75,0.7)" strokeWidth="1.6" />
-        <line x1="10" y1="24" x2="76" y2="24" stroke="rgba(245,176,75,0.75)" strokeWidth="1.6" />
-        <line x1="4" y1="36" x2="70" y2="36" stroke="rgba(245,176,75,0.8)" strokeWidth="1.6" />
-        <line x1="10" y1="48" x2="76" y2="48" stroke="rgba(255,77,28,0.95)" strokeWidth="1.8" />
-        {/* Interface dots — pulse in sequence */}
-        <circle cx="40" cy="12" r="2" fill="rgba(245,176,75,0.95)" className="impact-anim-pulse impact-anim-pulse-1" />
-        <circle cx="40" cy="24" r="2" fill="rgba(245,176,75,0.95)" className="impact-anim-pulse impact-anim-pulse-2" />
-        <circle cx="40" cy="36" r="2" fill="rgba(245,176,75,0.95)" className="impact-anim-pulse impact-anim-pulse-3" />
-        <circle cx="40" cy="48" r="2" fill="rgba(255,77,28,1)" className="impact-anim-pulse impact-anim-pulse-4" />
-      </g>
-    </svg>
+        {label}
+      </text>
+    </g>
   );
 }
 
-function StudiosMetaphor() {
-  // Two glowing points connected by a thin line. The two inner dots
-  // alternate brightness so the eye reads a slow A/B pulse between
-  // Houston and Orlando.
+function DisciplinesDiagram() {
+  // Four horizontal building-system layers, each with a distinct line
+  // character (solid + grid for struct, segmented for mech, node-dotted
+  // for elec, dashed + ground hatch for civil). Hover brightens each
+  // layer in turn via staggered transition delays.
   return (
     <svg
       aria-hidden
-      viewBox="0 0 80 56"
-      className="h-10 w-16 sm:h-14 sm:w-24"
+      viewBox="0 0 240 120"
+      preserveAspectRatio="xMidYMid meet"
+      className="block h-full w-full"
       fill="none"
     >
-      <g className="opacity-90 transition-opacity duration-300 group-hover:opacity-100">
-        <line x1="14" y1="28" x2="66" y2="28" stroke="rgba(245,176,75,0.7)" strokeWidth="1.2" />
-        {/* Houston */}
-        <circle cx="14" cy="28" r="10" fill="rgba(255,77,28,0.12)" />
-        <circle cx="14" cy="28" r="6" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
-        <circle cx="14" cy="28" r="3" fill="rgba(255,77,28,1)" className="impact-anim-studio-a" />
-        {/* Orlando */}
-        <circle cx="66" cy="28" r="10" fill="rgba(255,77,28,0.12)" />
-        <circle cx="66" cy="28" r="6" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
-        <circle cx="66" cy="28" r="3" fill="rgba(255,77,28,1)" className="impact-anim-studio-b" />
-      </g>
-    </svg>
-  );
-}
+      <DiagramGrid id="disc-grid" />
+      <rect width="240" height="120" fill="url(#disc-grid)" />
 
-function YearsMetaphor() {
-  // Ruler / timeline. The "current year" marker at the end glows
-  // slowly (impact-anim-marker) to show the timeline is alive.
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 80 56"
-      className="h-10 w-16 sm:h-14 sm:w-24"
-      fill="none"
-    >
-      <g
-        className="opacity-90 transition-opacity duration-300 group-hover:opacity-100"
-        strokeLinecap="square"
-      >
-        <line x1="4" y1="40" x2="76" y2="40" stroke="rgba(245,176,75,0.7)" strokeWidth="1.1" />
-        {/* short year ticks */}
-        {[10, 16, 22, 34, 40, 52, 58, 64].map((x) => (
-          <line key={x} x1={x} y1="36" x2={x} y2="40" stroke="rgba(245,176,75,0.55)" strokeWidth="0.8" />
+      {/* Discipline labels — left column */}
+      <g fontFamily="var(--font-mono)" fontSize="6" fill="rgba(244,237,229,0.5)" letterSpacing="1.3">
+        <text x="12" y="22">STRUCT</text>
+        <text x="12" y="50">MECH</text>
+        <text x="12" y="78">ELEC</text>
+        <text x="12" y="106">CIVIL</text>
+      </g>
+
+      {/* STRUCT — solid baseline + small vertical beam ticks */}
+      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100 [transition-delay:0ms]">
+        <line x1="58" y1="20" x2="228" y2="20" stroke="rgba(244,237,229,0.6)" strokeWidth="0.9" />
+        {[70, 90, 110, 130, 150, 170, 190, 210].map((x) => (
+          <line key={x} x1={x} y1="16" x2={x} y2="24" stroke="rgba(244,237,229,0.5)" strokeWidth="0.5" />
         ))}
-        {/* milestone ticks at 5-year intervals */}
-        <line x1="6" y1="28" x2="6" y2="40" stroke="rgba(245,176,75,0.85)" strokeWidth="1.1" />
-        <line x1="28" y1="28" x2="28" y2="40" stroke="rgba(245,176,75,0.85)" strokeWidth="1.1" />
-        <line x1="46" y1="28" x2="46" y2="40" stroke="rgba(245,176,75,0.95)" strokeWidth="1.1" />
-        <line x1="70" y1="22" x2="70" y2="40" stroke="rgba(255,77,28,1)" strokeWidth="1.6" />
-        {/* current-year marker — glow + tiny scale pulse */}
-        <circle cx="70" cy="20" r="2.6" fill="rgba(255,77,28,1)" className="impact-anim-marker" />
+      </g>
+
+      {/* MECH — segmented duct line */}
+      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100 [transition-delay:80ms]">
+        <rect x="58" y="46" width="22" height="6" stroke="rgba(244,237,229,0.55)" strokeWidth="0.7" />
+        <line x1="80" y1="49" x2="98" y2="49" stroke="rgba(244,237,229,0.4)" strokeWidth="0.6" />
+        <rect x="98" y="46" width="22" height="6" stroke="rgba(244,237,229,0.55)" strokeWidth="0.7" />
+        <line x1="120" y1="49" x2="138" y2="49" stroke="rgba(244,237,229,0.4)" strokeWidth="0.6" />
+        <rect x="138" y="46" width="22" height="6" stroke="rgba(244,237,229,0.55)" strokeWidth="0.7" />
+        <line x1="160" y1="49" x2="178" y2="49" stroke="rgba(244,237,229,0.4)" strokeWidth="0.6" />
+        <rect x="178" y="46" width="22" height="6" stroke="rgba(244,237,229,0.55)" strokeWidth="0.7" />
+        <line x1="200" y1="49" x2="228" y2="49" stroke="rgba(244,237,229,0.4)" strokeWidth="0.6" />
+      </g>
+
+      {/* ELEC — thin line with circuit nodes */}
+      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100 [transition-delay:160ms]">
+        <line x1="58" y1="76" x2="228" y2="76" stroke="rgba(244,237,229,0.55)" strokeWidth="0.6" />
+        {[70, 100, 130, 160, 190, 220].map((x) => (
+          <circle key={x} cx={x} cy="76" r="2.2" fill="rgba(255,81,0,0.85)" />
+        ))}
+      </g>
+
+      {/* CIVIL — dashed grade line + small ground hatches below */}
+      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100 [transition-delay:240ms]">
+        <line
+          x1="58"
+          y1="104"
+          x2="228"
+          y2="104"
+          stroke="rgba(244,237,229,0.55)"
+          strokeWidth="0.7"
+          strokeDasharray="3 3"
+        />
+        {[64, 84, 104, 124, 144, 164, 184, 204, 224].map((x) => (
+          <line
+            key={x}
+            x1={x}
+            y1="106"
+            x2={x - 4}
+            y2="112"
+            stroke="rgba(244,237,229,0.35)"
+            strokeWidth="0.5"
+          />
+        ))}
       </g>
     </svg>
   );
 }
 
-function RegionsMetaphor() {
-  // Three glowing points (USA, UAE apex, GCC). Solid arcs carry an
-  // animated dash (impact-anim-flow) so the route reads as flowing
-  // connection traffic between regions.
+function StudiosDiagram() {
+  // Two studio nodes (HOUSTON, ORLANDO) on a faint coordinate grid,
+  // connected by a precise technical line with tick marks. Halos
+  // expand on hover.
   return (
     <svg
       aria-hidden
-      viewBox="0 0 200 60"
-      className="h-16 w-full max-w-[280px]"
+      viewBox="0 0 240 120"
+      preserveAspectRatio="xMidYMid meet"
+      className="block h-full w-full"
       fill="none"
     >
-      <g className="opacity-90 transition-opacity duration-300 group-hover:opacity-100">
-        {/* primary connection arcs with flowing dash */}
+      <DiagramGrid id="studio-grid" />
+      <rect width="240" height="120" fill="url(#studio-grid)" />
+
+      {/* Faint cross-hair guide lines through the center */}
+      <line x1="0" y1="60" x2="240" y2="60" stroke="rgba(244,237,229,0.08)" strokeWidth="0.4" />
+      <line x1="120" y1="0" x2="120" y2="120" stroke="rgba(244,237,229,0.08)" strokeWidth="0.4" />
+
+      {/* Connection between nodes */}
+      <line
+        x1="55"
+        y1="60"
+        x2="185"
+        y2="60"
+        stroke="rgba(255,81,0,0.75)"
+        strokeWidth="0.9"
+        className="transition-opacity duration-300 group-hover:opacity-100"
+      />
+      {/* Tick marks along the connection — small technical surveying marks */}
+      {[75, 95, 115, 135, 155, 175].map((x) => (
         <line
-          x1="20"
-          y1="36"
-          x2="110"
-          y2="20"
-          stroke="rgba(255,77,28,0.85)"
-          strokeWidth="1.2"
-          strokeDasharray="6 4"
-          className="impact-anim-flow"
+          key={x}
+          x1={x}
+          y1="57"
+          x2={x}
+          y2="63"
+          stroke="rgba(244,237,229,0.3)"
+          strokeWidth="0.4"
         />
-        <line
-          x1="110"
-          y1="20"
-          x2="180"
-          y2="40"
-          stroke="rgba(255,77,28,0.85)"
-          strokeWidth="1.2"
-          strokeDasharray="6 4"
-          className="impact-anim-flow"
-        />
-        {/* faint return connection — static */}
-        <line
-          x1="20"
-          y1="36"
-          x2="180"
-          y2="40"
-          stroke="rgba(245,176,75,0.4)"
-          strokeWidth="0.8"
-          strokeDasharray="2 3"
-        />
-        {/* USA */}
-        <circle cx="20" cy="36" r="12" fill="rgba(255,77,28,0.12)" />
-        <circle cx="20" cy="36" r="7" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
-        <circle cx="20" cy="36" r="3.5" fill="rgba(255,77,28,1)" />
-        {/* UAE — apex */}
-        <circle cx="110" cy="20" r="12" fill="rgba(255,77,28,0.12)" />
-        <circle cx="110" cy="20" r="7" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
-        <circle cx="110" cy="20" r="3.5" fill="rgba(255,77,28,1)" />
-        {/* GCC */}
-        <circle cx="180" cy="40" r="12" fill="rgba(255,77,28,0.12)" />
-        <circle cx="180" cy="40" r="7" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
-        <circle cx="180" cy="40" r="3.5" fill="rgba(255,77,28,1)" />
+      ))}
+
+      {/* Houston node — left */}
+      <StudioNode cx={55} cy={60} label="HOUSTON" />
+      {/* Orlando node — right */}
+      <StudioNode cx={185} cy={60} label="ORLANDO" />
+    </svg>
+  );
+}
+
+function StudioNode({
+  cx,
+  cy,
+  label,
+}: {
+  cx: number;
+  cy: number;
+  label: string;
+}) {
+  return (
+    <g>
+      <circle cx={cx} cy={cy} r="12" fill="rgba(255,81,0,0.12)" />
+      <circle
+        cx={cx}
+        cy={cy}
+        r="7"
+        fill="none"
+        stroke="rgba(255,81,0,0.6)"
+        strokeWidth="0.7"
+        className="transition-all duration-300 group-hover:[r:9]"
+      />
+      <circle cx={cx} cy={cy} r="3" fill="rgba(255,81,0,1)" />
+      <text
+        x={cx}
+        y={cy + 22}
+        textAnchor="middle"
+        fontFamily="var(--font-mono)"
+        fontSize="6"
+        fill="rgba(244,237,229,0.55)"
+        letterSpacing="1.3"
+      >
+        {label}
+      </text>
+    </g>
+  );
+}
+
+function YearsDiagram() {
+  // Technical measuring ruler. Long horizontal baseline + many fine
+  // ticks, three taller milestone ticks, current marker as a glowing
+  // node at the end with tiny START / BUILD / NOW labels above.
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 240 120"
+      preserveAspectRatio="xMidYMid meet"
+      className="block h-full w-full"
+      fill="none"
+    >
+      <DiagramGrid id="years-grid" />
+      <rect width="240" height="120" fill="url(#years-grid)" />
+
+      {/* Milestone labels above the line */}
+      <g fontFamily="var(--font-mono)" fontSize="6" fill="rgba(244,237,229,0.5)" letterSpacing="1.2" textAnchor="middle">
+        <text x="22" y="46">START</text>
+        <text x="120" y="46">BUILD</text>
+        <text x="222" y="46">NOW</text>
       </g>
+
+      {/* Baseline */}
+      <line
+        x1="18"
+        y1="72"
+        x2="226"
+        y2="72"
+        stroke="rgba(244,237,229,0.55)"
+        strokeWidth="0.8"
+      />
+
+      {/* Many small year ticks */}
+      {Array.from({ length: 21 }, (_, i) => 22 + i * 10).map((x) => (
+        <line
+          key={x}
+          x1={x}
+          y1="68"
+          x2={x}
+          y2="76"
+          stroke="rgba(244,237,229,0.4)"
+          strokeWidth="0.4"
+          className="transition-opacity duration-300 group-hover:opacity-100"
+        />
+      ))}
+
+      {/* Three taller milestone ticks */}
+      <line x1="22" y1="52" x2="22" y2="76" stroke="rgba(244,237,229,0.85)" strokeWidth="0.9" />
+      <line x1="120" y1="52" x2="120" y2="76" stroke="rgba(244,237,229,0.85)" strokeWidth="0.9" />
+      <line x1="222" y1="52" x2="222" y2="76" stroke="rgba(255,81,0,1)" strokeWidth="1.2" />
+
+      {/* Current marker — glowing node at the end */}
+      <circle cx="222" cy="48" r="9" fill="rgba(255,81,0,0.18)" />
+      <circle
+        cx="222"
+        cy="48"
+        r="3.5"
+        fill="rgba(255,81,0,1)"
+        className="transition-all duration-300 group-hover:[r:4.5]"
+      />
+
+      {/* Subtle baseline annotation tick (below) */}
+      <line x1="18" y1="86" x2="222" y2="86" stroke="rgba(244,237,229,0.18)" strokeWidth="0.4" strokeDasharray="2 3" />
+      <text
+        x="120"
+        y="100"
+        textAnchor="middle"
+        fontFamily="var(--font-mono)"
+        fontSize="6"
+        fill="rgba(244,237,229,0.4)"
+        letterSpacing="1.5"
+      >
+        15+ YEARS
+      </text>
     </svg>
   );
 }
@@ -702,11 +1004,33 @@ function FeaturedWorkSection({
         </div>
       </Reveal>
 
-      <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Mobile: horizontal CSS scroll-snap carousel — each card occupies
+              ~88% of the viewport so the next card peeks at the edge,
+              communicating swipeability without arrows or dots.
+            Desktop (sm+): standard responsive grid, 2-up at sm, 4-up at lg.
+          The negative -mx-6/-mx-10 + matching pl/pr on the carousel push
+          the scroll surface to the screen edges so the peek of the next
+          card lines up with the page padding. Reset at sm via mx-0. */}
+      <div
+        role="region"
+        aria-label="Featured projects (swipe to browse)"
+        className={[
+          "mt-16 -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-6 pb-4 pl-6 pr-6 scrollbar-hide sm:scroll-px-0",
+          "sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:pb-0 sm:pl-0 sm:pr-0",
+          "lg:grid-cols-4",
+        ].join(" ")}
+      >
         {featured.map((project, i) => (
-          <Reveal key={project.slug} delay={(i % 4) * 80}>
-            <WorkCard project={project} priority={i === 0} />
-          </Reveal>
+          <div
+            key={project.slug}
+            // Flex mode: each card is 88% of viewport width with snap-start.
+            // Grid mode (sm+): w-auto lets the grid layout decide.
+            className="w-[88%] shrink-0 snap-start sm:w-auto sm:shrink"
+          >
+            <Reveal delay={(i % 4) * 80}>
+              <WorkCard project={project} priority={i === 0} />
+            </Reveal>
+          </div>
         ))}
       </div>
     </section>
