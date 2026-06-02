@@ -103,17 +103,20 @@ function HeroSection() {
             environment.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link
-              href="/work"
-              className="rounded-full bg-lava px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-obsidian transition-colors hover:bg-ember"
-            >
-              Explore our work
-            </Link>
+            {/* Primary action for the .us audience is lead generation —
+                "Discuss a project" gets the filled-lava treatment, and
+                "Explore our work" sits as the bordered secondary. */}
             <Link
               href="/contact"
-              className="rounded-full border border-border px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-ash transition-colors hover:border-ash"
+              className="rounded-full bg-lava px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-obsidian transition-colors hover:bg-ember"
             >
               Discuss a project
+            </Link>
+            <Link
+              href="/work"
+              className="rounded-full border border-border px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-ash transition-colors hover:border-ash"
+            >
+              Explore our work
             </Link>
           </div>
         </div>
@@ -122,60 +125,20 @@ function HeroSection() {
   );
 }
 
-// ─── 2. Impact (stat cards) ─────────────────────────────────────────────────
+// ─── 2. Impact (asymmetric stat cards + SVG metaphors) ─────────────────────
 
 /**
- * Each stat is a card — NOT an animated counter. Structure prepared so a
- * later pass can attach a visual metaphor in the icon slot per the brief:
- *   projects     → stacked drawing sheets / project cards
- *   disciplines  → layered building systems
- *   studios      → connected location points
- *   years        → timeline / milestone line
- *   regions      → glowing connection map
- * The icon slot is rendered as a faint ember-tinted square for now.
+ * Asymmetric impact grid. Top row at lg+: a featured "120+ Projects" card
+ * (col-span-7) + a wide "Multi-region reach" card (col-span-5). Bottom row:
+ * three supporting cards (Disciplines / Studios / Years) at col-span-4
+ * each. Stacks to single-column below lg so the cards stay compact on
+ * mobile rather than ballooning.
+ *
+ * Each card carries its own small inline-SVG metaphor — no external lib.
+ * Hover is subtle: ember border tint, soft glow, 2px lift, the metaphor
+ * lines brighten via group-hover opacity. Per brief, deliberately not
+ * over-animated.
  */
-type ImpactStat = {
-  value: string;
-  label: string;
-  description: string;
-  /** Last stat ("Multi-region clients") isn't a number — display smaller. */
-  qualitative?: boolean;
-};
-
-const IMPACT_STATS: ImpactStat[] = [
-  {
-    value: "120+",
-    label: "Projects",
-    description:
-      "Shaped, documented or delivered across the built environment.",
-  },
-  {
-    value: "4+",
-    label: "Core engineering disciplines",
-    description:
-      "Structural, mechanical, electrical, civil — coordinated in-house.",
-  },
-  {
-    value: "2",
-    label: "US studios",
-    description:
-      "Houston and Orlando, with shared delivery across both.",
-  },
-  {
-    value: "15+",
-    label: "Years of cross-disciplinary experience",
-    description:
-      "Senior leadership with a track record across markets.",
-  },
-  {
-    value: "USA · UAE · GCC",
-    label: "Multi-region clients",
-    description:
-      "Project teams across markets, with regional insight on both sides.",
-    qualitative: true,
-  },
-];
-
 function ImpactSection() {
   return (
     <section className="relative border-y border-border bg-basalt">
@@ -194,46 +157,290 @@ function ImpactSection() {
           <p className="mt-8 max-w-3xl font-serif text-lg leading-relaxed text-smoke md:text-xl">
             From technical documentation to multidisciplinary project
             support, Lava Design brings structure, coordination and
-            clarity to projects across markets.
+            clarity to projects across sectors, disciplines and regions.
           </p>
         </Reveal>
 
-        <ul className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {IMPACT_STATS.map((stat, i) => (
-            <li key={stat.label}>
-              <Reveal delay={(i % 3) * 80}>
-                <article className="flex h-full flex-col gap-5 rounded-md border border-border bg-obsidian/40 p-7 transition-colors duration-300 hover:border-ember/40">
-                  {/* Icon slot — placeholder for the future visual metaphor */}
-                  <div
-                    aria-hidden
-                    className="h-10 w-10 rounded border border-border"
-                    style={{
-                      background:
-                        "radial-gradient(circle at 30% 30%, rgba(245,176,75,0.15), transparent 65%)",
-                    }}
-                  />
-                  <p
-                    className={
-                      stat.qualitative
-                        ? "font-display text-2xl font-black tracking-[-0.01em] text-ash sm:text-3xl"
-                        : "font-display text-5xl font-black tabular-nums tracking-[-0.01em] text-ash"
-                    }
-                  >
-                    {stat.value}
-                  </p>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
-                    {stat.label}
-                  </p>
-                  <p className="font-serif text-sm leading-relaxed text-smoke">
-                    {stat.description}
-                  </p>
-                </article>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-16 grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
+          {/* Top row: featured Projects + wide Multi-region */}
+          <Reveal className="lg:col-span-7">
+            <ProjectsCard />
+          </Reveal>
+          <Reveal delay={80} className="lg:col-span-5">
+            <MultiRegionCard />
+          </Reveal>
+          {/* Bottom row: 3 supporting cards */}
+          <Reveal delay={160} className="lg:col-span-4">
+            <DisciplinesCard />
+          </Reveal>
+          <Reveal delay={200} className="lg:col-span-4">
+            <StudiosCard />
+          </Reveal>
+          <Reveal delay={240} className="lg:col-span-4">
+            <YearsCard />
+          </Reveal>
+        </div>
       </div>
     </section>
+  );
+}
+
+/** Shared base classes for every impact card. The `group` class lets
+ *  child SVGs respond to card hover via group-hover utilities. */
+const IMPACT_CARD =
+  "group flex h-full flex-col gap-5 rounded-md border border-border bg-obsidian/40 p-7 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)]";
+
+function ProjectsCard() {
+  return (
+    <article className={IMPACT_CARD}>
+      <ProjectsMetaphor />
+      <p className="font-display text-6xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash sm:text-7xl">
+        120+
+      </p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
+        Projects
+      </p>
+      <p className="max-w-md font-serif text-base leading-relaxed text-smoke">
+        Shaped, documented or delivered across the built environment —
+        from single-site fit-outs to multi-discipline campus work.
+      </p>
+    </article>
+  );
+}
+
+function DisciplinesCard() {
+  return (
+    <article className={IMPACT_CARD}>
+      <DisciplinesMetaphor />
+      <p className="font-display text-5xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash">
+        4+
+      </p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
+        Core engineering disciplines
+      </p>
+      <p className="font-serif text-sm leading-relaxed text-smoke">
+        Structural, mechanical, electrical, civil — coordinated in-house.
+      </p>
+    </article>
+  );
+}
+
+function StudiosCard() {
+  return (
+    <article className={IMPACT_CARD}>
+      <StudiosMetaphor />
+      <p className="font-display text-5xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash">
+        2
+      </p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
+        US studios
+      </p>
+      <p className="font-serif text-sm leading-relaxed text-smoke">
+        Houston and Orlando, with shared delivery across both.
+      </p>
+    </article>
+  );
+}
+
+function YearsCard() {
+  return (
+    <article className={IMPACT_CARD}>
+      <YearsMetaphor />
+      <p className="font-display text-5xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash">
+        15+
+      </p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
+        Years of cross-disciplinary experience
+      </p>
+      <p className="font-serif text-sm leading-relaxed text-smoke">
+        Senior leadership with a track record across markets.
+      </p>
+    </article>
+  );
+}
+
+function MultiRegionCard() {
+  return (
+    <article className={IMPACT_CARD}>
+      <RegionsMetaphor />
+      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+        <h3 className="font-display text-3xl font-black uppercase leading-tight tracking-[-0.01em] text-ash sm:text-4xl">
+          Multi-region reach
+        </h3>
+        <span className="font-mono text-[11px] uppercase tracking-[0.32em] text-ember">
+          USA · UAE · GCC
+        </span>
+      </div>
+      <p className="max-w-md font-serif text-base leading-relaxed text-smoke">
+        Projects, clients and collaborators across key markets, with
+        regional insight and cross-border delivery support.
+      </p>
+    </article>
+  );
+}
+
+// ─── Impact metaphors ───────────────────────────────────────────────────────
+// Lightweight inline SVGs. Each one's stroke colors carry an opacity that
+// lifts on group-hover via Tailwind's `group-hover:opacity-100` on the
+// wrapping <g>. Pure SVG, no external deps.
+
+function ProjectsMetaphor() {
+  // Three stacked drawing sheets — each offset diagonally, the topmost
+  // tinted ember to read as the "live" sheet.
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 80 56"
+      className="h-14 w-20"
+      fill="none"
+    >
+      <g
+        className="opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        strokeLinecap="square"
+      >
+        <rect x="4" y="20" width="46" height="32" rx="1" stroke="rgba(245,176,75,0.45)" />
+        <rect x="13" y="12" width="46" height="32" rx="1" stroke="rgba(245,176,75,0.65)" />
+        <rect
+          x="22"
+          y="4"
+          width="46"
+          height="32"
+          rx="1"
+          fill="rgba(255,77,28,0.06)"
+          stroke="rgba(245,176,75,0.95)"
+        />
+        {/* Three faint horizontal "line items" on the front sheet to suggest a drawing */}
+        <line x1="28" y1="14" x2="58" y2="14" stroke="rgba(245,176,75,0.5)" strokeWidth="0.5" />
+        <line x1="28" y1="20" x2="50" y2="20" stroke="rgba(245,176,75,0.35)" strokeWidth="0.5" />
+        <line x1="28" y1="26" x2="54" y2="26" stroke="rgba(245,176,75,0.35)" strokeWidth="0.5" />
+      </g>
+    </svg>
+  );
+}
+
+function DisciplinesMetaphor() {
+  // Four parallel system lines stacked vertically. Subtle stagger in the
+  // start position so they read as separate "tracks" running across the
+  // card, like building-system runs in plan.
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 80 56"
+      className="h-14 w-20"
+      fill="none"
+    >
+      <g
+        className="opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        strokeLinecap="round"
+      >
+        <line x1="4" y1="12" x2="76" y2="12" stroke="rgba(245,176,75,0.45)" strokeWidth="1.5" />
+        <line x1="10" y1="24" x2="76" y2="24" stroke="rgba(245,176,75,0.6)" strokeWidth="1.5" />
+        <line x1="4" y1="36" x2="70" y2="36" stroke="rgba(245,176,75,0.75)" strokeWidth="1.5" />
+        <line x1="10" y1="48" x2="76" y2="48" stroke="rgba(255,77,28,0.9)" strokeWidth="1.5" />
+        {/* Small connection dots — discipline interfaces */}
+        <circle cx="40" cy="12" r="1.6" fill="rgba(245,176,75,0.8)" />
+        <circle cx="40" cy="24" r="1.6" fill="rgba(245,176,75,0.8)" />
+        <circle cx="40" cy="36" r="1.6" fill="rgba(245,176,75,0.8)" />
+        <circle cx="40" cy="48" r="1.6" fill="rgba(255,77,28,0.95)" />
+      </g>
+    </svg>
+  );
+}
+
+function StudiosMetaphor() {
+  // Two glowing points connected by a thin line. Light "halo" ring around
+  // each dot for the glow read.
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 80 56"
+      className="h-14 w-20"
+      fill="none"
+    >
+      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100">
+        <line x1="14" y1="28" x2="66" y2="28" stroke="rgba(245,176,75,0.55)" strokeWidth="1" />
+        {/* Houston */}
+        <circle cx="14" cy="28" r="9" fill="rgba(255,77,28,0.1)" />
+        <circle cx="14" cy="28" r="5" fill="none" stroke="rgba(255,77,28,0.45)" />
+        <circle cx="14" cy="28" r="2.5" fill="rgba(255,77,28,0.95)" />
+        {/* Orlando */}
+        <circle cx="66" cy="28" r="9" fill="rgba(255,77,28,0.1)" />
+        <circle cx="66" cy="28" r="5" fill="none" stroke="rgba(255,77,28,0.45)" />
+        <circle cx="66" cy="28" r="2.5" fill="rgba(255,77,28,0.95)" />
+      </g>
+    </svg>
+  );
+}
+
+function YearsMetaphor() {
+  // Ruler / timeline: horizontal baseline with regular tick marks, taller
+  // ticks at "milestone" intervals, an ember marker near the end.
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 80 56"
+      className="h-14 w-20"
+      fill="none"
+    >
+      <g
+        className="opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        strokeLinecap="square"
+      >
+        <line x1="4" y1="40" x2="76" y2="40" stroke="rgba(245,176,75,0.55)" strokeWidth="1" />
+        {/* short ticks at every 6px (small year units) */}
+        {[10, 16, 22, 34, 40, 52, 58, 64].map((x) => (
+          <line key={x} x1={x} y1="36" x2={x} y2="40" stroke="rgba(245,176,75,0.4)" strokeWidth="0.7" />
+        ))}
+        {/* taller "milestone" ticks at 5-year intervals */}
+        <line x1="6" y1="28" x2="6" y2="40" stroke="rgba(245,176,75,0.75)" strokeWidth="1" />
+        <line x1="28" y1="28" x2="28" y2="40" stroke="rgba(245,176,75,0.75)" strokeWidth="1" />
+        <line x1="46" y1="28" x2="46" y2="40" stroke="rgba(245,176,75,0.85)" strokeWidth="1" />
+        <line x1="70" y1="22" x2="70" y2="40" stroke="rgba(255,77,28,0.95)" strokeWidth="1.5" />
+        {/* the "current" marker */}
+        <circle cx="70" cy="20" r="2.2" fill="rgba(255,77,28,0.95)" />
+      </g>
+    </svg>
+  );
+}
+
+function RegionsMetaphor() {
+  // Three glowing points (USA, UAE, GCC) in a wide arrangement, connected
+  // by molten-orange lines. Wider viewBox to suit the wide card.
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 200 60"
+      className="h-16 w-full max-w-[260px]"
+      fill="none"
+    >
+      <g className="opacity-75 transition-opacity duration-300 group-hover:opacity-100">
+        {/* primary connection arcs — solid molten */}
+        <line x1="20" y1="36" x2="110" y2="20" stroke="rgba(255,77,28,0.65)" strokeWidth="1" />
+        <line x1="110" y1="20" x2="180" y2="40" stroke="rgba(255,77,28,0.65)" strokeWidth="1" />
+        {/* faint return connection */}
+        <line
+          x1="20"
+          y1="36"
+          x2="180"
+          y2="40"
+          stroke="rgba(245,176,75,0.35)"
+          strokeWidth="0.8"
+          strokeDasharray="2 3"
+        />
+        {/* USA */}
+        <circle cx="20" cy="36" r="11" fill="rgba(255,77,28,0.1)" />
+        <circle cx="20" cy="36" r="6" fill="none" stroke="rgba(255,77,28,0.5)" />
+        <circle cx="20" cy="36" r="3" fill="rgba(255,77,28,0.95)" />
+        {/* UAE — slightly higher, the apex */}
+        <circle cx="110" cy="20" r="11" fill="rgba(255,77,28,0.1)" />
+        <circle cx="110" cy="20" r="6" fill="none" stroke="rgba(255,77,28,0.5)" />
+        <circle cx="110" cy="20" r="3" fill="rgba(255,77,28,0.95)" />
+        {/* GCC */}
+        <circle cx="180" cy="40" r="11" fill="rgba(255,77,28,0.1)" />
+        <circle cx="180" cy="40" r="6" fill="none" stroke="rgba(255,77,28,0.5)" />
+        <circle cx="180" cy="40" r="3" fill="rgba(255,77,28,0.95)" />
+      </g>
+    </svg>
   );
 }
 
