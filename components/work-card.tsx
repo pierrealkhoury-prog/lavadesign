@@ -53,11 +53,13 @@ export function WorkCard({
             priority={priority}
           />
         ) : null}
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-obsidian/20 to-transparent" />
+        {/* Discipline label as a translucent pill in the top-left corner —
+            higher contrast than the previous overlaid microcaps text. */}
+        <span className="absolute left-4 top-4 inline-flex rounded-full border border-ash/20 bg-obsidian/70 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ash backdrop-blur">
+          {getDisciplineLabel(project.discipline)}
+        </span>
         <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ash/80">
-            {getDisciplineLabel(project.discipline)}
-          </p>
           <h3 className="font-display text-2xl font-black uppercase leading-tight tracking-[-0.01em] text-ash">
             {project.title}
           </h3>

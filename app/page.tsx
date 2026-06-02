@@ -50,7 +50,10 @@ export default function HomePage() {
 function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden">
-      <div className="relative aspect-video w-full md:absolute md:inset-0 md:-z-20 md:aspect-auto md:h-full">
+      {/* Media container — mobile: in-flow 3:2 banner (taller than 16:9
+          so the wireframe-render has more presence above the fold).
+          Desktop: absolute fill behind the headline overlay. */}
+      <div className="relative aspect-[3/2] w-full overflow-hidden md:absolute md:inset-0 md:-z-20 md:aspect-auto md:h-full">
         <picture>
           <source type="image/webp" srcSet="/home/hero-desktop.webp" />
           <source type="image/jpeg" srcSet="/home/hero-desktop.jpg" />
@@ -59,7 +62,7 @@ function HeroSection() {
             src="/home/hero-desktop.jpg"
             alt=""
             aria-hidden
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover motion-safe:scale-110 md:motion-safe:scale-100"
             fetchPriority="high"
           />
         </picture>
@@ -71,7 +74,7 @@ function HeroSection() {
           playsInline
           preload="auto"
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden motion-safe:scale-110 md:motion-safe:scale-100"
         />
       </div>
 
@@ -86,35 +89,40 @@ function HeroSection() {
       />
 
       <Reveal>
-        <div className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-16 sm:px-10 md:py-40">
+        {/* Tighter vertical rhythm than before: gap-6/gap-8 instead of gap-14,
+            top padding cut to roughly 30% on desktop (py-12 vs py-40) so the
+            text block sits higher against the wireframe. CTAs keep generous
+            spacing so the buttons still feel placed. */}
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 pb-12 pt-6 sm:px-10 md:gap-8 md:pb-32 md:pt-16">
           <p className="min-w-0 font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
             Engineering-led technical design partner
           </p>
           <h1 className="min-w-0 max-w-5xl font-display text-5xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-7xl md:text-8xl">
             Engineering the technical backbone
-            <span className="block font-serif text-4xl font-normal italic tracking-normal text-ember sm:text-5xl md:text-6xl">
+            <span className="mt-2 block font-serif text-4xl font-normal italic tracking-normal text-ember sm:text-5xl md:text-6xl">
               behind ambitious spaces.
             </span>
           </h1>
-          <p className="min-w-0 max-w-3xl font-serif text-xl leading-relaxed text-smoke md:text-2xl">
+          {/* Lighter body copy — ash at 75% reads brighter than the previous
+              smoke (#8c7f78) while staying premium against the dark hero. */}
+          <p className="min-w-0 max-w-3xl font-serif text-lg leading-relaxed text-ash/75 sm:text-xl md:text-2xl">
             Lava Design supports architects, agencies, developers and
             project teams with coordinated engineering, documentation
             and design-development support across the built
             environment.
           </p>
-          <div className="flex flex-wrap gap-4">
-            {/* Primary action for the .us audience is lead generation —
-                "Discuss a project" gets the filled-lava treatment, and
-                "Explore our work" sits as the bordered secondary. */}
+          <div className="mt-2 flex flex-wrap gap-4 md:mt-6">
+            {/* Primary: filled lava, WHITE text for max readability on the
+                molten orange. Secondary: ash/30 border for visible stroke. */}
             <Link
               href="/contact"
-              className="rounded-full bg-lava px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-obsidian transition-colors hover:bg-ember"
+              className="rounded-full bg-lava px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-white transition-colors hover:bg-ember hover:text-obsidian"
             >
               Discuss a project
             </Link>
             <Link
               href="/work"
-              className="rounded-full border border-border px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-ash transition-colors hover:border-ash"
+              className="rounded-full border border-ash/40 px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-ash transition-colors hover:border-ash hover:bg-ash/5"
             >
               Explore our work
             </Link>
@@ -162,14 +170,14 @@ function ImpactSection() {
         </Reveal>
 
         <div className="mt-16 grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
-          {/* Top row: featured Projects + wide Multi-region */}
-          <Reveal className="lg:col-span-7">
+          {/* Top row: two equal-width featured cards (6/6 on lg). */}
+          <Reveal className="lg:col-span-6">
             <ProjectsCard />
           </Reveal>
-          <Reveal delay={80} className="lg:col-span-5">
+          <Reveal delay={80} className="lg:col-span-6">
             <MultiRegionCard />
           </Reveal>
-          {/* Bottom row: 3 supporting cards */}
+          {/* Bottom row: three equal-width supporting cards (4/4/4 on lg). */}
           <Reveal delay={160} className="lg:col-span-4">
             <DisciplinesCard />
           </Reveal>
@@ -186,16 +194,21 @@ function ImpactSection() {
 }
 
 /** Shared base classes for every impact card. The `group` class lets
- *  child SVGs respond to card hover via group-hover utilities. */
+ *  child SVGs respond to card hover via group-hover utilities.
+ *  - bg-charcoal/60 — slightly lighter than the basalt section background
+ *    so cards visibly raise off the page.
+ *  - border-ash/15 — subtle warm-light edge that reads as a hairline on
+ *    the dark background without feeling heavy.
+ *  - Hover keeps the existing ember tint + glow + 2px lift. */
 const IMPACT_CARD =
-  "group flex h-full flex-col gap-5 rounded-md border border-border bg-obsidian/40 p-7 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)]";
+  "group flex h-full flex-col gap-5 rounded-md border border-ash/15 bg-charcoal/60 p-7 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)]";
 
 /** Compact variant for the three supporting cards. Tighter padding +
  *  gap + smaller number text on mobile so the vertical rhythm doesn't
  *  drag. Reverts to the full IMPACT_CARD spacing from sm+ — desktop
  *  stays unchanged. */
 const IMPACT_CARD_COMPACT =
-  "group flex h-full flex-col gap-3 rounded-md border border-border bg-obsidian/40 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)] sm:gap-5 sm:p-7";
+  "group flex h-full flex-col gap-3 rounded-md border border-ash/15 bg-charcoal/60 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)] sm:gap-5 sm:p-7";
 
 function ProjectsCard() {
   return (
@@ -207,10 +220,10 @@ function ProjectsCard() {
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
         Projects
       </p>
-      <p className="max-w-md font-serif text-base leading-relaxed text-smoke">
+      <CardBody>
         Shaped, documented or delivered across the built environment —
         from single-site fit-outs to multi-discipline campus work.
-      </p>
+      </CardBody>
     </article>
   );
 }
@@ -225,9 +238,9 @@ function DisciplinesCard() {
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
         Core engineering disciplines
       </p>
-      <p className="font-serif text-sm leading-relaxed text-smoke">
+      <CardBody>
         Structural, mechanical, electrical, civil — coordinated in-house.
-      </p>
+      </CardBody>
     </article>
   );
 }
@@ -242,9 +255,9 @@ function StudiosCard() {
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
         US studios
       </p>
-      <p className="font-serif text-sm leading-relaxed text-smoke">
+      <CardBody>
         Houston and Orlando, with shared delivery across both.
-      </p>
+      </CardBody>
     </article>
   );
 }
@@ -259,9 +272,9 @@ function YearsCard() {
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
         Years of cross-disciplinary experience
       </p>
-      <p className="font-serif text-sm leading-relaxed text-smoke">
+      <CardBody>
         Senior leadership with a track record across markets.
-      </p>
+      </CardBody>
     </article>
   );
 }
@@ -278,11 +291,48 @@ function MultiRegionCard() {
           USA · UAE · GCC
         </span>
       </div>
-      <p className="max-w-md font-serif text-base leading-relaxed text-smoke">
+      <CardBody>
         Projects, clients and collaborators across key markets, with
         regional insight and cross-border delivery support.
-      </p>
+      </CardBody>
     </article>
+  );
+}
+
+/**
+ * Mobile-collapsible body for impact cards. On <sm the body is hidden
+ * behind a "More" affordance using native <details> (no JS needed). On
+ * sm+ the body always shows and the toggle disappears — desktop sees
+ * full prose, mobile sees the icon/number/label first.
+ *
+ * Using <details> means the toggle is keyboard + screen-reader
+ * accessible without a client component, which keeps the page server-
+ * rendered end-to-end.
+ */
+function CardBody({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      {/* Mobile: collapsed by default, toggleable. Hidden at sm+. */}
+      <details className="group/body sm:hidden">
+        <summary className="flex cursor-pointer list-none items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-smoke transition-colors hover:text-ash">
+          <span className="group-open/body:hidden">More</span>
+          <span className="hidden group-open/body:inline">Less</span>
+          <span
+            aria-hidden
+            className="text-ember transition-transform duration-200 group-open/body:rotate-45"
+          >
+            +
+          </span>
+        </summary>
+        <p className="mt-3 font-serif text-sm leading-relaxed text-ash/75">
+          {children}
+        </p>
+      </details>
+      {/* Desktop: always-on body. */}
+      <p className="hidden font-serif text-base leading-relaxed text-ash/75 sm:block">
+        {children}
+      </p>
+    </>
   );
 }
 
@@ -293,161 +343,184 @@ function MultiRegionCard() {
 
 function ProjectsMetaphor() {
   // Three stacked drawing sheets — each offset diagonally, the topmost
-  // tinted ember to read as the "live" sheet.
+  // tinted lava to read as the "live" sheet. The front sheet floats
+  // gently up and down via the impact-anim-float keyframes.
   return (
     <svg
       aria-hidden
       viewBox="0 0 80 56"
-      className="h-14 w-20"
+      className="h-16 w-24"
       fill="none"
     >
       <g
-        className="opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        className="opacity-85 transition-opacity duration-300 group-hover:opacity-100"
         strokeLinecap="square"
+        strokeWidth="1.1"
       >
-        <rect x="4" y="20" width="46" height="32" rx="1" stroke="rgba(245,176,75,0.45)" />
-        <rect x="13" y="12" width="46" height="32" rx="1" stroke="rgba(245,176,75,0.65)" />
-        <rect
-          x="22"
-          y="4"
-          width="46"
-          height="32"
-          rx="1"
-          fill="rgba(255,77,28,0.06)"
-          stroke="rgba(245,176,75,0.95)"
-        />
-        {/* Three faint horizontal "line items" on the front sheet to suggest a drawing */}
-        <line x1="28" y1="14" x2="58" y2="14" stroke="rgba(245,176,75,0.5)" strokeWidth="0.5" />
-        <line x1="28" y1="20" x2="50" y2="20" stroke="rgba(245,176,75,0.35)" strokeWidth="0.5" />
-        <line x1="28" y1="26" x2="54" y2="26" stroke="rgba(245,176,75,0.35)" strokeWidth="0.5" />
+        <rect x="4" y="20" width="46" height="32" rx="1" stroke="rgba(245,176,75,0.55)" />
+        <rect x="13" y="12" width="46" height="32" rx="1" stroke="rgba(245,176,75,0.75)" />
+        <g className="impact-anim-float">
+          <rect
+            x="22"
+            y="4"
+            width="46"
+            height="32"
+            rx="1"
+            fill="rgba(255,77,28,0.10)"
+            stroke="rgba(255,77,28,0.95)"
+          />
+          {/* Drawing-line items on the front sheet */}
+          <line x1="28" y1="14" x2="60" y2="14" stroke="rgba(245,176,75,0.85)" strokeWidth="0.7" />
+          <line x1="28" y1="20" x2="52" y2="20" stroke="rgba(245,176,75,0.65)" strokeWidth="0.6" />
+          <line x1="28" y1="26" x2="56" y2="26" stroke="rgba(245,176,75,0.65)" strokeWidth="0.6" />
+          <line x1="28" y1="32" x2="48" y2="32" stroke="rgba(245,176,75,0.5)" strokeWidth="0.6" />
+        </g>
       </g>
     </svg>
   );
 }
 
 function DisciplinesMetaphor() {
-  // Four parallel system lines stacked vertically. Subtle stagger in the
-  // start position so they read as separate "tracks" running across the
-  // card, like building-system runs in plan. Sized smaller on mobile
-  // (supporting card) to keep the vertical rhythm tight.
+  // Four parallel system lines. The interface dots pulse in sequence
+  // (impact-anim-pulse-1..4) so the system reads as "live" without
+  // anything else moving.
   return (
     <svg
       aria-hidden
       viewBox="0 0 80 56"
-      className="h-10 w-14 sm:h-14 sm:w-20"
+      className="h-10 w-16 sm:h-14 sm:w-24"
       fill="none"
     >
       <g
-        className="opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        className="opacity-90 transition-opacity duration-300 group-hover:opacity-100"
         strokeLinecap="round"
       >
-        <line x1="4" y1="12" x2="76" y2="12" stroke="rgba(245,176,75,0.45)" strokeWidth="1.5" />
-        <line x1="10" y1="24" x2="76" y2="24" stroke="rgba(245,176,75,0.6)" strokeWidth="1.5" />
-        <line x1="4" y1="36" x2="70" y2="36" stroke="rgba(245,176,75,0.75)" strokeWidth="1.5" />
-        <line x1="10" y1="48" x2="76" y2="48" stroke="rgba(255,77,28,0.9)" strokeWidth="1.5" />
-        {/* Small connection dots — discipline interfaces */}
-        <circle cx="40" cy="12" r="1.6" fill="rgba(245,176,75,0.8)" />
-        <circle cx="40" cy="24" r="1.6" fill="rgba(245,176,75,0.8)" />
-        <circle cx="40" cy="36" r="1.6" fill="rgba(245,176,75,0.8)" />
-        <circle cx="40" cy="48" r="1.6" fill="rgba(255,77,28,0.95)" />
+        <line x1="4" y1="12" x2="76" y2="12" stroke="rgba(245,176,75,0.7)" strokeWidth="1.6" />
+        <line x1="10" y1="24" x2="76" y2="24" stroke="rgba(245,176,75,0.75)" strokeWidth="1.6" />
+        <line x1="4" y1="36" x2="70" y2="36" stroke="rgba(245,176,75,0.8)" strokeWidth="1.6" />
+        <line x1="10" y1="48" x2="76" y2="48" stroke="rgba(255,77,28,0.95)" strokeWidth="1.8" />
+        {/* Interface dots — pulse in sequence */}
+        <circle cx="40" cy="12" r="2" fill="rgba(245,176,75,0.95)" className="impact-anim-pulse impact-anim-pulse-1" />
+        <circle cx="40" cy="24" r="2" fill="rgba(245,176,75,0.95)" className="impact-anim-pulse impact-anim-pulse-2" />
+        <circle cx="40" cy="36" r="2" fill="rgba(245,176,75,0.95)" className="impact-anim-pulse impact-anim-pulse-3" />
+        <circle cx="40" cy="48" r="2" fill="rgba(255,77,28,1)" className="impact-anim-pulse impact-anim-pulse-4" />
       </g>
     </svg>
   );
 }
 
 function StudiosMetaphor() {
-  // Two glowing points connected by a thin line. Light "halo" ring around
-  // each dot for the glow read. Smaller on mobile.
+  // Two glowing points connected by a thin line. The two inner dots
+  // alternate brightness so the eye reads a slow A/B pulse between
+  // Houston and Orlando.
   return (
     <svg
       aria-hidden
       viewBox="0 0 80 56"
-      className="h-10 w-14 sm:h-14 sm:w-20"
+      className="h-10 w-16 sm:h-14 sm:w-24"
       fill="none"
     >
-      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100">
-        <line x1="14" y1="28" x2="66" y2="28" stroke="rgba(245,176,75,0.55)" strokeWidth="1" />
+      <g className="opacity-90 transition-opacity duration-300 group-hover:opacity-100">
+        <line x1="14" y1="28" x2="66" y2="28" stroke="rgba(245,176,75,0.7)" strokeWidth="1.2" />
         {/* Houston */}
-        <circle cx="14" cy="28" r="9" fill="rgba(255,77,28,0.1)" />
-        <circle cx="14" cy="28" r="5" fill="none" stroke="rgba(255,77,28,0.45)" />
-        <circle cx="14" cy="28" r="2.5" fill="rgba(255,77,28,0.95)" />
+        <circle cx="14" cy="28" r="10" fill="rgba(255,77,28,0.12)" />
+        <circle cx="14" cy="28" r="6" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
+        <circle cx="14" cy="28" r="3" fill="rgba(255,77,28,1)" className="impact-anim-studio-a" />
         {/* Orlando */}
-        <circle cx="66" cy="28" r="9" fill="rgba(255,77,28,0.1)" />
-        <circle cx="66" cy="28" r="5" fill="none" stroke="rgba(255,77,28,0.45)" />
-        <circle cx="66" cy="28" r="2.5" fill="rgba(255,77,28,0.95)" />
+        <circle cx="66" cy="28" r="10" fill="rgba(255,77,28,0.12)" />
+        <circle cx="66" cy="28" r="6" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
+        <circle cx="66" cy="28" r="3" fill="rgba(255,77,28,1)" className="impact-anim-studio-b" />
       </g>
     </svg>
   );
 }
 
 function YearsMetaphor() {
-  // Ruler / timeline: horizontal baseline with regular tick marks, taller
-  // ticks at "milestone" intervals, an ember marker near the end. Smaller
-  // on mobile.
+  // Ruler / timeline. The "current year" marker at the end glows
+  // slowly (impact-anim-marker) to show the timeline is alive.
   return (
     <svg
       aria-hidden
       viewBox="0 0 80 56"
-      className="h-10 w-14 sm:h-14 sm:w-20"
+      className="h-10 w-16 sm:h-14 sm:w-24"
       fill="none"
     >
       <g
-        className="opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        className="opacity-90 transition-opacity duration-300 group-hover:opacity-100"
         strokeLinecap="square"
       >
-        <line x1="4" y1="40" x2="76" y2="40" stroke="rgba(245,176,75,0.55)" strokeWidth="1" />
-        {/* short ticks at every 6px (small year units) */}
+        <line x1="4" y1="40" x2="76" y2="40" stroke="rgba(245,176,75,0.7)" strokeWidth="1.1" />
+        {/* short year ticks */}
         {[10, 16, 22, 34, 40, 52, 58, 64].map((x) => (
-          <line key={x} x1={x} y1="36" x2={x} y2="40" stroke="rgba(245,176,75,0.4)" strokeWidth="0.7" />
+          <line key={x} x1={x} y1="36" x2={x} y2="40" stroke="rgba(245,176,75,0.55)" strokeWidth="0.8" />
         ))}
-        {/* taller "milestone" ticks at 5-year intervals */}
-        <line x1="6" y1="28" x2="6" y2="40" stroke="rgba(245,176,75,0.75)" strokeWidth="1" />
-        <line x1="28" y1="28" x2="28" y2="40" stroke="rgba(245,176,75,0.75)" strokeWidth="1" />
-        <line x1="46" y1="28" x2="46" y2="40" stroke="rgba(245,176,75,0.85)" strokeWidth="1" />
-        <line x1="70" y1="22" x2="70" y2="40" stroke="rgba(255,77,28,0.95)" strokeWidth="1.5" />
-        {/* the "current" marker */}
-        <circle cx="70" cy="20" r="2.2" fill="rgba(255,77,28,0.95)" />
+        {/* milestone ticks at 5-year intervals */}
+        <line x1="6" y1="28" x2="6" y2="40" stroke="rgba(245,176,75,0.85)" strokeWidth="1.1" />
+        <line x1="28" y1="28" x2="28" y2="40" stroke="rgba(245,176,75,0.85)" strokeWidth="1.1" />
+        <line x1="46" y1="28" x2="46" y2="40" stroke="rgba(245,176,75,0.95)" strokeWidth="1.1" />
+        <line x1="70" y1="22" x2="70" y2="40" stroke="rgba(255,77,28,1)" strokeWidth="1.6" />
+        {/* current-year marker — glow + tiny scale pulse */}
+        <circle cx="70" cy="20" r="2.6" fill="rgba(255,77,28,1)" className="impact-anim-marker" />
       </g>
     </svg>
   );
 }
 
 function RegionsMetaphor() {
-  // Three glowing points (USA, UAE, GCC) in a wide arrangement, connected
-  // by molten-orange lines. Wider viewBox to suit the wide card.
+  // Three glowing points (USA, UAE apex, GCC). Solid arcs carry an
+  // animated dash (impact-anim-flow) so the route reads as flowing
+  // connection traffic between regions.
   return (
     <svg
       aria-hidden
       viewBox="0 0 200 60"
-      className="h-16 w-full max-w-[260px]"
+      className="h-16 w-full max-w-[280px]"
       fill="none"
     >
-      <g className="opacity-75 transition-opacity duration-300 group-hover:opacity-100">
-        {/* primary connection arcs — solid molten */}
-        <line x1="20" y1="36" x2="110" y2="20" stroke="rgba(255,77,28,0.65)" strokeWidth="1" />
-        <line x1="110" y1="20" x2="180" y2="40" stroke="rgba(255,77,28,0.65)" strokeWidth="1" />
-        {/* faint return connection */}
+      <g className="opacity-90 transition-opacity duration-300 group-hover:opacity-100">
+        {/* primary connection arcs with flowing dash */}
+        <line
+          x1="20"
+          y1="36"
+          x2="110"
+          y2="20"
+          stroke="rgba(255,77,28,0.85)"
+          strokeWidth="1.2"
+          strokeDasharray="6 4"
+          className="impact-anim-flow"
+        />
+        <line
+          x1="110"
+          y1="20"
+          x2="180"
+          y2="40"
+          stroke="rgba(255,77,28,0.85)"
+          strokeWidth="1.2"
+          strokeDasharray="6 4"
+          className="impact-anim-flow"
+        />
+        {/* faint return connection — static */}
         <line
           x1="20"
           y1="36"
           x2="180"
           y2="40"
-          stroke="rgba(245,176,75,0.35)"
+          stroke="rgba(245,176,75,0.4)"
           strokeWidth="0.8"
           strokeDasharray="2 3"
         />
         {/* USA */}
-        <circle cx="20" cy="36" r="11" fill="rgba(255,77,28,0.1)" />
-        <circle cx="20" cy="36" r="6" fill="none" stroke="rgba(255,77,28,0.5)" />
-        <circle cx="20" cy="36" r="3" fill="rgba(255,77,28,0.95)" />
-        {/* UAE — slightly higher, the apex */}
-        <circle cx="110" cy="20" r="11" fill="rgba(255,77,28,0.1)" />
-        <circle cx="110" cy="20" r="6" fill="none" stroke="rgba(255,77,28,0.5)" />
-        <circle cx="110" cy="20" r="3" fill="rgba(255,77,28,0.95)" />
+        <circle cx="20" cy="36" r="12" fill="rgba(255,77,28,0.12)" />
+        <circle cx="20" cy="36" r="7" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
+        <circle cx="20" cy="36" r="3.5" fill="rgba(255,77,28,1)" />
+        {/* UAE — apex */}
+        <circle cx="110" cy="20" r="12" fill="rgba(255,77,28,0.12)" />
+        <circle cx="110" cy="20" r="7" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
+        <circle cx="110" cy="20" r="3.5" fill="rgba(255,77,28,1)" />
         {/* GCC */}
-        <circle cx="180" cy="40" r="11" fill="rgba(255,77,28,0.1)" />
-        <circle cx="180" cy="40" r="6" fill="none" stroke="rgba(255,77,28,0.5)" />
-        <circle cx="180" cy="40" r="3" fill="rgba(255,77,28,0.95)" />
+        <circle cx="180" cy="40" r="12" fill="rgba(255,77,28,0.12)" />
+        <circle cx="180" cy="40" r="7" fill="none" stroke="rgba(255,77,28,0.6)" strokeWidth="0.8" />
+        <circle cx="180" cy="40" r="3.5" fill="rgba(255,77,28,1)" />
       </g>
     </svg>
   );
@@ -481,11 +554,13 @@ function PracticeSection() {
         </h2>
       </Reveal>
 
-      <ul className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
+      {/* Equal-width / equal-height cards matching the Impact section's
+          contrast (charcoal raise on the obsidian band) and border. */}
+      <ul className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6">
         {PRACTICE.map((c, i) => (
           <li key={c.title}>
             <Reveal delay={i * 100}>
-              <article className="flex h-full flex-col gap-5 rounded-md border border-border bg-basalt p-8 transition-colors duration-300 hover:border-ember/40">
+              <article className="flex h-full flex-col gap-5 rounded-md border border-ash/15 bg-charcoal/60 p-7 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)]">
                 <span
                   aria-hidden
                   className="font-mono text-xs tabular-nums text-ember"
@@ -495,7 +570,7 @@ function PracticeSection() {
                 <h3 className="font-display text-2xl font-black uppercase tracking-[-0.01em] text-ash">
                   {c.title}
                 </h3>
-                <p className="font-serif text-base leading-relaxed text-smoke">
+                <p className="font-serif text-base leading-relaxed text-ash/75">
                   {c.body}
                 </p>
               </article>
@@ -555,25 +630,26 @@ function ServicesSnapshotSection() {
           </div>
         </Reveal>
 
-        <ul className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* 2 columns from xs, 4 columns from lg+. Cards are equal-height
+            via flex h-full. Border + bg match the Impact / Practice cards
+            for consistent contrast across all snapshot blocks. */}
+        <ul className="mt-16 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
           {SERVICES_SNAPSHOT.map((svc, i) => (
             <li key={svc.title}>
               <Reveal delay={(i % 4) * 60}>
                 <Link
                   href={svc.href}
-                  className="group flex h-full flex-col justify-between gap-6 rounded-md border border-border bg-obsidian/40 p-6 transition-colors duration-300 hover:border-ember/40"
+                  className="group flex h-full flex-col justify-between gap-6 rounded-md border border-ash/15 bg-charcoal/60 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.28)] sm:p-6"
                 >
-                  {/* Icon slot — short hairline that grows on hover.
-                      Placeholder for a future system-line / circuit-trace
-                      icon per the brief. */}
+                  {/* Icon slot — short hairline that grows on hover. */}
                   <div
                     aria-hidden
-                    className="h-px w-12 bg-ember/50 transition-[width,background-color] duration-300 group-hover:w-20 group-hover:bg-ember"
+                    className="h-px w-12 bg-ember/70 transition-[width,background-color] duration-300 group-hover:w-20 group-hover:bg-ember"
                   />
-                  <h3 className="font-display text-lg font-black uppercase leading-tight tracking-[-0.01em] text-ash">
+                  <h3 className="font-display text-base font-black uppercase leading-tight tracking-[-0.01em] text-ash sm:text-lg">
                     {svc.title}
                   </h3>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-smoke transition-colors group-hover:text-ash">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ash/60 transition-colors group-hover:text-ember">
                     See service →
                   </p>
                 </Link>
@@ -675,12 +751,14 @@ function WhyLavaSection() {
           </h2>
         </Reveal>
 
+        {/* Brighter top-of-card divider (ash/25 instead of border) so the
+            four reasons read as clearly separated items, still subtle. */}
         <ol className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2 lg:gap-12">
           {WHY_LAVA.map((r, i) => (
             <li key={r.title}>
               <Reveal
                 delay={(i % 2) * 100}
-                className="flex flex-col gap-4 border-t border-border pt-6"
+                className="flex flex-col gap-4 border-t border-ash/25 pt-7"
               >
                 <span className="font-mono text-xs tabular-nums text-ember">
                   {String(i + 1).padStart(2, "0")}
@@ -688,7 +766,7 @@ function WhyLavaSection() {
                 <h3 className="font-display text-2xl font-black uppercase tracking-[-0.01em] text-ash">
                   {r.title}
                 </h3>
-                <p className="font-serif text-base leading-relaxed text-smoke">
+                <p className="font-serif text-base leading-relaxed text-ash/75">
                   {r.body}
                 </p>
               </Reveal>
@@ -706,15 +784,17 @@ function FinalCtaSection() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-32 sm:px-10">
       <Reveal>
-        <div className="flex flex-col items-start gap-8 rounded-md border border-border bg-basalt p-10 md:flex-row md:items-center md:justify-between md:p-16">
+        <div className="flex flex-col items-start gap-8 rounded-md border border-ash/15 bg-charcoal/60 p-10 md:flex-row md:items-center md:justify-between md:p-16">
           <div>
+            {/* &nbsp; keeps "a concept" together so the line never breaks
+                with "a" stranded at the end. */}
             <h2 className="max-w-2xl font-display text-3xl font-black uppercase leading-tight tracking-[-0.01em] text-ash sm:text-5xl">
-              Have drawings, a concept
+              Have drawings, a&nbsp;concept
               <span className="block font-serif text-2xl font-normal italic tracking-normal text-ember sm:text-4xl">
                 or a project challenge?
               </span>
             </h2>
-            <p className="mt-4 max-w-2xl font-serif text-base text-smoke">
+            <p className="mt-4 max-w-2xl font-serif text-base text-ash/75">
               Share your scope with Lava Design and let&rsquo;s
               identify the technical support, documentation or
               design-development input your project needs.
@@ -722,7 +802,7 @@ function FinalCtaSection() {
           </div>
           <Link
             href="/contact"
-            className="rounded-full bg-lava px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-obsidian transition-colors hover:bg-ember"
+            className="shrink-0 rounded-full bg-lava px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-white transition-colors hover:bg-ember hover:text-obsidian"
           >
             Start a project review
           </Link>

@@ -63,3 +63,68 @@ body {
     0 0 28px rgba(245, 176, 75, 0.45),
     0 0 6px rgba(245, 176, 75, 0.25);
 }
+
+/*
+ * Impact section — subtle, slow animations for the inline SVG metaphors.
+ * All wrapped in prefers-reduced-motion: no-preference so users who opt
+ * out get the static composition only.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  /* Stacked sheets — top sheet floats gently up and down. */
+  .impact-anim-float {
+    animation: impactFloat 6s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  @keyframes impactFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-1.2px); }
+  }
+
+  /* Disciplines — the ember interface dots pulse in sequence so the
+     four system lines read as "live". */
+  .impact-anim-pulse {
+    animation: impactPulse 4s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  .impact-anim-pulse-1 { animation-delay: 0s; }
+  .impact-anim-pulse-2 { animation-delay: 1s; }
+  .impact-anim-pulse-3 { animation-delay: 2s; }
+  .impact-anim-pulse-4 { animation-delay: 3s; }
+  @keyframes impactPulse {
+    0%, 100% { opacity: 0.55; }
+    50%      { opacity: 1; }
+  }
+
+  /* US studios — slow alternating glow between the two points. */
+  .impact-anim-studio-a { animation: impactStudioA 5s ease-in-out infinite; }
+  .impact-anim-studio-b { animation: impactStudioB 5s ease-in-out infinite; }
+  @keyframes impactStudioA {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.5; }
+  }
+  @keyframes impactStudioB {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 1; }
+  }
+
+  /* Years — current-year marker glow + tiny scale. */
+  .impact-anim-marker {
+    animation: impactMarker 4.5s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  @keyframes impactMarker {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.18); }
+  }
+
+  /* Multi-region — slow flowing dash on the connection arcs. */
+  .impact-anim-flow {
+    animation: impactFlow 9s linear infinite;
+  }
+  @keyframes impactFlow {
+    to { stroke-dashoffset: -40; }
+  }
+}

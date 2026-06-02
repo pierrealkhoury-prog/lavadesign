@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MobileMenu } from "@/components/mobile-menu";
 
 const NAV_LINKS = [
   { href: "/work", label: "Work" },
@@ -22,9 +23,7 @@ export function SiteNav() {
           Lava<span className="text-lava">.</span>
         </Link>
 
-        {/* "Sign in" was here, pointing to /sign-in — pulled until Phase 2
-            wires Clerk + a real /sign-in route. With the link present, Next
-            prefetches /sign-in on hover and logs a 404 in the console. */}
+        {/* Desktop nav — server-rendered links. */}
         <ul className="hidden items-center gap-10 md:flex">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
@@ -37,6 +36,9 @@ export function SiteNav() {
             </li>
           ))}
         </ul>
+
+        {/* Mobile nav — client component with hamburger + slide-down panel. */}
+        <MobileMenu />
       </nav>
     </header>
   );
