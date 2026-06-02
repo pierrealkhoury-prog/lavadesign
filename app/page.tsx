@@ -190,6 +190,13 @@ function ImpactSection() {
 const IMPACT_CARD =
   "group flex h-full flex-col gap-5 rounded-md border border-border bg-obsidian/40 p-7 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)]";
 
+/** Compact variant for the three supporting cards. Tighter padding +
+ *  gap + smaller number text on mobile so the vertical rhythm doesn't
+ *  drag. Reverts to the full IMPACT_CARD spacing from sm+ — desktop
+ *  stays unchanged. */
+const IMPACT_CARD_COMPACT =
+  "group flex h-full flex-col gap-3 rounded-md border border-border bg-obsidian/40 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)] sm:gap-5 sm:p-7";
+
 function ProjectsCard() {
   return (
     <article className={IMPACT_CARD}>
@@ -210,9 +217,9 @@ function ProjectsCard() {
 
 function DisciplinesCard() {
   return (
-    <article className={IMPACT_CARD}>
+    <article className={IMPACT_CARD_COMPACT}>
       <DisciplinesMetaphor />
-      <p className="font-display text-5xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash">
+      <p className="font-display text-4xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash sm:text-5xl">
         4+
       </p>
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
@@ -227,9 +234,9 @@ function DisciplinesCard() {
 
 function StudiosCard() {
   return (
-    <article className={IMPACT_CARD}>
+    <article className={IMPACT_CARD_COMPACT}>
       <StudiosMetaphor />
-      <p className="font-display text-5xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash">
+      <p className="font-display text-4xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash sm:text-5xl">
         2
       </p>
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
@@ -244,9 +251,9 @@ function StudiosCard() {
 
 function YearsCard() {
   return (
-    <article className={IMPACT_CARD}>
+    <article className={IMPACT_CARD_COMPACT}>
       <YearsMetaphor />
-      <p className="font-display text-5xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash">
+      <p className="font-display text-4xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash sm:text-5xl">
         15+
       </p>
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
@@ -321,12 +328,13 @@ function ProjectsMetaphor() {
 function DisciplinesMetaphor() {
   // Four parallel system lines stacked vertically. Subtle stagger in the
   // start position so they read as separate "tracks" running across the
-  // card, like building-system runs in plan.
+  // card, like building-system runs in plan. Sized smaller on mobile
+  // (supporting card) to keep the vertical rhythm tight.
   return (
     <svg
       aria-hidden
       viewBox="0 0 80 56"
-      className="h-14 w-20"
+      className="h-10 w-14 sm:h-14 sm:w-20"
       fill="none"
     >
       <g
@@ -349,12 +357,12 @@ function DisciplinesMetaphor() {
 
 function StudiosMetaphor() {
   // Two glowing points connected by a thin line. Light "halo" ring around
-  // each dot for the glow read.
+  // each dot for the glow read. Smaller on mobile.
   return (
     <svg
       aria-hidden
       viewBox="0 0 80 56"
-      className="h-14 w-20"
+      className="h-10 w-14 sm:h-14 sm:w-20"
       fill="none"
     >
       <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100">
@@ -374,12 +382,13 @@ function StudiosMetaphor() {
 
 function YearsMetaphor() {
   // Ruler / timeline: horizontal baseline with regular tick marks, taller
-  // ticks at "milestone" intervals, an ember marker near the end.
+  // ticks at "milestone" intervals, an ember marker near the end. Smaller
+  // on mobile.
   return (
     <svg
       aria-hidden
       viewBox="0 0 80 56"
-      className="h-14 w-20"
+      className="h-10 w-14 sm:h-14 sm:w-20"
       fill="none"
     >
       <g
