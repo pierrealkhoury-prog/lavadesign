@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo, Fraunces, Space_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
+import { CANONICAL_HOST, isIndexable } from "@/lib/site";
 import { SiteNav } from "@/components/site-nav";
 import "./globals.css";
 
@@ -26,13 +27,15 @@ const spaceMono = Space_Mono({
 const SITE_DESCRIPTION =
   "Lava Design is an engineering and architecture studio in Houston and Orlando, delivering permit-ready MEP, structural, and civil design — part of a multidisciplinary practice spanning 2D & 3D, branding, and event activations.";
 
+const INDEXABLE = isIndexable();
+
 export const metadata: Metadata = {
   title: {
     default: "Lava Design — Engineering, Architecture & Design Studio",
     template: "%s · Lava Design",
   },
   description: SITE_DESCRIPTION,
-  metadataBase: new URL("https://lavadesign.us"),
+  metadataBase: new URL(CANONICAL_HOST),
   applicationName: "Lava Design",
   authors: [{ name: "Lava Design" }],
   generator: "Next.js",
@@ -57,16 +60,22 @@ export const metadata: Metadata = {
     },
     description: SITE_DESCRIPTION,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  // Meta-level indexing follows the same host check as robots.txt, so the
+  // preview deployment carries a noindex tag as well as a disallow — belt and
+  // braces, since a page can be indexed through an inbound link even when
+  // robots.txt forbids crawling it.
+  robots: INDEXABLE
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      }
+    : { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
 
 export default function RootLayout({
