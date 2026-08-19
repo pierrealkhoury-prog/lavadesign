@@ -43,3 +43,6 @@ next-env.d.ts
 
 # prisma generated client
 /lib/generated
+
+# claude code local settings
+.claude/settings.local.json

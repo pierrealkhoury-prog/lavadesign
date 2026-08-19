@@ -1,8 +1,13 @@
 import Link from "next/link";
 
+// Mirrors the site nav, with the two Design Services destinations flattened
+// into the row (the footer has no dropdown) so every top-level page is
+// reachable from the bottom of any page.
 const FOOTER_LINKS = [
   { href: "/work", label: "Work" },
   { href: "/services", label: "Services" },
+  { href: "/web-design", label: "Web Design" },
+  { href: "/free-website", label: "Free Website" },
   { href: "/about", label: "Studio" },
   { href: "/team", label: "Team" },
   { href: "/contact", label: "Contact" },
