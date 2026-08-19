@@ -54,9 +54,14 @@ export function WorkCard({
           />
         ) : null}
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-obsidian/20 to-transparent" />
-        {/* Discipline label as a translucent pill in the top-left corner —
-            higher contrast than the previous overlaid microcaps text. */}
-        <span className="absolute left-4 top-4 inline-flex rounded-full border border-ash/20 bg-obsidian/70 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ash backdrop-blur">
+        {/* Discipline pill — dark translucent capsule with a thin lava
+            border, warm ember text and a small glowing lava dot. Reads as
+            a technical tag rather than a loud solid badge. */}
+        <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-lava/40 bg-obsidian/70 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ember backdrop-blur">
+          <span
+            aria-hidden
+            className="h-1 w-1 rounded-full bg-lava shadow-[0_0_6px_rgba(255,77,28,0.9)]"
+          />
           {getDisciplineLabel(project.discipline)}
         </span>
         <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6">

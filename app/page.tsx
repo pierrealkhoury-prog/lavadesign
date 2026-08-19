@@ -89,28 +89,40 @@ function HeroSection() {
       />
 
       <Reveal>
-        {/* Cinematic desktop spacing restored: generous pt + pb on md+ so
-            the hero breathes against the wireframe-render. Mobile stays
-            tight. Extra mt-10 on the CTA cluster pushes the buttons
-            slightly lower from the body copy per brief. */}
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 pb-16 pt-10 sm:px-10 md:gap-10 md:pb-40 md:pt-28">
-          <p className="min-w-0 font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
-            Engineering-led technical design partner
+        {/* Margin-based vertical rhythm (not a uniform flex gap) so each
+            gap is tuned independently:
+            - Text group sits higher on desktop — pt reduced 28→16.
+            - Visual is unaffected (it's the absolute md fill behind this).
+            - Mobile: video→eyebrow (pt) and eyebrow→headline gaps roughly
+              halved vs the old pt-10 / gap-8.
+            - CTAs breathe lower — larger margin above the button cluster
+              than between the other blocks. */}
+        <div className="mx-auto flex max-w-7xl flex-col px-6 pb-16 pt-5 sm:px-10 sm:pt-10 md:pb-40 md:pt-16">
+          <p className="min-w-0 font-mono text-xs uppercase tracking-[0.2em] text-ember text-glow-ember sm:tracking-[0.32em]">
+            {/* Reads as two clean lines on mobile, one line from sm+. */}
+            <span className="block sm:inline">Engineering-led</span>
+            <span className="hidden sm:inline"> </span>
+            <span className="block sm:inline">technical design partner</span>
           </p>
-          <h1 className="min-w-0 max-w-5xl font-display text-5xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-7xl md:text-8xl">
+          {/* Below sm the headline is sized fluidly rather than in steps:
+              "ENGINEERING" is one unbreakable 371px word at 48px, which
+              overflows (and gets clipped by the section) on a 375px screen.
+              The clamp keeps the longest word inside the 6-unit gutters from
+              ~320px up, and sm:text-7xl takes over from 640px. */}
+          <h1 className="mt-4 min-w-0 max-w-5xl font-display text-[clamp(2rem,12.4vw_-_0.35rem,3rem)] font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:mt-8 sm:text-7xl md:mt-10 md:text-8xl">
             Engineering the technical backbone
             <span className="mt-2 block font-serif text-4xl font-normal italic tracking-normal text-ember sm:text-5xl md:text-6xl">
               behind ambitious spaces.
             </span>
           </h1>
           {/* Lighter body copy — ash at 75% reads brighter than smoke. */}
-          <p className="min-w-0 max-w-3xl font-serif text-lg leading-relaxed text-ash/75 sm:text-xl md:text-2xl">
+          <p className="mt-6 min-w-0 max-w-3xl font-serif text-lg leading-relaxed text-ash/75 sm:mt-8 sm:text-xl md:mt-10 md:text-2xl">
             Lava Design supports architects, agencies, developers and
             project teams with coordinated engineering, documentation
             and design-development support across the built
             environment.
           </p>
-          <div className="mt-6 flex flex-wrap gap-4 md:mt-10">
+          <div className="mt-8 flex flex-wrap gap-4 sm:mt-10 md:mt-16">
             {/* Primary: filled lava, WHITE text. Secondary: ash/40 stroke. */}
             <Link
               href="/contact"
@@ -135,7 +147,7 @@ function HeroSection() {
 
 /**
  * Asymmetric impact grid. Top row at lg+: a featured "120+ Projects" card
- * (col-span-7) + a wide "Multi-region reach" card (col-span-5). Bottom row:
+ * (col-span-6) + a wide "Multi-market reach" card (col-span-6). Bottom row:
  * three supporting cards (Disciplines / Studios / Years) at col-span-4
  * each. Stacks to single-column below lg so the cards stay compact on
  * mobile rather than ballooning.
@@ -149,25 +161,28 @@ function ImpactSection() {
   return (
     <section className="relative border-y border-border bg-basalt">
       <EmberHairline />
-      <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10 md:py-32">
+      {/* Mobile vertical rhythm tightened so the first card appears far
+          sooner on a 390px screen — smaller top padding + halved gaps
+          between eyebrow → headline → body → cards. Desktop unchanged. */}
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 sm:py-24 md:py-32">
         <Reveal>
           <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
             Impact
           </p>
-          <h2 className="mt-6 max-w-4xl font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-5xl md:text-6xl">
+          <h2 className="mt-3 max-w-4xl font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:mt-6 sm:text-5xl md:text-6xl">
             Built across disciplines,
             <span className="block font-serif text-3xl font-normal italic tracking-normal text-ember sm:text-4xl md:text-5xl">
               projects and regions.
             </span>
           </h2>
-          <p className="mt-8 max-w-3xl font-serif text-lg leading-relaxed text-smoke md:text-xl">
+          <p className="mt-4 max-w-3xl font-serif text-base leading-relaxed text-smoke sm:mt-8 sm:text-lg md:text-xl">
             From technical documentation to multidisciplinary project
             support, Lava Design brings structure, coordination and
             clarity to projects across sectors, disciplines and regions.
           </p>
         </Reveal>
 
-        <div className="mt-16 grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:mt-12 lg:mt-16 lg:grid-cols-12 lg:gap-6">
           {/* Top row: two equal-width featured cards (6/6 on lg). */}
           <Reveal className="lg:col-span-6">
             <ProjectsCard />
@@ -259,13 +274,17 @@ function StudiosCard() {
         <StudiosDiagram />
       </DiagramBanner>
       <p className="font-display text-4xl font-black tabular-nums leading-none tracking-[-0.01em] text-ash sm:text-5xl">
-        2
+        3
       </p>
       <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ember">
-        US studios
+        Studios
+      </p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-ash/55">
+        Houston · Orlando · Dubai
       </p>
       <p className="font-serif text-sm leading-relaxed text-ash/75 sm:text-base">
-        Houston and Orlando, with shared delivery across both.
+        Houston, Orlando and Dubai — connected through one delivery
+        mindset.
       </p>
     </article>
   );
@@ -298,7 +317,7 @@ function MultiRegionCard() {
       </DiagramBanner>
       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
         <h3 className="font-display text-3xl font-black uppercase leading-tight tracking-[-0.01em] text-ash sm:text-4xl">
-          Multi-region reach
+          Multi-market reach
         </h3>
         <span className="font-mono text-[11px] uppercase tracking-[0.32em] text-ember">
           USA · UAE · GCC
@@ -378,10 +397,12 @@ function DiagramGrid({ id }: { id: string }) {
 }
 
 function ProjectsDiagram() {
-  // Five offset technical drawing sheets stacked from back to front.
-  // Each sheet shows faint plan-style line marks; the front sheet has
-  // a tiny title block ("A-101") and a molten orange edge that glows
-  // on hover. Sheets shift apart subtly on hover.
+  // Five offset technical drawing sheets stacked from back to front, like
+  // sheets in an archive drawer. On hover they slide out in staggered
+  // layers — the front "live" sheet travels furthest, deeper sheets trail
+  // with increasing delay — then glide smoothly back when hover ends. The
+  // front sheet's molten orange edge brightens as it's pulled. Subtle and
+  // premium, never cartoonish.
   return (
     <svg
       aria-hidden
@@ -393,24 +414,25 @@ function ProjectsDiagram() {
       <DiagramGrid id="proj-grid" />
       <rect width="240" height="120" fill="url(#proj-grid)" />
 
-      {/* Far back sheet */}
-      <g className="opacity-50 transition-transform duration-500 group-hover:-translate-x-1 group-hover:-translate-y-1">
+      {/* Far back sheet — pulled out least, trails last */}
+      <g className="opacity-50 transition-transform duration-500 ease-out [transition-delay:240ms] group-hover:translate-x-1 group-hover:-translate-y-0.5 motion-reduce:transition-none">
         <rect x="32" y="20" width="120" height="80" rx="1" stroke="rgba(244,237,229,0.20)" />
       </g>
       {/* Mid-back sheet */}
-      <g className="opacity-65 transition-transform duration-500 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">
+      <g className="opacity-65 transition-transform duration-500 ease-out [transition-delay:180ms] group-hover:translate-x-2 group-hover:-translate-y-1 motion-reduce:transition-none">
         <rect x="44" y="26" width="120" height="80" rx="1" stroke="rgba(244,237,229,0.28)" />
       </g>
       {/* Mid sheet */}
-      <g className="opacity-80 transition-transform duration-500">
+      <g className="opacity-80 transition-transform duration-500 ease-out [transition-delay:120ms] group-hover:translate-x-3 group-hover:-translate-y-1.5 motion-reduce:transition-none">
         <rect x="56" y="32" width="120" height="80" rx="1" stroke="rgba(244,237,229,0.40)" />
       </g>
       {/* Mid-front sheet */}
-      <g className="opacity-90 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:translate-y-0.5">
+      <g className="opacity-90 transition-transform duration-500 ease-out [transition-delay:60ms] group-hover:translate-x-4 group-hover:-translate-y-2 motion-reduce:transition-none">
         <rect x="68" y="38" width="120" height="80" rx="1" stroke="rgba(244,237,229,0.55)" />
       </g>
-      {/* Front "live" sheet with the plan, title block, lava edge */}
-      <g className="transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1">
+      {/* Front "live" sheet with the plan, title block, lava edge —
+          pulled out first and furthest */}
+      <g className="transition-transform duration-500 ease-out [transition-delay:0ms] group-hover:translate-x-5 group-hover:-translate-y-2.5 motion-reduce:transition-none">
         <rect
           x="80"
           y="44"
@@ -586,9 +608,23 @@ function RegionNode({
 
 function DisciplinesDiagram() {
   // Four horizontal building-system layers, each with a distinct line
-  // character (solid + grid for struct, segmented for mech, node-dotted
-  // for elec, dashed + ground hatch for civil). Hover brightens each
-  // layer in turn via staggered transition delays.
+  // character (solid + beam ticks for struct, segmented duct for mech,
+  // node-dotted circuit for elec, dashed grade for civil).
+  //
+  // Hover interaction: the layers switch on in sequence (staggered
+  // transition-delays) — base opacity is low so the brighten reads
+  // clearly, like engineering capability layers powering up. A small
+  // node at the end of each layer glows gently on hover. No constant
+  // animation; hover-only and disabled under prefers-reduced-motion via
+  // motion-reduce:transition-none.
+  //
+  // Shared per-layer classes: low base opacity, brighten + soft glow on
+  // hover, staggered by transition-delay applied per <g>.
+  const layer =
+    "opacity-50 transition-[opacity,filter] duration-300 group-hover:opacity-100 group-hover:[filter:drop-shadow(0_0_2px_rgba(245,176,75,0.45))] motion-reduce:transition-none";
+  // Endpoint "connection node" that glows gently when its layer powers on.
+  const nodeGlow =
+    "transition-[fill,filter] duration-300 group-hover:[filter:drop-shadow(0_0_3px_rgba(255,81,0,0.9))] motion-reduce:transition-none";
   return (
     <svg
       aria-hidden
@@ -609,15 +645,16 @@ function DisciplinesDiagram() {
       </g>
 
       {/* STRUCT — solid baseline + small vertical beam ticks */}
-      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100 [transition-delay:0ms]">
+      <g className={`${layer} [transition-delay:0ms]`}>
         <line x1="58" y1="20" x2="228" y2="20" stroke="rgba(244,237,229,0.6)" strokeWidth="0.9" />
         {[70, 90, 110, 130, 150, 170, 190, 210].map((x) => (
           <line key={x} x1={x} y1="16" x2={x} y2="24" stroke="rgba(244,237,229,0.5)" strokeWidth="0.5" />
         ))}
+        <circle cx="228" cy="20" r="2.4" fill="rgba(255,81,0,0.9)" className={nodeGlow} />
       </g>
 
       {/* MECH — segmented duct line */}
-      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100 [transition-delay:80ms]">
+      <g className={`${layer} [transition-delay:90ms]`}>
         <rect x="58" y="46" width="22" height="6" stroke="rgba(244,237,229,0.55)" strokeWidth="0.7" />
         <line x1="80" y1="49" x2="98" y2="49" stroke="rgba(244,237,229,0.4)" strokeWidth="0.6" />
         <rect x="98" y="46" width="22" height="6" stroke="rgba(244,237,229,0.55)" strokeWidth="0.7" />
@@ -626,18 +663,20 @@ function DisciplinesDiagram() {
         <line x1="160" y1="49" x2="178" y2="49" stroke="rgba(244,237,229,0.4)" strokeWidth="0.6" />
         <rect x="178" y="46" width="22" height="6" stroke="rgba(244,237,229,0.55)" strokeWidth="0.7" />
         <line x1="200" y1="49" x2="228" y2="49" stroke="rgba(244,237,229,0.4)" strokeWidth="0.6" />
+        <circle cx="228" cy="49" r="2.4" fill="rgba(255,81,0,0.9)" className={nodeGlow} />
       </g>
 
       {/* ELEC — thin line with circuit nodes */}
-      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100 [transition-delay:160ms]">
+      <g className={`${layer} [transition-delay:180ms]`}>
         <line x1="58" y1="76" x2="228" y2="76" stroke="rgba(244,237,229,0.55)" strokeWidth="0.6" />
-        {[70, 100, 130, 160, 190, 220].map((x) => (
+        {[70, 100, 130, 160, 190].map((x) => (
           <circle key={x} cx={x} cy="76" r="2.2" fill="rgba(255,81,0,0.85)" />
         ))}
+        <circle cx="220" cy="76" r="2.4" fill="rgba(255,81,0,0.9)" className={nodeGlow} />
       </g>
 
       {/* CIVIL — dashed grade line + small ground hatches below */}
-      <g className="opacity-70 transition-opacity duration-300 group-hover:opacity-100 [transition-delay:240ms]">
+      <g className={`${layer} [transition-delay:270ms]`}>
         <line
           x1="58"
           y1="104"
@@ -658,14 +697,17 @@ function DisciplinesDiagram() {
             strokeWidth="0.5"
           />
         ))}
+        <circle cx="228" cy="104" r="2.4" fill="rgba(255,81,0,0.9)" className={nodeGlow} />
       </g>
     </svg>
   );
 }
 
 function StudiosDiagram() {
-  // Two studio nodes (HOUSTON, ORLANDO) on a faint coordinate grid,
-  // connected by a precise technical line with tick marks. Halos
+  // Three studio nodes (HOUSTON, ORLANDO, DUBAI) evenly spaced on a faint
+  // coordinate grid, connected by one precise technical line with tick
+  // marks. All three nodes share identical styling so Dubai reads as an
+  // equal part of the group presence — not an external source. Halos
   // expand on hover.
   return (
     <svg
@@ -678,22 +720,21 @@ function StudiosDiagram() {
       <DiagramGrid id="studio-grid" />
       <rect width="240" height="120" fill="url(#studio-grid)" />
 
-      {/* Faint cross-hair guide lines through the center */}
+      {/* Faint cross-hair guide line through the center */}
       <line x1="0" y1="60" x2="240" y2="60" stroke="rgba(244,237,229,0.08)" strokeWidth="0.4" />
-      <line x1="120" y1="0" x2="120" y2="120" stroke="rgba(244,237,229,0.08)" strokeWidth="0.4" />
 
-      {/* Connection between nodes */}
+      {/* Single connection spanning all three nodes */}
       <line
-        x1="55"
+        x1="42"
         y1="60"
-        x2="185"
+        x2="198"
         y2="60"
         stroke="rgba(255,81,0,0.75)"
         strokeWidth="0.9"
         className="transition-opacity duration-300 group-hover:opacity-100"
       />
       {/* Tick marks along the connection — small technical surveying marks */}
-      {[75, 95, 115, 135, 155, 175].map((x) => (
+      {[58, 78, 98, 118, 138, 158, 178].map((x) => (
         <line
           key={x}
           x1={x}
@@ -705,10 +746,10 @@ function StudiosDiagram() {
         />
       ))}
 
-      {/* Houston node — left */}
-      <StudioNode cx={55} cy={60} label="HOUSTON" />
-      {/* Orlando node — right */}
-      <StudioNode cx={185} cy={60} label="ORLANDO" />
+      {/* Three evenly spaced studio nodes — identical styling. */}
+      <StudioNode cx={42} cy={60} label="HOUSTON" />
+      <StudioNode cx={120} cy={60} label="ORLANDO" />
+      <StudioNode cx={198} cy={60} label="DUBAI" />
     </svg>
   );
 }
@@ -751,9 +792,17 @@ function StudioNode({
 }
 
 function YearsDiagram() {
-  // Technical measuring ruler. Long horizontal baseline + many fine
-  // ticks, three taller milestone ticks, current marker as a glowing
-  // node at the end with tiny START / BUILD / NOW labels above.
+  // Technical timeline ruler with four EQUALLY spaced milestones:
+  //   2011 Dubai → Texas → Orlando → Now.
+  // Spacing is even for neatness — it is not historically proportional.
+  // The "Now" milestone is the glowing orange node; its label sits well
+  // above the marker so the two never overlap (fixes the prior collision).
+  const milestones = [
+    { x: 26, year: "2011", place: "DUBAI" },
+    { x: 91, place: "TEXAS" },
+    { x: 156, place: "ORLANDO" },
+    { x: 221, place: "NOW", now: true },
+  ];
   return (
     <svg
       aria-hidden
@@ -765,13 +814,6 @@ function YearsDiagram() {
       <DiagramGrid id="years-grid" />
       <rect width="240" height="120" fill="url(#years-grid)" />
 
-      {/* Milestone labels above the line */}
-      <g fontFamily="var(--font-mono)" fontSize="6" fill="rgba(244,237,229,0.5)" letterSpacing="1.2" textAnchor="middle">
-        <text x="22" y="46">START</text>
-        <text x="120" y="46">BUILD</text>
-        <text x="222" y="46">NOW</text>
-      </g>
-
       {/* Baseline */}
       <line
         x1="18"
@@ -782,7 +824,7 @@ function YearsDiagram() {
         strokeWidth="0.8"
       />
 
-      {/* Many small year ticks */}
+      {/* Many small evenly distributed ticks */}
       {Array.from({ length: 21 }, (_, i) => 22 + i * 10).map((x) => (
         <line
           key={x}
@@ -796,26 +838,66 @@ function YearsDiagram() {
         />
       ))}
 
-      {/* Three taller milestone ticks */}
-      <line x1="22" y1="52" x2="22" y2="76" stroke="rgba(244,237,229,0.85)" strokeWidth="0.9" />
-      <line x1="120" y1="52" x2="120" y2="76" stroke="rgba(244,237,229,0.85)" strokeWidth="0.9" />
-      <line x1="222" y1="52" x2="222" y2="76" stroke="rgba(255,81,0,1)" strokeWidth="1.2" />
+      {/* Four milestone markers + labels */}
+      {milestones.map((m) => (
+        <g key={m.place}>
+          {/* Taller milestone tick — orange for "Now", ash otherwise */}
+          <line
+            x1={m.x}
+            y1="58"
+            x2={m.x}
+            y2="76"
+            stroke={m.now ? "rgba(255,81,0,1)" : "rgba(244,237,229,0.85)"}
+            strokeWidth={m.now ? 1.2 : 0.9}
+          />
+          {/* Node dot on the baseline. "Now" glows. */}
+          {m.now ? (
+            <>
+              <circle cx={m.x} cy="72" r="8" fill="rgba(255,81,0,0.18)" />
+              <circle
+                cx={m.x}
+                cy="72"
+                r="3.5"
+                fill="rgba(255,81,0,1)"
+                className="transition-all duration-300 group-hover:[r:4.5]"
+              />
+            </>
+          ) : (
+            <circle cx={m.x} cy="72" r="2.2" fill="rgba(244,237,229,0.8)" />
+          )}
+          {/* Labels sit ABOVE the markers, clear of the orange node. */}
+          {m.year ? (
+            <text
+              x={m.x}
+              y="40"
+              textAnchor="middle"
+              fontFamily="var(--font-mono)"
+              fontSize="6"
+              fill="rgba(244,237,229,0.7)"
+              letterSpacing="1.1"
+            >
+              {m.year}
+            </text>
+          ) : null}
+          <text
+            x={m.x}
+            y="49"
+            textAnchor="middle"
+            fontFamily="var(--font-mono)"
+            fontSize="6"
+            fill={m.now ? "rgba(255,81,0,0.95)" : "rgba(244,237,229,0.55)"}
+            letterSpacing="1.1"
+          >
+            {m.place}
+          </text>
+        </g>
+      ))}
 
-      {/* Current marker — glowing node at the end */}
-      <circle cx="222" cy="48" r="9" fill="rgba(255,81,0,0.18)" />
-      <circle
-        cx="222"
-        cy="48"
-        r="3.5"
-        fill="rgba(255,81,0,1)"
-        className="transition-all duration-300 group-hover:[r:4.5]"
-      />
-
-      {/* Subtle baseline annotation tick (below) */}
-      <line x1="18" y1="86" x2="222" y2="86" stroke="rgba(244,237,229,0.18)" strokeWidth="0.4" strokeDasharray="2 3" />
+      {/* Subtle span annotation below the baseline */}
+      <line x1="18" y1="88" x2="221" y2="88" stroke="rgba(244,237,229,0.18)" strokeWidth="0.4" strokeDasharray="2 3" />
       <text
         x="120"
-        y="100"
+        y="102"
         textAnchor="middle"
         fontFamily="var(--font-mono)"
         fontSize="6"
@@ -843,12 +925,12 @@ const PRACTICE = [
 
 function PracticeSection() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24 sm:px-10 md:py-32">
+    <section className="mx-auto max-w-7xl px-6 py-16 sm:px-10 sm:py-24 md:py-32">
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-[0.32em] text-ember text-glow-ember">
           The practice
         </p>
-        <h2 className="mt-6 max-w-4xl font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:text-5xl md:text-6xl">
+        <h2 className="mt-3 max-w-4xl font-display text-4xl font-black uppercase leading-[0.95] tracking-[-0.01em] text-ash sm:mt-6 sm:text-5xl md:text-6xl">
           Engineering-led.
           <span className="block font-serif text-3xl font-normal italic tracking-normal text-ember sm:text-4xl md:text-5xl">
             Design-aware.
@@ -857,11 +939,13 @@ function PracticeSection() {
       </Reveal>
 
       {/* Equal-width / equal-height cards matching the Impact section's
-          contrast (charcoal raise on the obsidian band) and border. */}
-      <ul className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6">
+          contrast (charcoal raise on the obsidian band) and border.
+          Mobile: tighter intro→first-card gap so the section reads as
+          one connected unit and fits a phone screen better. */}
+      <ul className="mt-8 grid grid-cols-1 gap-6 sm:mt-16 md:grid-cols-2 md:gap-6">
         {PRACTICE.map((c, i) => (
-          <li key={c.title}>
-            <Reveal delay={i * 100}>
+          <li key={c.title} className="flex">
+            <Reveal delay={i * 100} className="h-full w-full">
               <article className="flex h-full flex-col gap-5 rounded-md border border-ash/15 bg-charcoal/60 p-7 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.32)]">
                 <span
                   aria-hidden
@@ -937,8 +1021,8 @@ function ServicesSnapshotSection() {
             for consistent contrast across all snapshot blocks. */}
         <ul className="mt-16 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
           {SERVICES_SNAPSHOT.map((svc, i) => (
-            <li key={svc.title}>
-              <Reveal delay={(i % 4) * 60}>
+            <li key={svc.title} className="flex">
+              <Reveal delay={(i % 4) * 60} className="h-full w-full">
                 <Link
                   href={svc.href}
                   className="group flex h-full flex-col justify-between gap-6 rounded-md border border-ash/15 bg-charcoal/60 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-ember/50 hover:shadow-[0_18px_42px_-16px_rgba(245,176,75,0.28)] sm:p-6"
@@ -981,7 +1065,9 @@ function FeaturedWorkSection({
   featured: ReturnType<typeof getFeaturedProjects>;
 }) {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24 sm:px-10 md:py-32">
+    // work-carousel-scope hoists the carousel's named scroll timeline so
+    // the mobile progress rail (a sibling of the scroller) can bind to it.
+    <section className="work-carousel-scope mx-auto max-w-7xl px-6 py-16 sm:px-10 sm:py-24 md:py-32">
       <Reveal>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
@@ -1004,10 +1090,39 @@ function FeaturedWorkSection({
         </div>
       </Reveal>
 
+      {/* Mobile-only carousel indicator — a thin technical progress rail
+          whose lava thumb tracks scroll position via a CSS scroll-driven
+          timeline (no JS). Degrades gracefully to a resting thumb at the
+          start on browsers without scroll-timeline support. Sits just
+          under the section header and signals there are multiple swipeable
+          projects. */}
+      <div className="mt-7 sm:hidden">
+        <div
+          className="relative h-0.5 w-full overflow-hidden rounded-full bg-ash/15"
+          aria-hidden
+        >
+          <span
+            className="work-rail-thumb absolute inset-y-0 left-0 block rounded-full bg-lava"
+            style={
+              {
+                width: `calc(100% / ${featured.length})`,
+                // consumed by the keyframes to size the travel distance
+                "--count": featured.length,
+              } as React.CSSProperties
+            }
+          />
+        </div>
+        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.3em] text-smoke">
+          Swipe — {featured.length} projects
+        </p>
+      </div>
+
       {/* Mobile: horizontal CSS scroll-snap carousel — each card occupies
               ~88% of the viewport so the next card peeks at the edge,
-              communicating swipeability without arrows or dots.
-            Desktop (sm+): standard responsive grid, 2-up at sm, 4-up at lg.
+              communicating swipeability. The progress rail above makes the
+              multi-project set explicit.
+            Desktop (sm+): standard responsive grid, 2-up at sm, 4-up at lg,
+              with a tightened gap below the header.
           The negative -mx-6/-mx-10 + matching pl/pr on the carousel push
           the scroll surface to the screen edges so the peek of the next
           card lines up with the page padding. Reset at sm via mx-0. */}
@@ -1015,8 +1130,8 @@ function FeaturedWorkSection({
         role="region"
         aria-label="Featured projects (swipe to browse)"
         className={[
-          "mt-16 -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-6 pb-4 pl-6 pr-6 scrollbar-hide sm:scroll-px-0",
-          "sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:pb-0 sm:pl-0 sm:pr-0",
+          "work-carousel mt-5 -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-6 pb-4 pl-6 pr-6 scrollbar-hide sm:scroll-px-0",
+          "sm:mx-0 sm:mt-10 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:pb-0 sm:pl-0 sm:pr-0",
           "lg:grid-cols-4",
         ].join(" ")}
       >
@@ -1104,35 +1219,117 @@ function WhyLavaSection() {
 
 // ─── 7. Final CTA ───────────────────────────────────────────────────────────
 
+/** The four stages of the intake path rendered inside the final CTA. */
+const CTA_STEPS = ["Brief", "Review", "Scope", "Delivery"] as const;
+
 function FinalCtaSection() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-32 sm:px-10">
       <Reveal>
-        <div className="flex flex-col items-start gap-8 rounded-md border border-ash/15 bg-charcoal/60 p-10 md:flex-row md:items-center md:justify-between md:p-16">
-          <div>
-            {/* &nbsp; keeps "a concept" together so the line never breaks
-                with "a" stranded at the end. */}
-            <h2 className="max-w-2xl font-display text-3xl font-black uppercase leading-tight tracking-[-0.01em] text-ash sm:text-5xl">
-              Have drawings, a&nbsp;concept
-              <span className="block font-serif text-2xl font-normal italic tracking-normal text-ember sm:text-4xl">
-                or a project challenge?
-              </span>
-            </h2>
-            <p className="mt-4 max-w-2xl font-serif text-base text-ash/75">
-              Share your scope with Lava Design and let&rsquo;s
-              identify the technical support, documentation or
-              design-development input your project needs.
-            </p>
+        {/* Project-intake console: framed panel with a status eyebrow, the
+            headline + CTA, and a technical process path along the bottom.
+            `group` drives the hover trace. */}
+        <div className="group relative overflow-hidden rounded-md border border-ash/15 bg-charcoal/60 p-10 md:p-16">
+          <CtaConsoleFrame />
+
+          <div className="relative flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.32em] text-ember">
+                <span
+                  aria-hidden
+                  className="h-1.5 w-1.5 rounded-full bg-lava shadow-[0_0_6px_rgba(255,77,28,0.9)]"
+                />
+                Project intake
+              </p>
+              {/* &nbsp; keeps "a concept" together so the line never breaks
+                  with "a" stranded at the end. */}
+              <h2 className="mt-4 max-w-2xl font-display text-3xl font-black uppercase leading-tight tracking-[-0.01em] text-ash sm:text-5xl">
+                Have drawings, a&nbsp;concept
+                <span className="block font-serif text-2xl font-normal italic tracking-normal text-ember sm:text-4xl">
+                  or a project challenge?
+                </span>
+              </h2>
+              <p className="mt-4 max-w-2xl font-serif text-base text-ash/75">
+                Share your scope with Lava Design and let&rsquo;s
+                identify the technical support, documentation or
+                design-development input your project needs.
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="shrink-0 rounded-full bg-lava px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-white transition-colors hover:bg-ember hover:text-obsidian"
+            >
+              Start a project review
+            </Link>
           </div>
-          <Link
-            href="/contact"
-            className="shrink-0 rounded-full bg-lava px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-white transition-colors hover:bg-ember hover:text-obsidian"
-          >
-            Start a project review
-          </Link>
+
+          <CtaProcessPath />
         </div>
       </Reveal>
     </section>
+  );
+}
+
+/**
+ * Technical process rail along the bottom of the CTA panel:
+ * Brief → Review → Scope → Delivery. A faint base track sits behind four
+ * nodes; a molten orange trace fills left-to-right along the track on
+ * hover (the "project path" lighting up), and the nodes + labels brighten
+ * in sequence. Hover-only, no constant motion, disabled under
+ * prefers-reduced-motion via motion-reduce:transition-none.
+ */
+function CtaProcessPath() {
+  return (
+    <div className="relative mt-12 border-t border-ash/10 pt-10">
+      <div className="relative">
+        {/* Base track */}
+        <div
+          aria-hidden
+          className="absolute inset-x-1 top-[7px] h-px bg-ash/15"
+        />
+        {/* Molten trace — fills along the track on hover */}
+        <div
+          aria-hidden
+          className="absolute left-1 top-[7px] h-px w-0 rounded-full bg-gradient-to-r from-lava to-ember shadow-[0_0_8px_rgba(255,77,28,0.75)] transition-[width] duration-700 ease-out group-hover:w-[calc(100%-0.5rem)] motion-reduce:transition-none"
+        />
+        <ol className="relative flex items-start justify-between">
+          {CTA_STEPS.map((step, i) => (
+            <li
+              key={step}
+              className="flex flex-col items-center gap-3 text-center"
+            >
+              <span
+                aria-hidden
+                style={{ transitionDelay: `${i * 120}ms` }}
+                className="flex h-3.5 w-3.5 items-center justify-center rounded-full border border-ember/40 bg-charcoal transition-[border-color,box-shadow,background-color] duration-300 group-hover:border-lava group-hover:bg-lava group-hover:shadow-[0_0_8px_rgba(255,77,28,0.8)] motion-reduce:transition-none"
+              >
+                <span className="h-1 w-1 rounded-full bg-ember transition-colors duration-300 group-hover:bg-white" />
+              </span>
+              <span
+                style={{ transitionDelay: `${i * 120}ms` }}
+                className="font-mono text-[10px] uppercase tracking-[0.24em] text-ash/55 transition-colors duration-300 group-hover:text-ash motion-reduce:transition-none"
+              >
+                {step}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  );
+}
+
+/** Faint corner ticks that frame the CTA panel like a console readout. */
+function CtaConsoleFrame() {
+  const corner =
+    "pointer-events-none absolute h-4 w-4 border-ember/30";
+  return (
+    <div aria-hidden className="absolute inset-3">
+      <span className={`${corner} left-0 top-0 border-l border-t`} />
+      <span className={`${corner} right-0 top-0 border-r border-t`} />
+      <span className={`${corner} bottom-0 left-0 border-b border-l`} />
+      <span className={`${corner} bottom-0 right-0 border-b border-r`} />
+    </div>
   );
 }
 

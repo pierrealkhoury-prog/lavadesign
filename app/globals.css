@@ -93,3 +93,36 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/*
+ * Featured Work mobile carousel — scroll-linked progress rail.
+ *
+ * The carousel exposes a named scroll-progress timeline; the section
+ * hoists that name with `timeline-scope` so the rail thumb (a sibling of
+ * the scroller, not a descendant) can bind to it. The thumb is sized to
+ * 1/N of the rail (N = project count) and travels (N-1) of its own widths
+ * across the rail as the user scrolls — so it lands flush at each edge.
+ *
+ * Pure CSS, no JS. On browsers without scroll-driven-animation support the
+ * thumb simply rests at the start: still a clear "multiple projects" cue.
+ */
+.work-carousel-scope {
+  timeline-scope: --work-carousel;
+}
+.work-carousel {
+  scroll-timeline-name: --work-carousel;
+  scroll-timeline-axis: inline;
+}
+.work-rail-thumb {
+  animation: workRailProgress linear both;
+  animation-timeline: --work-carousel;
+}
+@keyframes workRailProgress {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* (N-1) × own width → flush against the right edge of the rail */
+    transform: translateX(calc((var(--count) - 1) * 100%));
+  }
+}
